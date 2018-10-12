@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
 
 import java.util.Arrays;
@@ -34,9 +35,8 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new RNGoogleSigninPackage(),
-          new FBSDKPackage(mCallbackManager)
+              new MainReactPackage(),
+              new FBSDKPackage(mCallbackManager)
       );
     }
 
@@ -44,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected String getJSMainModuleName() {
       return "index";
     }
+
   };
 
   @Override
@@ -54,6 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+    AppEventsLogger.activateApp(this);
+    //...
   }
 }

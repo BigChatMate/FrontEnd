@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 // import LoginForm from './LoginForm';
 
-import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk';
+import FBSDK, { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
 // GoogleSignin.configure();
@@ -18,68 +18,62 @@ class Login extends Component {
         Alert.alert("Login Success permission granted:" + result.grantedPermissions);
       }
     }, function (error) {
-      Alert.alert("some error occurred!!");
+      Alert.alert("Some error occurred!\n" +  error);
     })
   }
 
   // Somewhere in your code
-  signIn = async () => {
-    try {
-      Alert.alert("SIGNING IN...");
+  // signIn = async () => {
+  //   try {
+  //     Alert.alert("SIGNING IN...");
 
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      this.setState({ userInfo });
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        Alert.alert("SIGN IN CANCLED");
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (f.e. sign in) is in progress already
-        Alert.alert("SIGN IN IN_PROGRESS");
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     this.setState({ userInfo });
+  //   } catch (error) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       // user cancelled the login flow
+  //       Alert.alert("SIGN IN CANCLED");
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       // operation (f.e. sign in) is in progress already
+  //       Alert.alert("SIGN IN IN_PROGRESS");
 
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-        Alert.alert("SIGN PLAY_SERVICES_NOT_AVAILABLE");
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       // play services not available or outdated
+  //       Alert.alert("SIGN PLAY_SERVICES_NOT_AVAILABLE");
 
-      } else {
-        // some other error happened
-        Alert.alert("SIGN IN ERROR OTHER");
+  //     } else {
+  //       // some other error happened
+  //       Alert.alert("SIGN IN ERROR OTHER");
 
-      }
-    }
-  };
+  //     }
+  //   }
+  // };
 
 
   render() {
     return (
       <View>
-        <LoginButton
-          publishPermissions={["publish_actions"]}
-          onLoginFinished={
-            (error, result) => {
-              if (error) {
-                alert("login has error: " + result.error);
-              } else if (result.isCancelled) {
-                alert("login is cancelled.");
-              } else {
-                AccessToken.getCurrentAccessToken().then(
-                  (data) => {
-                    alert(data.accessToken.toString())
-                  }
-                )
-              }
-            }
-          }
-          onLogoutFinished={() => alert("logout.")} />
+
+       <Button
+        onPress={this._fbAuth}
+        title="Login With Facebook"
+        color="#4267B2"
+      />
        
-        <GoogleSigninButton
+       <Button
+          // onPress={this.signIn}
+          title="Login With Google"
+          // color={GoogleSigninButton.Color.Dark}
+      />
+
+        {/* <GoogleSigninButton
           style={{ width: 48, height: 48 }}
           size={GoogleSigninButton.Size.Icon}
           color={GoogleSigninButton.Color.Dark}
           onPress={this.signIn}
-          // disabled={this.state.isSigninInProgress} 
-          />
+          disabled={this.state.isSigninInProgress} 
+          /> */}
 
           
       </View>
