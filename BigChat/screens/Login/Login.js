@@ -11,8 +11,37 @@ class Login extends Component {
 
     console.log("Inside _loginSuccess");
     console.log(data);
+    try {
+    let req = await fetch('http://localhost:8000/auth/authenticate/?user_id='
+    + data.user_id + '&token=' + data.token + '&app_id=' + data.app_id + '&authType=' + data.authType, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if(req.error != "") {
+      throw req.error
+    }
+  } catch (exception) {
+    alert("Unable to log into BigChat." + exception)
+  }
+
 
   }
+
+  // var req = fetch('https://mywebsite.com/endpoint/', {
+  //   method: 'POST',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     firstParam: 'yourValue',
+  //     secondParam: 'yourOtherValue',
+  //   }),
+  // });
 
   render() {
     return (
