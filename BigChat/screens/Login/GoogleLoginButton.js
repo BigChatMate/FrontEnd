@@ -16,6 +16,7 @@ export default class GoogleLoginButton extends Component {
 
       // Contains user info (email, name, picture (if null, use stock))
       console.log(userInfo);
+      this.props.onLogin(result);
 
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

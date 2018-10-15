@@ -14,6 +14,9 @@ export default class FBLoginButton extends Component {
             // alert('Success fetching data: ' + result.toString());
             console.log("Success");
             console.log(result);
+            this.props.onLogin(result);
+
+
         }
     }
 

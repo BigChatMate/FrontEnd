@@ -7,12 +7,19 @@ var GoogleLoginButton = require('./GoogleLoginButton');
 
 class Login extends Component {
 
+  _loginSuccess = (data) => {
+
+    console.log("Inside _loginSuccess");
+    console.log(data);
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.label}>Log into BigChat using either Facebook or Google!</Text>
-          <FBLoginButton style={styles.loginButtons}/>
-          <GoogleLoginButton style={styles.loginButtons}/>
+          <FBLoginButton style={styles.loginButtons} onLogin={this._loginSuccess}/>
+          <GoogleLoginButton style={styles.loginButtons} onLogin={this._loginSuccess}/>
       </View>
     );
   }
