@@ -7,16 +7,37 @@ GoogleSignin.configure();
 
 export default class GoogleLoginButton extends Component {
 
+state = {
+
+    data : {
+        name: "", // Name
+        email: "", // Email Address
+        user_id: "",   // User's Name
+        app_id: "", // app_id (FB or Google)
+        token: "", // Authentication Token
+        authType: "google",   // Token issuer (FB or Google)
+    }
+
+}
+
   // Somewhere in your code
   signIn = async () => {
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      this.setState({ userInfo });
+       
+       await GoogleSignin.hasPlayServices();
+       const userInfo = await GoogleSignin.signIn();
+       this.setState({ userInfo });
 
-      // Contains user info (email, name, picture (if null, use stock))
-      console.log(userInfo);
-      this.props.onLogin(result);
+       // Contains user info (email, name, picture (if null, use stock))
+       console.log(userInfo);
+
+       this.state.data.name = userInfo.name; // Name
+       this.state.data.email = userInfo.email, // Email Address
+       this.state.data.user_id = userInfo.user_id,   // Userid
+       this.state.data.app_id = userInfo.app_id, // app_id
+       this.state.data.token = userInfo.token, // Authentication Token
+
+       this.props.onLogin(this.state.data);
 
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

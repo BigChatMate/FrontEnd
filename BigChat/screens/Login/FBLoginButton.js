@@ -4,6 +4,20 @@ import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManag
 
 export default class FBLoginButton extends Component {
 
+state = {
+
+    data : {
+        name: "", // Name
+        email: "", // Email Address
+        user_id: "",   // User's Name
+        app_id: "", // app_id (FB or Google)
+        token: "", // Authentication Token
+        authType: "facebook",   // Token issuer (FB or Google)
+    }
+
+
+}
+
     //Create response callback.
     _responseInfoCallback = (error, result) => {
         console.log("CallBack");
@@ -11,10 +25,18 @@ export default class FBLoginButton extends Component {
             console.log("Failure");
             console.log('Error fetching data: ' + error.toString());
         } else {
+
             // alert('Success fetching data: ' + result.toString());
             console.log("Success");
             console.log(result);
-            this.props.onLogin(result);
+
+            this.state.data.name = result.name;
+            this.state.data.email = result.email;
+            this.state.data.user_id = result.id;
+
+
+            // const { onLogin } = this.props;
+            this.props.onLogin(this.state.data);
 
 
         }
@@ -55,6 +77,10 @@ export default class FBLoginButton extends Component {
                                 AccessToken.getCurrentAccessToken().then(
                                     (data) => {
                                         console.log(data);
+                                        
+                                        this.state.data.token = data.accessToken.toString();
+                                        this.state.data.app_id = data.applicationID;
+
                                         const infoRequest = new GraphRequest(
                                             '/me',
                                             {
