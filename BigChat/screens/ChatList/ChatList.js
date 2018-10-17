@@ -7,7 +7,7 @@ class ChatList extends React.Component {
 
     constructor(props) {
 
-        this.props.navigation.replace("Home");
+        // this.props.navigation.replace("Home");
 
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

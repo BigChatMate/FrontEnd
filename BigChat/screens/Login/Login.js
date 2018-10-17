@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import {AppRegistry, StyleSheet, Text, View, Image} from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import { LoginButton, AccessToken, LoginManager, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+
+
 var FBLoginButton = require('./FBLoginButton');
 var GoogleLoginButton = require('./GoogleLoginButton');
 
@@ -13,7 +18,9 @@ class Login extends Component {
     console.log("Inside _loginSuccess");
     console.log(data);
 
-    this.props.navigation.navigate("App", data);
+    this.state.loginStatus = true;
+
+    this.props.navigation.navigate("App");
     
     // try {
     // let req = await fetch('http://168.62.4.43:8000/auth/authenticate/?user_id='
@@ -48,7 +55,50 @@ class Login extends Component {
   //   }),
   // });
 
+
+  isGoogleSignedIn = async () => {
+    console.log("Checking google login...");
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    
+    // console.log(isSignedIn);
+    
+    return isSignedIn;
+  };
+
+  isFacebookSignedIn = async () => {
+
+    var isSignedIn;
+
+    await AccessToken.getCurrentAccessToken().then((tokenInfo) => {
+      console.log("Checking fb login...");
+      isSignedIn = tokenInfo;
+     });
+    //  console.log(isSignedIn);
+
+     return isSignedIn;
+  }
+
+
+
   render() {
+
+  
+
+    var isFacebookSignedIn = this.isFacebookSignedIn().then((status) => {
+      console.log(status);
+      return status;
+    });
+
+
+    var isGoogleLogin = this.isGoogleSignedIn().then((status) => {
+      console.log(status);
+      return status;
+    });
+
+    console.log(isGoogleLogin);
+    console.log(isFacebookSignedIn);
+
+
     return (
       <View style={styles.container}>
       <Image resizeMode="contain" style={styles.logo} source={require('./BigChatLogo.png')} />        

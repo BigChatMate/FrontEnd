@@ -70,6 +70,7 @@ state = {
                     onLoginFinished={
                         (error, result) => {
                             if (error) {
+                                alert("Login error: " + result.error);
                                 console.log("login has error: " + result.error);
                             } else if (result.isCancelled) {
                                 console.log("login is cancelled.");
