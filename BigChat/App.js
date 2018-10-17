@@ -12,7 +12,7 @@ import Login from './screens/Login/Login.js';
 import ChatList from './screens/ChatList/ChatList.js';
 import Contact from './screens/Contact/Contact.js';
 
-import { createStackNavigator } from 'react-navigation';
+import { createSwitchNavigator,  createStackNavigator } from 'react-navigation';
 
 
 // export default class DemoLogin extends Component {
@@ -28,10 +28,21 @@ export default class App extends React.Component {
     return <RootStack />;
   }
 }
+const AppStack = createStackNavigator({ Home: ChatList, Contact: Contact, Logout: Login });
+
+const AuthStack = createSwitchNavigator(
+  {
+    Login: Login,
+    App: AppStack,
+  },
+  {
+    initialRouteName: 'Login',
+  }
+);
 
 const RootStack = createStackNavigator(
   {
-    Login: {
+    Home: {
       screen: Login,
       navigationOptions: {
         header: null // Will hide header for Home only
@@ -39,6 +50,7 @@ const RootStack = createStackNavigator(
     },
     Contact: Contact,
     ChatList: ChatList,
+    Login: Login,
   },
   {
     // Hides Header globally

@@ -12,6 +12,9 @@ class Login extends Component {
 
     console.log("Inside _loginSuccess");
     console.log(data);
+
+    this.props.navigation.navigate("App", data);
+    
     // try {
     // let req = await fetch('http://168.62.4.43:8000/auth/authenticate/?user_id='
     // + data.user_id + '&token=' + data.token + '&app_id=' + data.app_id + '&authType=' + data.authType, {

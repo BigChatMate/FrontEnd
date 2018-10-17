@@ -4,13 +4,19 @@ import Row from './Row';
 import data from './data';
 
 class ChatList extends React.Component {
+
     constructor(props) {
+
+        this.props.navigation.replace("Home");
+
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             dataSource: ds.cloneWithRows(data),
         };
     }
+
+    
     render() {
         return (
             <View style={{ flex: 1 }} >
