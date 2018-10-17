@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AppRegistry, StyleSheet, Text, View, Image} from 'react-native';
+import {AppRegistry, StyleSheet, Text, View, Image, AsyncStorage} from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 
@@ -13,15 +13,67 @@ var GoogleLoginButton = require('./GoogleLoginButton');
 
 class Login extends Component {
 
+    _storeData = async (key, value) => {
+      try {
+        console.log("Storing data...");
+        console.log(value);
+        await AsyncStorage.setItem(key, value);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    _retrieveData = async (key) => {
+      try {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+          // We have data!!
+          console.log("Retrieving data...");
+          console.log(data);
+          return value;
+        }
+       } catch (error) {
+        console.log(error);
+      }
+    }
+
+    _isLoggedIn = async () => {
+
+
+      console.log("Checking if logged in...");
+
+      try {
+        const data = await this._retrieveData('logInStatus');
+
+        if (data != null && data == "true") {
+
+          console.log("LoggedIn: Navigating to App...");
+
+          this.props.navigation.navigate("App");
+
+        } else {
+          console.log("Not LoggedIn.");
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+
+
+    }
+
   _loginSuccess = async (data) => {
 
     console.log("Inside _loginSuccess");
     console.log(data);
 
-    this.state.loginStatus = true;
+    this._storeData("userData", JSON.stringify(data));
+    this._storeData("logInStatus", "true");
 
     this.props.navigation.navigate("App");
     
+    console.log("Navigating to App...");
+
     // try {
     // let req = await fetch('http://168.62.4.43:8000/auth/authenticate/?user_id='
     // + data.user_id + '&token=' + data.token + '&app_id=' + data.app_id + '&authType=' + data.authType, {
@@ -76,29 +128,14 @@ class Login extends Component {
     //  console.log(isSignedIn);
 
      return isSignedIn;
+
   }
 
 
 
   render() {
 
-  
-
-    var isFacebookSignedIn = this.isFacebookSignedIn().then((status) => {
-      console.log(status);
-      return status;
-    });
-
-
-    var isGoogleLogin = this.isGoogleSignedIn().then((status) => {
-      console.log(status);
-      return status;
-    });
-
-    console.log(isGoogleLogin);
-    console.log(isFacebookSignedIn);
-
-
+    this._isLoggedIn();
     return (
       <View style={styles.container}>
       <Image resizeMode="contain" style={styles.logo} source={require('./BigChatLogo.png')} />        

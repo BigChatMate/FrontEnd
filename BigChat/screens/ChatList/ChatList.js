@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ListView, StyleSheet, Text, Image } from 'react-native';
+import { View, ListView, StyleSheet, Text, Image, AsyncStorage } from 'react-native';
 import Row from './Row';
 import data from './data';
 
@@ -11,12 +11,40 @@ class ChatList extends React.Component {
 
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        
         this.state = {
             dataSource: ds.cloneWithRows(data),
-        };
+        };        
+        
+        
+        this._retrieveData("userData").then((userData) => {
+
+            console.log("In ChatList");
+            console.log("userData: "  + userData);
+            userData = JSON.parse(userData);
+            console.log(userData);
+            console.log(userData.email);
+
+        })
+
+
     }
 
-    
+    _retrieveData = async (key) => {
+        try {
+          const value = await AsyncStorage.getItem(key);
+          if (value !== null) {
+            // We have data!!
+            console.log("Retrieving data...");
+            console.log(data);
+            return value;
+          }
+         } catch (error) {
+          console.log(error);
+        }
+      }
+
+
     render() {
         return (
             <View style={{ flex: 1 }} >
