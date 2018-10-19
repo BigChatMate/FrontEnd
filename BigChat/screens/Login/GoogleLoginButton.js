@@ -31,11 +31,11 @@ state = {
        // Contains user info (email, name, picture (if null, use stock))
        console.log(userInfo);
 
-       this.state.data.name = userInfo.name; // Name
-       this.state.data.email = userInfo.email, // Email Address
-       this.state.data.user_id = userInfo.user_id,   // Userid
-       this.state.data.app_id = userInfo.app_id, // app_id
-       this.state.data.token = userInfo.token, // Authentication Token
+       this.state.data.name = userInfo.user.name; // Name
+       this.state.data.email = userInfo.user.email, // Email Address
+       this.state.data.user_id = userInfo.user.id,  // Userid
+       this.state.data.app_id = userInfo.idToken, // app_id
+       this.state.data.token = userInfo.accessToken, // Authentication Token
 
        this.props.onLogin(this.state.data);
 
