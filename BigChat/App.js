@@ -31,7 +31,7 @@ export default class App extends React.Component {
 const AppStack = createStackNavigator(
   { Home: ChatList, 
     Contact: Contact, 
-    Logout: Login },  
+    Logout: Login ,Bottom:BottomNavBar,},  
   {
      // Hides Header globally
      navigationOptions: {
@@ -40,10 +40,76 @@ const AppStack = createStackNavigator(
   }
  );
 
+ const ChatNav = createStackNavigator({
+  ChatList:ChatList,
+  Chat:{screen:Chat},
+  Profile:Profile
+});
+
+ChatNav.navigationOptions=({navigation})=>{
+  if(navigation.state.index!=0){
+    return{
+      tabBarVisible : false,
+    };
+  }
+  return{
+    tabBarVisible : true,
+  };
+}
+
+const ContactNav = createStackNavigator({
+  Contacts:Contact,
+  Profile:Profile,
+  Chat:Chat,
+});
+
+
+const ContactNav = createStackNavigator({
+  Contacts:Contact,
+  Profile:Profile,
+  Chat:Chat,
+});
+
+
+
+const BottomNavBar = createBottomTabNavigator({
+      Chats:{
+        screen:ChatNav,
+        tabBarOptions:{
+        tabBarLabel: 'Chats',
+        tabBarIcon:()=> (
+          <Ionicons name = "chats" size={24}/>
+        )
+      }
+    },
+    
+      Contacts:{
+          screen:ContactNav,
+          tabBarOptions:{
+          tabBarLabel: 'Contacts',
+          tabBarIcon:()=> (
+            <Ionicons name = "user-friends" size={24}/>
+          )
+        }
+      },
+        
+    
+        Me:{
+          screen:MyProfile,
+          tabBarOptions:{
+          tabBarLabel: 'Me',
+          tabBarIcon:()=> (
+            <Ionicons name = "profile"  size={24}/>
+          )
+        }
+      },
+});
+
 const AuthStack = createSwitchNavigator(
   {
     Login: Login,
     App: AppStack,
+    
   },
   {
     // Hides Header globally

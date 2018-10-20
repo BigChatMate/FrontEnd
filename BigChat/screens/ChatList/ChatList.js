@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ListView, StyleSheet, Text, Image, AsyncStorage } from 'react-native';
+import { View, ListView, StyleSheet,TouchableOpacity, Text, Image, AsyncStorage } from 'react-native';
 import Row from './Row';
 import data from './data';
 
@@ -7,7 +7,6 @@ class ChatList extends React.Component {
 
     constructor(props) {
 
-        // this.props.navigation.replace("Home");
 
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -46,6 +45,8 @@ class ChatList extends React.Component {
 
 
     render() {
+        var {navigate} = this.props.navigation;
+
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
@@ -55,12 +56,23 @@ class ChatList extends React.Component {
                 </View>
                 <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(data) => <Row {...data} />}
+                    renderRow={ (data)=> this._renderRow(data,navigate)}
+                    //renderRow={(data) => <Row {...data} />}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
                 />
             </View>
         );
     }
+
+    _renderRow(data,navigate) {
+        return (
+          <TouchableOpacity onPress = {
+            ()=>navigate("Chat",{})
+       }>
+            <Row {...data} />
+          </TouchableOpacity>
+        );
+      }
 }
 
 const styles = StyleSheet.create({
@@ -70,8 +82,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#8E8E8E',
     },
     toolbar: {
-        backgroundColor: '#81c04d',
-        paddingTop: 30,
+        backgroundColor: '#00bfff',
+        paddingTop: 40,
         paddingBottom: 10,
         flexDirection: 'row'
     },
@@ -85,7 +97,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 25,
         flex: 1
     }
 });

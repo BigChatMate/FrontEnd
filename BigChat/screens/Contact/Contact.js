@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
-import { View, ListView, StyleSheet, Text,Image } from 'react-native';
+import { View, TouchableOpacity, ListView, StyleSheet, Text,Image } from 'react-native';
 import Row from './Row';
 import SectionHeader from './SectionHeader';
 import data from './data';
 import Header from './Header'
 
-class Contact extends React.Component {
+
+
+
+export default class Contact extends React.Component {
+  static navigationOptions ={
+    header: null,
+};
     constructor(props) {
         super(props);
         const getSectionData = (dataBlob, sectionId) => dataBlob[sectionId];
@@ -69,6 +75,8 @@ class Contact extends React.Component {
       return { dataBlob, sectionIds, rowIds };
     }
     render() {
+      var {navigate} = this.props.navigation;
+
         return (
           <View style = {{flex: 1}} >
           <View style={styles.toolbar}>
@@ -78,7 +86,7 @@ class Contact extends React.Component {
                 </View>
             <ListView
             dataSource = {this.state.dataSource}
-            renderRow = {(data) => <Row {...data} />}
+            renderRow={ (data)=> this._renderRow(data,navigate)}
             renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
             renderHeader={() => <Header />}
             renderSectionHeader={(sectionData) => <SectionHeader {...sectionData} />}
@@ -87,7 +95,18 @@ class Contact extends React.Component {
         );
 
     }
+    _renderRow(data,navigate) {
+      return (
+        <TouchableOpacity onPress = {
+          ()=>navigate("Profile",{})
+     }>
+          <Row {...data} />
+        </TouchableOpacity>
+      );
+    }
 }
+
+
 
 const styles = StyleSheet.create({
   separator: {
@@ -96,24 +115,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#8E8E8E',
   },
   toolbar:{
-    backgroundColor:'#81c04d',
-    paddingTop:30,
+    backgroundColor:'#00bfff',
+    paddingTop:40,
     paddingBottom:10,
     flexDirection:'row'    //Step 1
 },
-toolbarButton:{
-    width: 50,            //Step 2
-    color:'#fff',
-    textAlign:'center',
-    fontSize: 15,
-},
-toolbarTitle:{
-    color:'#fff',
-    textAlign:'center',
-    fontWeight:'bold',
-    fontSize: 20,
-    flex:1                //Step 3
-}
-});
+  toolbarButton:{
+      width: 50,            //Step 2
+      color:'#fff',
+      textAlign:'center',
+      fontSize: 16,
+  },
+  toolbarTitle:{
+      color:'#fff',
+      textAlign:'center',
+      fontWeight:'bold',
+      fontSize: 25,
+      flex:1                //Step 3
+  }
+  });
 
-export default Contact;
+//export default Contact;

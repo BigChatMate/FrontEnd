@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, ListView, Button,StyleSheet, Text, Image } from 'react-native';
+import { View, ListView, StyleSheet, Text, Image } from 'react-native';
+import Footer from './Footer';
 
 
 
-export default class Profile extends React.Component {
+export default class MyProfile extends React.Component {
     static navigationOptions ={
         header: null,
     };
@@ -41,35 +42,21 @@ export default class Profile extends React.Component {
         );
     }
     render() {
-        var {goBack} = this.props.navigation;
         var {navigate} = this.props.navigation;
-
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
-                    <Text onPress = {
-                         ()=>goBack()
-                    }
-                    style={styles.toolbarButton} >Back</Text>
                     <Text style={styles.toolbarTitle}>Profile</Text>
                 </View>
                 <ListView
                     style={styles.container}
                     dataSource={this.state.dataSource}
                     renderRow={this._renderRow}
-                    renderFooter = {()=>this._renderFooter(navigate)}
+                    renderFooter={() => <Footer />}
                 />
             </View>
         );
     }
-
-    _renderFooter(navigate) {
-        return (
-          <Button onPress = {
-            ()=>navigate("Chat",{})
-       } title = "Let's Chat" backgroundcolor="#00bfff"></Button>
-        );
-      }
 }
 
 const styles = StyleSheet.create({
