@@ -25,16 +25,32 @@ import { createSwitchNavigator,  createStackNavigator } from 'react-navigation';
 
 export default class App extends React.Component {
   render() {
-    return <RootStack />;
+    return <AuthStack />;
   }
 }
-const AppStack = createStackNavigator({ Home: ChatList, Contact: Contact, Logout: Login });
+const AppStack = createStackNavigator(
+  { Home: ChatList, 
+    Contact: Contact, 
+    Logout: Login },  
+  {
+     // Hides Header globally
+     navigationOptions: {
+      header: null,
+     }
+  }
+ );
 
 const AuthStack = createSwitchNavigator(
   {
     Login: Login,
     App: AppStack,
   },
+  {
+    // Hides Header globally
+    navigationOptions: {
+      header: null,
+    }
+   },
   {
     initialRouteName: 'Login',
   }
