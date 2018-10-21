@@ -11,8 +11,11 @@ import {AppRegistry,Platform, StyleSheet, Text, View} from 'react-native';
 import Login from './screens/Login/Login.js';
 import ChatList from './screens/ChatList/ChatList.js';
 import Contact from './screens/Contact/Contact.js';
+import Chat from './screens/Chat/Chat';
+import Profile from './screens/Profile/Profile';
+import MyProfile from './screens/Profile/MyProfile';
 
-import { createSwitchNavigator,  createStackNavigator } from 'react-navigation';
+import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 
 // export default class DemoLogin extends Component {
@@ -28,17 +31,17 @@ export default class App extends React.Component {
     return <AuthStack />;
   }
 }
-const AppStack = createStackNavigator(
-  { Home: ChatList, 
-    Contact: Contact, 
-    Logout: Login ,Bottom:BottomNavBar,},  
-  {
-     // Hides Header globally
-     navigationOptions: {
-      header: null,
-     }
-  }
- );
+// const AppStack = createStackNavigator(
+//   { Home: ChatList, 
+//     Contact: Contact, 
+//     Logout: Login ,Bottom:BottomNavBar,},  
+//   {
+//      // Hides Header globally
+//      navigationOptions: {
+//       header: null,
+//      }
+//   }
+//  );
 
  const ChatNav = createStackNavigator({
   ChatList:ChatList,
@@ -62,15 +65,6 @@ const ContactNav = createStackNavigator({
   Profile:Profile,
   Chat:Chat,
 });
-
-
-const ContactNav = createStackNavigator({
-  Contacts:Contact,
-  Profile:Profile,
-  Chat:Chat,
-});
-
-
 
 const BottomNavBar = createBottomTabNavigator({
       Chats:{
@@ -108,7 +102,7 @@ const BottomNavBar = createBottomTabNavigator({
 const AuthStack = createSwitchNavigator(
   {
     Login: Login,
-    App: AppStack,
+    App: BottomNavBar,
     
   },
   {
