@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>912372889342-bo5k7j69ja91r1h46gdbng4u19raojtd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.912372889342-bo5k7j69ja91r1h46gdbng4u19raojtd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBM2y8itrR4OtrozKY3t9SadZ6iQBYWEr0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>912372889342</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.BigChat</string>
+	<key>PROJECT_ID</key>
+	<string>bigchat-b2fb4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bigchat-b2fb4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:912372889342:ios:0884579c23944c2b</string>
+	<key>DATABASE_URL</key>
+	<string>https://bigchat-b2fb4.firebaseio.com</string>
+</dict>
+</plist>
