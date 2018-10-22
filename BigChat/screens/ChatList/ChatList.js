@@ -74,6 +74,11 @@ class ChatList extends React.Component {
         }
     }
 
+    _goToChat = (chatId) => {
+
+        ;
+
+    }
 
     render() {
         console.log("rendering...");
@@ -96,13 +101,16 @@ class ChatList extends React.Component {
                     <View style={styles.toolbar}>
                         <Text style={styles.toolbarTitle}>All Chats</Text>
                     </View>
-                    <FlatList
+                    <FlatList 
                         data={this.state.chats}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) =>
                             <View style={styles.flatview}>
-                                <TouchableOpacity>
-                                    <Text style={styles.chatId}>{item.chatId}</Text>
+                                <TouchableOpacity style={styles.container} onPress={() => {
+                                    
+                                    this.props.navigation.navigate("Chat", {chatId: item.chatId})
+                                }}>
+                                    <Text style={styles.name}>{item.name}</Text>
                                     <Text style={styles.message}>{item.message}</Text>
                                 </TouchableOpacity>
                             </View>
@@ -116,12 +124,23 @@ class ChatList extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    chatId: {
-        color: 'blue'
-    },
+    container: {
+        flex: 1,
+        // marginTop: 50,
+        // justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: '#F5FCFF',
+      },
     message: {
+        color: 'blue',
+        alignItems: 'center',
+
+    },
+    name: {
         fontFamily: 'Verdana',
-        fontSize: 18
+        fontSize: 18,
+        alignItems: 'center',
+
     },
     flatview: {
         // justifyContent: 'center',

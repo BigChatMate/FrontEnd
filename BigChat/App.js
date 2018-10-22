@@ -11,6 +11,7 @@ import {AppRegistry,Platform, StyleSheet, Text, View} from 'react-native';
 import Login from './screens/Login/Login.js';
 import ChatList from './screens/ChatList/ChatList.js';
 import Contact from './screens/Contact/Contact.js';
+import Chat from './screens/Chat/Chat.js';
 
 import { createSwitchNavigator,  createStackNavigator } from 'react-navigation';
 
@@ -31,7 +32,9 @@ export default class App extends React.Component {
 const AppStack = createStackNavigator(
   { Home: ChatList, 
     Contact: Contact, 
-    Logout: Login },  
+    Logout: Login,
+    Chat: Chat,
+   },  
   {
      // Hides Header globally
      navigationOptions: {
