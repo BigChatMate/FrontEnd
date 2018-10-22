@@ -4,29 +4,67 @@ import Row from './Row';
 import data from './data';
 
 class ChatList extends React.Component {
-
+    static navigationOptions  = {
+        //tabBarVisible = false,
+       header : null
+    };
+    
     constructor(props) {
-
+   
 
         super(props);
+
+        
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         
-        this.state = {
-            dataSource: ds.cloneWithRows(data),
-        };        
+            
         
         
-        this._retrieveData("userData").then((userData) => {
+        const data = this._retrieveData("userData").then((userData) => {
 
             console.log("In ChatList");
             console.log("userData: "  + userData);
             userData = JSON.parse(userData);
             console.log(userData);
             console.log(userData.email);
+            return this._retrieveChatList(userData);
+
 
         })
 
+        //alert("contructor...");
 
+        
+
+        this.state = {
+            dataSource: ds.cloneWithRows(data),
+        };
+    }
+
+    _retrieveChatList = (userData)=>{
+        try {
+            //alert("Retrieving data...")
+            var data;
+            fetch('http://40.118.225.183:8000/chat/chatlist/?user_id='
+                +userData.token, {
+                method: 'GET',
+                headers: {
+                Accept: 'application/json',
+                },
+            }).then(response => response.json()).then(response => {
+                data = response;
+                alert(JSON.stringify(response));
+            });
+    
+            
+             if(data.error != "") {
+             throw data.error
+             }
+        } catch (exception) {
+        alert("Unable to retrieve list of chats. " + exception)
+    }
+
+    return data
     }
 
     _retrieveData = async (key) => {
@@ -46,7 +84,7 @@ class ChatList extends React.Component {
 
     render() {
         var {navigate} = this.props.navigation;
-
+        console.log("rendering...");
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
