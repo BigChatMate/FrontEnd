@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+// import FBLoginManager from 'react-native-fbsdk';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
 
 const Footer = (props) => (
   <View style={styles.container}>
-    <TouchableOpacity style={styles.button} onPress={() => console.log('log out')}>
+    <TouchableOpacity style={styles.button} onPress={() => FBLoginManager.logout()}>
       <Text style={styles.text}>LogOut</Text>
     </TouchableOpacity>
   </View>

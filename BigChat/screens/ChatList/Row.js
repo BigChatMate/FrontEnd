@@ -21,10 +21,13 @@ const styles = StyleSheet.create({
   
   const Row = (props) => (
     <View style={styles.container}>
-      <Image source={{ uri: props.picture.large}} style={styles.photo} />
+      {/* <Image source={{ uri: props.picture.large}} style={styles.photo} /> */}
       <Text style={styles.text}>
-        {`${props.name.first} ${props.name.last}`}
+        {`${props.name}`}
+        ~{"\n"}
+        {`${props.message}`}
       </Text>
+
     </View>
   );
 

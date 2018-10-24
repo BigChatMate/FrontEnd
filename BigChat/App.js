@@ -14,7 +14,7 @@ import Contact from './screens/Contact/Contact.js';
 import Chat from './screens/Chat/Chat';
 import Profile from './screens/Profile/Profile';
 import MyProfile from './screens/Profile/MyProfile';
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 
@@ -72,7 +72,7 @@ const BottomNavBar = createBottomTabNavigator({
         tabBarOptions:{
         tabBarLabel: 'Chats',
         tabBarIcon:()=> (
-          <Ionicons name = "chats" size={24}/>
+          <Icon name = 'ios-chatbubbles' size={24}/>
         )
       }
     },
@@ -82,7 +82,7 @@ const BottomNavBar = createBottomTabNavigator({
           tabBarOptions:{
           tabBarLabel: 'Contacts',
           tabBarIcon:()=> (
-            <Ionicons name = "user-friends" size={24}/>
+            <Icon name = 'md-people' size={24}/>
           )
         }
       },
@@ -93,7 +93,7 @@ const BottomNavBar = createBottomTabNavigator({
           tabBarOptions:{
           tabBarLabel: 'Me',
           tabBarIcon:()=> (
-            <Ionicons name = "profile"  size={24}/>
+            <Icon nmae = 'chat'  size={24}/>
           )
         }
       },
