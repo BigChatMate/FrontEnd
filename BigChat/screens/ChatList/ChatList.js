@@ -8,6 +8,7 @@ class ChatList extends React.Component {
         //tabBarVisible = false,
        header : null
     };
+<<<<<<< HEAD
 
     constructor(props) {
 
@@ -21,6 +22,21 @@ class ChatList extends React.Component {
          dataSource: ds,
      };  
     }
+=======
+    
+    constructor(props) {
+   
+
+        super(props);
+
+        
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        
+            
+        
+        
+        const data = this._retrieveData("userData").then((userData) => {
+>>>>>>> 7f36042f5033aafe9e4679fd72b27d50b03c1b30
 
     componentDidMount() {
 
@@ -30,6 +46,8 @@ class ChatList extends React.Component {
             userData = JSON.parse(userData);
             console.log(userData);
             console.log(userData.email);
+            return this._retrieveChatList(userData);
+
 
             let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
                 method: 'GET',
@@ -82,6 +100,7 @@ class ChatList extends React.Component {
 
     render() {
         var {navigate} = this.props.navigation;
+<<<<<<< HEAD
 
         if(this.state.isFetching == true){
         return(<View style={{ flex: 1 }} >
@@ -92,6 +111,9 @@ class ChatList extends React.Component {
             </View>             
         </View>);}
         else{
+=======
+        console.log("rendering...");
+>>>>>>> 7f36042f5033aafe9e4679fd72b27d50b03c1b30
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
