@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ListView, StyleSheet, Text, Image, AsyncStorage, FlatList, TouchableOpacity } from 'react-native';
-import Row from './Row';
-import data from './data';
+// import Row from './Row';
+// import data from './data';
 
 class ChatList extends React.Component {
 
@@ -21,6 +21,13 @@ class ChatList extends React.Component {
 
     componentWillMount() {
 
+        this._retrieveChatList();
+
+    }
+
+    _retrieveChatList = () => {
+
+
         this._retrieveData("userData").then((userData) => {
 
             console.log("In ChatList");
@@ -29,6 +36,8 @@ class ChatList extends React.Component {
             console.log(userData);
             console.log(userData.email);
 
+
+            try {
 
             let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token2", {
                 method: 'GET',
@@ -54,6 +63,17 @@ class ChatList extends React.Component {
 
 
             });
+        } catch (exp) {
+
+            this.setState(
+                {
+                    isFetching: false,
+                    chats: null
+                });
+
+            this.render();
+
+        }
 
         });
 
@@ -71,6 +91,7 @@ class ChatList extends React.Component {
             }
         } catch (error) {
             console.log(error);
+            return null;
         }
     }
 
@@ -102,6 +123,10 @@ class ChatList extends React.Component {
                         <Text style={styles.toolbarTitle}>All Chats</Text>
                     </View>
                     <FlatList 
+                        onRefresh={() => {
+                            this._retrieveChatList();
+                        }}
+                        refreshing={this.state.isFetching}
                         data={this.state.chats}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) =>

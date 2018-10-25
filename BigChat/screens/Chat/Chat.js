@@ -22,23 +22,26 @@ class Chat extends React.Component {
             }
         } catch (error) {
             console.log(error);
+            return null;
         }
     }
 
 
     componentWillMount() {
 
+        this._retrieveMessages();
+
+    }
+
+    _retrieveMessages = () => {
+
         this._retrieveData("userData").then((userData) => {
 
-            console.log("In Chat");
-            console.log("userData: " + userData);
             userData = JSON.parse(userData);
 
-            console.log("Chatid... ");
-
             var chatId = this.props.navigation.state.params.chatId;
-            console.log(chatId);
-            console.log(this.state)
+
+            try {
 
             let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId , {
                 method: 'GET',
@@ -47,34 +50,36 @@ class Chat extends React.Component {
                 },
             }).then((response) => {
 
-
-                console.log("Inside fetching chatlist....");
                 messages = response._bodyText;
-                console.log(messages);
 
                 messages = JSON.parse(messages);
-                console.log(messages);
                 this.setState(
                     {
                         isFetching: false,
                         messages: messages.messages
                     });
 
-
-                console.log(this.state);
-                console.log("thestate...");
-
-
                 this.render();
-
 
             });
 
+        } catch (exp) {
+
+            this.setState(
+                {
+                    isFetching: false,
+                    messages: []
+                });
+
+            this.render();
+
+        }
+
         });
 
+        
 
     }
-
 
     _sendMessage = async(message) => {
 
@@ -86,6 +91,9 @@ class Chat extends React.Component {
 
             var chatId = this.props.navigation.state.params.chatId;
 
+
+            try {
+
             let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId + "&message=" + message + "&type=1&email=" + userData.email, {
                 method: 'POST',
                 headers: {
@@ -93,6 +101,8 @@ class Chat extends React.Component {
                 },
             }).then((response) => {
 
+
+                try {
 
                 let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId , {
                     method: 'GET',
@@ -124,7 +134,24 @@ class Chat extends React.Component {
     
                 });
 
+            } catch (exception) {
+                
+            this.setState(
+                {
+                    isFetching: false,
+                    messages: []
+                });
+
+            this.render();
+
+            }
+
             });
+
+        } catch (exp) {
+
+
+        }
 
         });
 
@@ -155,6 +182,11 @@ class Chat extends React.Component {
                         <Text style={styles.toolbarTitle}>Chat</Text>
                     </View>
                     <FlatList 
+                        inverted={true}
+                        onRefresh={() => {
+                            this._retrieveMessages();
+                        }}
+                        refreshing={this.state.isFetching}                    
                         data={this.state.messages}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item }) =>
@@ -168,6 +200,7 @@ class Chat extends React.Component {
 
                     <View>
                         <TextInput
+                        ref={input => { this.textInput = input }}
                         placeholder="Type Message Here..."
                         onChangeText={(text) => {
                             this.setState({text})
@@ -175,7 +208,11 @@ class Chat extends React.Component {
                         />
                         <Button 
                         title="Send"
-                        onPress= {() => this._sendMessage(this.state.text)} />
+                        onPress= {() => {
+                            this._sendMessage(this.state.text);
+                            this.textInput.clear();
+                            
+                            }} />
                     </View>
                 </View>
             );
