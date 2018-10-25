@@ -189,6 +189,7 @@ export default class Chat extends Component{
                     this.setState(
                         {
                             isFetching: false,
+                            messages: messages,
                             messages: GiftedChat.append(this.state.messages,new_message),
 
                             // messages: GiftedChat.append(messages.messages),
