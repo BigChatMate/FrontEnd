@@ -22,43 +22,68 @@ class ChatList extends React.Component {
      };  
     }
 
-    componentDidMount() {
-        alert("hey");
+    componentWillMount() {
+
+        this._retrieveChatList();
+
+    }
+
+    _retrieveChatList = () => {
+
+
         this._retrieveData("userData").then((userData) => {
+
             console.log("In ChatList");
             console.log("userData: " + userData);
             userData = JSON.parse(userData);
             console.log(userData);
             console.log(userData.email);
-            return this._retrieveChatList(userData);
 
 
-            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
+            try {
+
+            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token2", {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 },
             }).then((response) => {
+
+                console.log("Inside fetching chatlist....");
                 chatlist = response._bodyText;
                 chatlist = JSON.parse(chatlist);
-                // alert(JSON.stringify(chatlist));
 
                 this.setState(
                     {
                         isFetching: false,
-                        chats: chatlist.chats,
-                        //dataSource : ds.cloneWithRows(chats),
+                        chats: chatlist.chats
                     });
+                console.log(this.state);
+                console.log("thestate...");
 
-                // alert(this.isFetching);
-                // alert("isFetching");
+
                 this.render();
+
+
             });
+        } catch (exp) {
+
+            this.setState(
+                {
+                    isFetching: false,
+                    chats: null
+                });
+
+            this.render();
+
+        }
 
         });
 
-        //alert(this.state.isFetching);
+
     }
+
+
 
     _retrieveData = async (key) => {
         try {
@@ -84,7 +109,6 @@ class ChatList extends React.Component {
 
     render() {
         var {navigate} = this.props.navigation;
-
         if(this.state.isFetching == true){
         return(<View style={{ flex: 1 }} >
             <View style={styles.toolbar}>
@@ -94,6 +118,9 @@ class ChatList extends React.Component {
             </View>             
         </View>);}
         else{
+
+        console.log("rendering...");
+
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
