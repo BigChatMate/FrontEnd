@@ -7,6 +7,34 @@ const onButtonPress = () => {
 };
 
 
+// define your styles
+const styles = StyleSheet.create({
+    container: {
+        padding: 20
+    },
+    input: {
+        height: 40,
+        backgroundColor: 'rgba(225,225,225,0.2)',
+        marginBottom: 10,
+        padding: 10,
+        color: '#fff'
+    },
+    buttonContainer: {
+        backgroundColor: '#2980b6',
+        paddingVertical: 15
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: '700'
+    },
+    loginButton: {
+        backgroundColor: '#2980b6',
+        color: '#fff'
+    }
+
+});
+
 // create a component
 class LoginForm extends Component {
     render() {
@@ -36,33 +64,6 @@ class LoginForm extends Component {
     }
 }
 
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        padding: 20
-    },
-    input: {
-        height: 40,
-        backgroundColor: 'rgba(225,225,225,0.2)',
-        marginBottom: 10,
-        padding: 10,
-        color: '#fff'
-    },
-    buttonContainer: {
-        backgroundColor: '#2980b6',
-        paddingVertical: 15
-    },
-    buttonText: {
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: '700'
-    },
-    loginButton: {
-        backgroundColor: '#2980b6',
-        color: '#fff'
-    }
-
-});
 
 //make this component available to the app
 export default LoginForm;

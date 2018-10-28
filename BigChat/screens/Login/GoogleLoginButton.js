@@ -20,7 +20,7 @@ state = {
 
 }
 
-  // Somewhere in your code
+  // Signing in...
   signIn = async () => {
     try {
        
