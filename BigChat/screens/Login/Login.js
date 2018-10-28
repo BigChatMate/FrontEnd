@@ -61,7 +61,7 @@ class Login extends Component {
         if (value !== null) {
           // We have data!!
           console.log("Retrieving data...");
-          console.log(data);
+          console.log(value);
           return value;
         }
        } catch (error) {
@@ -94,7 +94,7 @@ class Login extends Component {
 
     }
 
-    
+
   _loginSuccess = async (data) => {
 
     console.log("Inside _loginSuccess");
