@@ -22,37 +22,75 @@ class ChatList extends React.Component {
      };  
     }
 
+<<<<<<< HEAD
     componentDidMount() {
+=======
+    componentWillMount() {
+
+        this._retrieveChatList();
+
+    }
+
+    _retrieveChatList = () => {
+
+
+>>>>>>> f23e7a6858f6241a2ff96ea7e6f97db7c51c9264
         this._retrieveData("userData").then((userData) => {
+
             console.log("In ChatList");
             console.log("userData: " + userData);
             userData = JSON.parse(userData);
             console.log(userData);
             console.log(userData.email);
+<<<<<<< HEAD
             // return this._retrieveChatList(userData);
+=======
+>>>>>>> f23e7a6858f6241a2ff96ea7e6f97db7c51c9264
 
 
-            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
+            try {
+
+            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token2", {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 },
             }).then((response) => {
+
+                console.log("Inside fetching chatlist....");
                 chatlist = response._bodyText;
                 chatlist = JSON.parse(chatlist);
-                // alert(JSON.stringify(chatlist));
 
                 this.setState(
                     {
                         isFetching: false,
-                        chats: chatlist.chats,
-                        //dataSource : ds.cloneWithRows(chats),
+                        chats: chatlist.chats
                     });
+                console.log(this.state);
+                console.log("thestate...");
 
+
+<<<<<<< HEAD
                 // alert(this.isFetching);
                 // alert("isFetching");
                 
+=======
+                this.render();
+
+
+>>>>>>> f23e7a6858f6241a2ff96ea7e6f97db7c51c9264
             });
+        } catch (exp) {
+
+            this.setState(
+                {
+                    isFetching: false,
+                    chats: null
+                });
+
+            this.render();
+
+        }
 
         }).then(()=>{
             this._interval = setInterval(() => {
@@ -64,7 +102,7 @@ class ChatList extends React.Component {
             }, 1000);
         });
 
-        //alert(this.state.isFetching);
+
     }
 
 
@@ -93,7 +131,6 @@ class ChatList extends React.Component {
 
     render() {
         var {navigate} = this.props.navigation;
-
         if(this.state.isFetching == true){
         return(<View style={{ flex: 1 }} >
             <View style={styles.toolbar}>
@@ -103,6 +140,9 @@ class ChatList extends React.Component {
             </View>             
         </View>);}
         else{
+
+        console.log("rendering...");
+
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
