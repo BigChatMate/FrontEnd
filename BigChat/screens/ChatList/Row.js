@@ -10,8 +10,14 @@ const styles = StyleSheet.create({
     },
     text: {
         marginLeft: 12,
-        fontSize: 16,
+        fontSize: 20,
     },
+    textRead: {
+      textAlign: 'right',
+      fontWeight: 'bold',
+      fontSize: 16,
+      justifyContent: 'flex-end',
+  },
     photo: {
         height: 40,
         width: 40,
@@ -19,17 +25,45 @@ const styles = StyleSheet.create({
     },
 });
   
-  const Row = (props) => (
-    <View style={styles.container}>
-      {/* <Image source={{ uri: props.picture.large}} style={styles.photo} /> */}
-      <Text style={styles.text}>
-        {`${props.name}`}
-        ~{"\n"}
-        {`${props.message}`}
-      </Text>
+class Row extends React.Component {
+  render() {
 
-    </View>
-  );
+      const unread = <Text style={styles.textRead}>                                                       unread</Text>;
+
+      let message;
+      if (this.props.flag) {
+          // alert("here");
+          message = unread;
+      } else {
+        // alert("here2");
+          message = null;
+      }
+
+      return (
+      <View style={styles.container}>
+        {/* <Image source={{ uri: props.picture.large}} style={styles.photo} /> */}   
+        <Text style={styles.text}>
+          {`${this.props.name}`}
+          {"\n"}
+          {`${this.props.message}`}
+        </Text>
+        <View >{message}</View>
+      </View>);
+  }
+}
+  // const Row = (props) => (
+  //   <View style={styles.container}>
+  //     {/* <Image source={{ uri: props.picture.large}} style={styles.photo} /> */}
+  //     <Text style={styles.text}>
+  //       {`${props.name}`}
+  //       {"\n"}
+  //       {`${props.message}`}
+  //     </Text>
+
+  //       <Text style={styles.textRead}> unread </Text>
+
+  //   </View>
+  // );
 
 export default Row;
 

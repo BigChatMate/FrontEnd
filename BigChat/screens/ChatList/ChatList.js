@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ListView, StyleSheet,TouchableOpacity, Text, Image, AsyncStorage } from 'react-native';
 import Row from './Row';
-import chats from './data';
+// import chats from './data';
 
 class ChatList extends React.Component {
     static navigationOptions  = {
@@ -23,14 +23,13 @@ class ChatList extends React.Component {
     }
 
     componentDidMount() {
-        alert("hey");
         this._retrieveData("userData").then((userData) => {
             console.log("In ChatList");
             console.log("userData: " + userData);
             userData = JSON.parse(userData);
             console.log(userData);
             console.log(userData.email);
-            return this._retrieveChatList(userData);
+            // return this._retrieveChatList(userData);
 
 
             let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
@@ -52,13 +51,23 @@ class ChatList extends React.Component {
 
                 // alert(this.isFetching);
                 // alert("isFetching");
-                this.render();
+                
             });
 
+        }).then(()=>{
+            this._interval = setInterval(() => {
+                
+                this.refresh();
+                // this._isMounted = false;
+    
+                // alert("time out");
+            }, 1000);
         });
 
         //alert(this.state.isFetching);
     }
+
+
 
     _retrieveData = async (key) => {
         try {
@@ -74,11 +83,11 @@ class ChatList extends React.Component {
         }
     }
 
-    _goToChat = (chatId) => {
+    // _goToChat = (chatId) => {
 
-        ;
+    //     ;
 
-    }
+    // }
     
     
 
@@ -112,11 +121,49 @@ class ChatList extends React.Component {
             </View>
         );}
     }
+    refresh(){
+        this.setState({
+            isFetching:false,
+        })
+        this._retrieveData("userData").then((userData) => {
+            console.log("In ChatList");
+            console.log("userData: " + userData);
+            userData = JSON.parse(userData);
+            console.log(userData);
+            console.log(userData.email);
+            // return this._retrieveChatList(userData);
+
+
+            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                },
+            }).then((response) => {
+                chatlist = response._bodyText;
+                chatlist = JSON.parse(chatlist);
+                // alert(JSON.stringify(chatlist));
+
+                this.setState(
+                    {
+                        isFetching: false,
+                        chats: chatlist.chats,
+                        //dataSource : ds.cloneWithRows(chats),
+                    });
+            });
+
+        });
+
+    }
+
+    componentWillUnmount() {
+        clearInterval(this._interval);
+    }
 
     _renderRow(chats,navigate) {
         return (
           <TouchableOpacity onPress = {
-            ()=>navigate("Chat",{chatId:chats.chatId})
+            ()=>navigate("Chat",{chatId:chats.chatId,name: chats.name, onGoBack: ()=>this.refresh()})
           }>
             <Row {...chats}/>
             {/* <Text >{chats.name}</Text>

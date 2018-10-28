@@ -25,10 +25,18 @@ export default class Chat extends Component{
         messages: [],
         uuid:[], 
         isFetching: true,
+        messageLength: 0,
     };
-
+    constructor(props) {
+        super(props);
+        this._isMounted = false;
+    }
     componentWillMount() {
-
+        
+    }
+    backAndRefresh(){
+        this.props.navigation.state.params.onGoBack();
+        this.props.navigation.goBack();
     }
     render(){
         var {navigate} = this.props.navigation;
@@ -37,11 +45,11 @@ export default class Chat extends Component{
             return(<View style = {{flex: 1}} >
                 <View style={styles.toolbar}>
                     <Text onPress = {
-                         ()=>goBack()
+                        ()=>goBack()
                     }
                     style={styles.toolbarButton} >Back</Text>
 
-                    <Text style={styles.toolbarTitle}>Chat</Text>
+                    <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}</Text>
 
                     <Text onPress = {
                          ()=>navigate("Profile",{})
@@ -56,11 +64,11 @@ export default class Chat extends Component{
             <View style = {{flex: 1}} >
                 <View style={styles.toolbar}>
                     <Text onPress = {
-                         ()=>goBack()
+                       ()=> this.backAndRefresh()
                     }
                     style={styles.toolbarButton} >Back</Text>
 
-                    <Text style={styles.toolbarTitle}>Chat</Text>
+                    <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}</Text>
 
                     <Text onPress = {
                          ()=>navigate("Profile",{})
@@ -109,6 +117,18 @@ export default class Chat extends Component{
         }
     }
 
+    // setTimeout( () => {
+    //     if (this._isMounted === true) {
+    //       this.setState((previousState) => {
+    //         return {
+    //           messages: GiftedChat.prepend(previousState.messages, ),
+    //           loadEarlier: false,
+    //           isLoadingEarlier: false,
+    //         };
+    //       });
+    //     }
+    //   }, 1000); // simulating network
+
     _retrieveMessages = () => {
         this._retrieveData("userData").then((userData) => {
             userData = JSON.parse(userData);
@@ -123,23 +143,32 @@ export default class Chat extends Component{
 
                 messages = response._bodyText;
                 messages = JSON.parse(messages);
+                
+                for(i = 0; i<messages.messages.length;i++){
+                    messages.messages[i].user._id = messages.messages[i].user.user_email;
+                    messages.messages[i].text = messages.messages[i].message;
+                    messages.messages[i].createdAt = new Date(messages.messages[i].time);
+            }
+                newMessageArray=this.state.messages;
+                for(i = this.state.messageLength;i<messages.messages.length;i++){
+                    newMessageArray = GiftedChat.append(newMessageArray,messages.messages[i])
+                }
                 this.setState(
                     {
                         user_name: userData.email,
                         isFetching: false,
-                        messages: messages.messages
+                        messages:messages.messages,
+                        messageLength:messages.messages.length,
                     });
-                    for(i = 0; i<messages.messages.length;i++){
-                        this.state.messages[i].text = messages.messages[i].message;
-                        this.state.messages[i].createdAt = new Date(messages.messages[i].time);
-                }
+                    
                 // this._setUUID().then();
-                this.render();
-
+                // alert(JSON.stringify(this.state.messages))
+                this._isMounted=true;
+                // this.render();
             });
 
         } catch (exp) {
-
+            alert("nonononoo");
             this.setState(
                 {
                     isFetching: false,
@@ -189,21 +218,21 @@ export default class Chat extends Component{
                     this.setState(
                         {
                             isFetching: false,
-                            messages: messages,
+                            // messages: messages,
+                            messageLength: this.state.messageLength+1,
                             messages: GiftedChat.append(this.state.messages,new_message),
 
-                            // messages: GiftedChat.append(messages.messages),
                         });   
     
                 });
-                this.render();
+                // this.render();
             } catch (exception) {
             this.setState(
                 {
                     isFetching: false,
                     messages: []
                 });
-            this.render();
+            // this.render();
             }
             });
         } 
@@ -223,11 +252,22 @@ export default class Chat extends Component{
     //     });
     //   }
     componentDidMount() {
+        // this._retrieveMessages();
+        this._isMounted = true;
         this._retrieveMessages();
+
+        this._interval = setInterval(() => {
+            if(this._isMounted){
+            this._retrieveMessages();
+            // this._isMounted = false;
+
+            // alert("time out");
+        }
+          }, 2000);
       }
 
     componentWillUnmount() {
-        Backend.closeChat();
+        clearInterval(this._interval);
     }
 }
 
