@@ -108,6 +108,6 @@ state = {
             </View>
         );
     }
-};
+}
 
 module.exports = FBLoginButton;

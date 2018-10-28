@@ -262,8 +262,13 @@ export default class Chat extends Component{
             // this.render();
             }
             });
-        } 
-        catch (exp) {
+        } catch (exp) {
+            this.setState(
+                {
+                    isFetching: false,
+                    messages: []
+                });
+            // this.render();
         }
         });
 
