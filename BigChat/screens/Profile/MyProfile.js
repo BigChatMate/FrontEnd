@@ -4,61 +4,6 @@ import Footer from './Footer';
 
 
 
-export default class MyProfile extends React.Component {
-    static navigationOptions ={
-        header: null,
-    };
-    constructor(props) {
-        super(props);
-
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.state = {
-            dataSource: ds.cloneWithRows([
-                {
-                    name: "Bill Gates",
-                    picture: "https://randomuser.me/api/portraits/men/4.jpg",
-                    googleAccount: "BillGates@google.com",
-                    UserId: "123456",
-                }
-            ]),
-        };
-    }
-
-    _renderRow(rowData) {
-        return (
-            <View style = {{flex:1}}>
-                    <Image source={{ uri: rowData.picture }} style={styles.profilephoto}
-                    resizeMode="stretch" />
-                    <Text style={styles.username}> {rowData.name} </Text>
-                <View style={styles.row}>
-                    <Image source={{ uri: rowData.picture }} style={styles.photo} />
-                    <Text style={styles.text}> Friends </Text>
-                </View>
-                <View style={styles.row}>
-                    <Image source={{ uri: rowData.picture }} style={styles.photo} />
-                    <Text style={styles.text}> All Chats </Text>
-                </View>
-            </View>
-        );
-    }
-    render() {
-        var {navigate} = this.props.navigation;
-        return (
-            <View style={{ flex: 1 }} >
-                <View style={styles.toolbar}>
-                    <Text style={styles.toolbarTitle}>Profile</Text>
-                </View>
-                <ListView
-                    style={styles.container}
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderRow}
-                    renderFooter={() => <Footer />}
-                />
-            </View>
-        );
-    }
-}
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -114,5 +59,62 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 });
+
+export default class MyProfile extends React.Component {
+    static navigationOptions ={
+        header: null,
+    };
+    constructor(props) {
+        super(props);
+
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.state = {
+            dataSource: ds.cloneWithRows([
+                {
+                    name: "Bill Gates",
+                    picture: "https://randomuser.me/api/portraits/men/4.jpg",
+                    googleAccount: "BillGates@google.com",
+                    UserId: "123456",
+                }
+            ]),
+        };
+    }
+
+    _renderRow(rowData) {
+        return (
+            <View style = {{flex:1}}>
+                    <Image source={{ uri: rowData.picture }} style={styles.profilephoto}
+                    resizeMode="stretch" />
+                    <Text style={styles.username}> {rowData.name} </Text>
+                <View style={styles.row}>
+                    <Image source={{ uri: rowData.picture }} style={styles.photo} />
+                    <Text style={styles.text}> Friends </Text>
+                </View>
+                <View style={styles.row}>
+                    <Image source={{ uri: rowData.picture }} style={styles.photo} />
+                    <Text style={styles.text}> All Chats </Text>
+                </View>
+            </View>
+        );
+    }
+    render() {
+        var {navigate} = this.props.navigation;
+        return (
+            <View style={{ flex: 1 }} >
+                <View style={styles.toolbar}>
+                    <Text style={styles.toolbarTitle}>Profile</Text>
+                </View>
+                <ListView
+                    style={styles.container}
+                    dataSource={this.state.dataSource}
+                    renderRow={this._renderRow}
+                    renderFooter={() => <Footer />}
+                />
+            </View>
+        );
+    }
+}
+
+
 
 //export default Profile;

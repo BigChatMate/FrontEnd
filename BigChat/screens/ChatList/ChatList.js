@@ -3,6 +3,43 @@ import { View, ListView, StyleSheet,TouchableOpacity, Text, Image, AsyncStorage 
 import Row from './Row';
 // import chats from './data';
 
+
+const styles = StyleSheet.create({
+    message: {
+        color: 'blue',
+        alignItems: 'center',
+    },
+    name: {
+        fontFamily: 'Verdana',
+        fontSize: 18,
+        alignItems: 'center',
+    },
+    separator: {
+        flex: 1,
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: '#8E8E8E',
+    },
+    toolbar: {
+        backgroundColor: '#00bfff',
+        paddingTop: 40,
+        paddingBottom: 10,
+        flexDirection: 'row'
+    },
+    toolbarButton: {
+        width: 50,
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 15,
+    },
+    toolbarTitle: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
+        flex: 1
+    }
+});
+
 class ChatList extends React.Component {
     static navigationOptions  = {
         //tabBarVisible = false,
@@ -192,40 +229,6 @@ class ChatList extends React.Component {
       }
 }
 
-const styles = StyleSheet.create({
-    message: {
-        color: 'blue',
-        alignItems: 'center',
-    },
-    name: {
-        fontFamily: 'Verdana',
-        fontSize: 18,
-        alignItems: 'center',
-    },
-    separator: {
-        flex: 1,
-        height: StyleSheet.hairlineWidth,
-        backgroundColor: '#8E8E8E',
-    },
-    toolbar: {
-        backgroundColor: '#00bfff',
-        paddingTop: 40,
-        paddingBottom: 10,
-        flexDirection: 'row'
-    },
-    toolbarButton: {
-        width: 50,
-        color: '#fff',
-        textAlign: 'center',
-        fontSize: 15,
-    },
-    toolbarTitle: {
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 25,
-        flex: 1
-    }
-});
+
 
 export default ChatList;

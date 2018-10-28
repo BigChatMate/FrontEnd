@@ -1,7 +1,61 @@
 import React from 'react';
 import { View, ListView, Button,StyleSheet, Text, Image } from 'react-native';
 
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 20,
+    },
+    username:{
+        marginTop: 15,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 20,
+        flex: 1
+    },
+    text: {
+        marginLeft: 12,
+        fontSize: 16,
+    },
+    photo: {
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+    },
+    profilephoto:{
+        alignSelf: 'center',
+        height: 200,
+        width: 200,
+        borderWidth: 1,
+        borderRadius: 100,
+    },
+    row: {
+        flex: 1,
+        padding: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 15,
+    },
+    toolbar:{
+        backgroundColor:'#00bfff',
+        paddingTop:40,
+        paddingBottom:10,
+        flexDirection:'row'    //Step 1
+    },
+    toolbarTitle: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
+        flex: 1
+    },
+    toolbarButton:{
+        width: 50,            //Step 2
+        color:'#fff',
+        textAlign:'center',
+        fontSize: 16,
+    },
+});
 
 export default class Profile extends React.Component {
     static navigationOptions ={
@@ -72,60 +126,6 @@ export default class Profile extends React.Component {
       }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 20,
-    },
-    username:{
-        marginTop: 15,
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 20,
-        flex: 1
-    },
-    text: {
-        marginLeft: 12,
-        fontSize: 16,
-    },
-    photo: {
-        height: 40,
-        width: 40,
-        borderRadius: 20,
-    },
-    profilephoto:{
-        alignSelf: 'center',
-        height: 200,
-        width: 200,
-        borderWidth: 1,
-        borderRadius: 100,
-    },
-    row: {
-        flex: 1,
-        padding: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 15,
-    },
-    toolbar:{
-        backgroundColor:'#00bfff',
-        paddingTop:40,
-        paddingBottom:10,
-        flexDirection:'row'    //Step 1
-    },
-    toolbarTitle: {
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 25,
-        flex: 1
-    },
-    toolbarButton:{
-        width: 50,            //Step 2
-        color:'#fff',
-        textAlign:'center',
-        fontSize: 16,
-    },
-});
+
 
 //export default Profile;
