@@ -22,19 +22,7 @@ class ChatList extends React.Component {
      };  
     }
 
-<<<<<<< HEAD
     componentDidMount() {
-=======
-    componentWillMount() {
-
-        this._retrieveChatList();
-
-    }
-
-    _retrieveChatList = () => {
-
-
->>>>>>> f23e7a6858f6241a2ff96ea7e6f97db7c51c9264
         this._retrieveData("userData").then((userData) => {
 
             console.log("In ChatList");
@@ -42,10 +30,7 @@ class ChatList extends React.Component {
             userData = JSON.parse(userData);
             console.log(userData);
             console.log(userData.email);
-<<<<<<< HEAD
             // return this._retrieveChatList(userData);
-=======
->>>>>>> f23e7a6858f6241a2ff96ea7e6f97db7c51c9264
 
 
             try {
@@ -70,15 +55,9 @@ class ChatList extends React.Component {
                 console.log("thestate...");
 
 
-<<<<<<< HEAD
                 // alert(this.isFetching);
                 // alert("isFetching");
                 
-=======
-                this.render();
-
-
->>>>>>> f23e7a6858f6241a2ff96ea7e6f97db7c51c9264
             });
         } catch (exp) {
 
