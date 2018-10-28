@@ -50,7 +50,7 @@ export default class App extends React.Component {
 });
 
 ChatNav.navigationOptions=({navigation})=>{
-  if(navigation.state.index!=0){
+  if(navigation.state.index !== 0){
     return{
       tabBarVisible : false,
     };
