@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
 
 export default class Chat extends Component{
     static navigationOptions  = {
-        //tabBarVisible = false,
        header : null
     };
     state = {
@@ -113,21 +112,6 @@ export default class Chat extends Component{
             );
     }
 
-    // _setUUID = async () =>{
-    //     var i = 0;
-    //     for( item of this.state.messages){ 
-    //     // alert(i);
-    //     await UUIDGenerator.getRandomUUID().then((uuid)=>{           
-    //         this.state.uuid[i] = uuid;
-    //         this.state.messages[i]._id = uuid;
-    //         i++;
-    //         alert(JSON.stringify(this.state.messages));
-    //       })
-    //     //   this.render();
-    //     }
-    //     alert("where");
-    // };
-
 
     _retrieveData = async (key) => {
         try {
@@ -143,18 +127,6 @@ export default class Chat extends Component{
             return null;
         }
     }
-
-    // setTimeout( () => {
-    //     if (this._isMounted === true) {
-    //       this.setState((previousState) => {
-    //         return {
-    //           messages: GiftedChat.prepend(previousState.messages, ),
-    //           loadEarlier: false,
-    //           isLoadingEarlier: false,
-    //         };
-    //       });
-    //     }
-    //   }, 1000); // simulating network
 
     _retrieveMessages = () => {
         this._retrieveData("userData").then((userData) => {
@@ -207,13 +179,7 @@ export default class Chat extends Component{
     }
 
     _sendMessage = async(message) => {
-        // for (let i = 0; i < message.length; i++) {
-        //     this.messagesRef.push({
-        //       text: message[i].text,
-        //       user: message[i].user,
-        //       createdAt: firebase.database.ServerValue.TIMESTAMP,
-        //     });
-        //   }
+
         var new_message = message[0];
         message = message[0].text;
         if(message == "" || message == null)
@@ -268,16 +234,7 @@ export default class Chat extends Component{
         });
 
     }
-    // componentDidMount() {
-    //     Backend.loadMessages((message) => {
-    //         alert(JSON.stringify(message));
-    //       this.setState((previousState) => {
-    //         return {
-    //           messages: GiftedChat.append(previousState.messages, message),
-    //         };
-    //       });
-    //     });
-    //   }
+
     componentDidMount() {
         // this._retrieveMessages();
         this._isMounted = true;

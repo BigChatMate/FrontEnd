@@ -211,6 +211,15 @@ class ChatList extends React.Component {
         });
 
     }
+    comeBack(){
+        this._interval = setInterval(() => {
+                
+            this.refresh();
+            // this._isMounted = false;
+
+            // alert("time out");
+        }, 1000);
+    }
 
     componentWillUnmount() {
         clearInterval(this._interval);
@@ -219,13 +228,18 @@ class ChatList extends React.Component {
     _renderRow(chats,navigate) {
         return (
           <TouchableOpacity onPress = {
-            ()=>navigate("Chat",{chatId:chats.chatId,name: chats.name, onGoBack: ()=>this.refresh()})
+            ()=>this.gotochat(chats,navigate)
           }>
             <Row {...chats}/>
             {/* <Text >{chats.name}</Text>
             <Text >{chats.message}</Text> */}
           </TouchableOpacity>
         );
+      }
+
+      gotochat(chats,navigate){
+        navigate("Chat",{chatId:chats.chatId,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
+        clearInterval(this._interval);
       }
 }
 
