@@ -182,7 +182,7 @@ export default class Chat extends Component{
 
         var new_message = message[0];
         message = message[0].text;
-        if(message == "" || message == null)
+        if(message === "" || message === null)
             return;
         // alert(message);
         this._retrieveData("userData").then((userData) => {
@@ -228,8 +228,13 @@ export default class Chat extends Component{
             // this.render();
             }
             });
-        } 
-        catch (exp) {
+        } catch (exp) {
+            this.setState(
+                {
+                    isFetching: false,
+                    messages: []
+                });
+            // this.render();
         }
         });
 

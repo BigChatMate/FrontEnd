@@ -11,6 +11,38 @@ var FBLoginButton = require('./FBLoginButton');
 var GoogleLoginButton = require('./GoogleLoginButton');
 
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#81c04d',
+  },
+  label1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  label2: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: 'black'
+  },
+  loginButtons: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    marginBottom: 20,
+    width: "100%",
+  },
+  logo: {
+    width: 300,
+    height: 100
+}
+});
+
+
 class Login extends Component {
 
     _storeData = async (key, value) => {
@@ -29,7 +61,7 @@ class Login extends Component {
         if (value !== null) {
           // We have data!!
           console.log("Retrieving data...");
-          console.log(data);
+          console.log(value);
           return value;
         }
        } catch (error) {
@@ -45,7 +77,7 @@ class Login extends Component {
       try {
         const data = await this._retrieveData('logInStatus');
 
-        if (data != null && data == "true") {
+        if (data !== null && data === "true") {
 
           console.log("LoggedIn: Navigating to App...");
 
@@ -61,6 +93,7 @@ class Login extends Component {
 
 
     }
+
 
   _loginSuccess = async (data) => {
 
@@ -138,7 +171,7 @@ class Login extends Component {
     this._isLoggedIn();
     return (
       <View style={styles.container}>
-      <Image resizeMode="contain" style={styles.logo} source={require('./BigChatLogo.png')} />        
+      <Image resizeMode="contain" style={styles.logo} source={require('./../images/BigChatLogo.png')} />        
       <Text style={styles.label1}>Log into BigChat</Text>
         <Text style={styles.label2}>using either Facebook or Google!</Text>
           <FBLoginButton style={styles.loginButtons} onLogin={this._loginSuccess}/>
@@ -149,35 +182,5 @@ class Login extends Component {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#81c04d',
-  },
-  label1: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black'
-  },
-  label2: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: 'black'
-  },
-  loginButtons: {
-    fontSize: 16,
-    fontWeight: 'normal',
-    marginBottom: 20,
-    width: "100%",
-  },
-  logo: {
-    width: 300,
-    height: 100
-}
-});
 
 export default Login;

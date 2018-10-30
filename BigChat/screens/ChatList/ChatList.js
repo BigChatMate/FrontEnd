@@ -147,7 +147,7 @@ class ChatList extends React.Component {
 
     render() {
         var {navigate} = this.props.navigation;
-        if(this.state.isFetching == true){
+        if(this.state.isFetching === true){
         return(<View style={{ flex: 1 }} >
             <View style={styles.toolbar}>
                 <Text style={styles.toolbarButton}>Add</Text>
