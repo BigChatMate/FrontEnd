@@ -12,6 +12,7 @@ import Login from './screens/Login/Login.js';
 import ChatList from './screens/ChatList/ChatList.js';
 import Contact from './screens/Contact/Contact.js';
 import Chat from './screens/Chat/Chat.js';
+import AddFriends from './screens/AddFriends/AddFriends.js';
 
 import { createSwitchNavigator,  createStackNavigator } from 'react-navigation';
 
@@ -45,7 +46,7 @@ const AppStack = createStackNavigator(
 
 const AuthStack = createSwitchNavigator(
   {
-    Login: Login,
+    Login: AddFriends,
     App: AppStack,
   },
   {
