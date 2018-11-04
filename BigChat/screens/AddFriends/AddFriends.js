@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { View, ListView, StyleSheet, Text,Image, AsyncStorage,TextInput, Button, FlatList, TouchableOpacity, SectionList } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class AddFriends extends React.Component {
     static navigationOptions ={
@@ -221,9 +222,13 @@ class AddFriends extends React.Component {
 
                 <View style = {{flex: 1}} >
                     <View style={styles.toolbar}>
+                    <Ionicons
+                    name='ios-arrow-back'
+                    size={25}
+                    style={{color:'#fff', marginLeft:5}}/>
                             <Text style = {styles.toolbarButton} onPress={()=>this.backAndRefresh()}>Back</Text>
                             <Text style={styles.toolbarTitle}>Add Friends</Text>
-                            <Text style={styles.toolbarButton}>Like</Text>
+                            <Text style={styles.toolbarButton}></Text>
                     </View>
 
                     <View style={styles.addFriendsBar}>
@@ -274,9 +279,16 @@ class AddFriends extends React.Component {
              return (
              <View style = {{flex: 1}} >
                  <View style={styles.toolbar}>
-                        <Text style = {styles.toolbarButton} onPress={()=>this.backAndRefresh()}>Back</Text>
+                 <Ionicons
+                    name='ios-arrow-back'
+                    size={25}
+                    style={{color:'#fff', marginLeft:5}}/>
+                    <Text onPress = {
+                       ()=> this.backAndRefresh()
+                    }
+                    style={styles.toolbarButton} >Back</Text>
                         <Text style={styles.toolbarTitle}>Add Friends</Text>
-                        <Text style={styles.toolbarButton}>Like</Text>
+                        <Text style={styles.toolbarButton}></Text>
 
                  </View>
 
@@ -385,7 +397,7 @@ const styles = StyleSheet.create({
   },
   toolbar:{
     backgroundColor:'#00bfff',
-    paddingTop:40,
+    paddingTop:30,
     paddingBottom:10,
     flexDirection:'row'    //Step 1
 },
@@ -416,10 +428,10 @@ flatview: {
     flexDirection:'row' 
 },
 toolbarButton:{
-    width: 50,            //Step 2
+    width: 47.5,            //Step 2
     color:'#fff',
     textAlign:'center',
-    fontSize: 16,
+    fontSize: 17,
 },
 });
 

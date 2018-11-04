@@ -14,11 +14,12 @@ import Contact from './screens/Contact/Contact.js';
 import Chat from './screens/Chat/Chat';
 import Profile from './screens/Profile/Profile';
 import MyProfile from './screens/Profile/MyProfile';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import ChatMenu from './screens/Chat/ChatMenu'
 import VoiceRecord from './screens/Chat/VoiceRecord'
 import AddFriends from './screens/AddFriends/AddFriends'
+
 // export default class DemoLogin extends Component {
 //   render() {
 //     return (
@@ -70,38 +71,55 @@ const ContactNav = createStackNavigator({
   Chat:Chat,
 });
 
-const BottomNavBar = createBottomTabNavigator({
-      Chats:{
-        screen:ChatNav,
-        tabBarOptions:{
+const BottomNavBar = createBottomTabNavigator(
+  {
+    Chats: {
+      screen: ChatNav,
+      navigationOptions: {
         tabBarLabel: 'Chats',
-        tabBarIcon:()=> (
-          <Icon type='ionicons' name='ios-chatbubbles' size={24}/>
-        )
-      }
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Ionicons
+            name='ios-chatbubbles'
+            size={25}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
     },
-    
-      Contacts:{
-          screen:ContactNav,
-          tabBarOptions:{
-          tabBarLabel: 'Contacts',
-          tabBarIcon:()=> (
-            <Icon name = 'md-people' size={24}/>
-          )
-        }
+    Contacts: {
+      screen: ContactNav,
+      navigationOptions: {
+        tabBarLabel: 'Contacts',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Ionicons
+            name = 'md-people'
+            size={25}
+            style={{ color: tintColor }}
+          />
+        ),
       },
-        
-    
-        Me:{
-          screen:MyProfile,
-          tabBarOptions:{
-          tabBarLabel: 'Me',
-          tabBarIcon:()=> (
-            <Icon nmae = 'chat'  size={24}/>
-          )
-        }
-      },
-});
+    },
+  Me: {
+    screen: MyProfile,
+    navigationOptions: {
+      tabBarLabel: 'Me',
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name='md-person'
+          size={25}
+          style={{ color: tintColor }}
+        />
+      ),
+    },
+  },
+},
+  {
+    tabBarOptions: {
+      showLabel: true,
+      showIcon: true,
+    },
+  }
+);
 
 const AuthStack = createSwitchNavigator(
   {

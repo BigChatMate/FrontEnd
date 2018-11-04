@@ -95,38 +95,32 @@ class Login extends Component {
     }
 
 
-  _loginSuccess = async (data) => {
+    _loginSuccess = async (data) => {
 
-    console.log("Inside _loginSuccess");
-    console.log(data);
-
-    this._storeData("userData", JSON.stringify(data));
-    this._storeData("logInStatus", "true");
-
-    this.props.navigation.navigate("App");
-    
-    console.log("Navigating to App...");
-
-    // try {
-    // let req = await fetch('http://168.62.4.43:8000/auth/authenticate/?user_id='
-    // + data.user_id + '&token=' + data.token + '&app_id=' + data.app_id + '&authType=' + data.authType, {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-
-    // if(req.error != "") {
-    //   throw req.error
-    // }
-  // } catch (exception) {
-  //   alert("Unable to log into BigChat." + exception)
-  // }
-
-
-  }
+      console.log("Inside _loginSuccess");
+      console.log(data);
+  
+      this._storeData("userData", JSON.stringify(data));
+      this._storeData("logInStatus", "true");
+  
+      this.props.navigation.navigate("App");
+      
+      console.log("Navigating to App...");
+  
+      try {
+      let req = await fetch('http://40.118.225.183:8000/auth/authenticate/?email=' + data.email + '&token=' + data.token + '&authType=' + data.authType, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+  
+    } catch (exception) {
+      alert("Unable to log into BigChat." + exception)
+    }
+  
+  
+    }
 
   // var req = fetch('https://mywebsite.com/endpoint/', {
   //   method: 'POST',

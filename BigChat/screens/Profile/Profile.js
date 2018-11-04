@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, ListView, Button,StyleSheet, Text, Image } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const styles = StyleSheet.create({
     container: {
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
     },
     toolbar:{
         backgroundColor:'#00bfff',
-        paddingTop:40,
+        paddingTop:30,
         paddingBottom:10,
         flexDirection:'row'    //Step 1
     },
@@ -50,10 +52,10 @@ const styles = StyleSheet.create({
         flex: 1
     },
     toolbarButton:{
-        width: 50,            //Step 2
+        width: 47.5,            //Step 2
         color:'#fff',
         textAlign:'center',
-        fontSize: 16,
+        fontSize: 17,
     },
 });
 
@@ -101,11 +103,16 @@ export default class Profile extends React.Component {
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
+                    <Ionicons
+                    name='ios-arrow-back'
+                    size={25}
+                    style={{color:'#fff', marginLeft:5}}/>
                     <Text onPress = {
                          ()=>goBack()
                     }
                     style={styles.toolbarButton} >Back</Text>
                     <Text style={styles.toolbarTitle}>Profile</Text>
+                    <Text style = {styles.toolbarButton}></Text>
                 </View>
                 <ListView
                     style={styles.container}

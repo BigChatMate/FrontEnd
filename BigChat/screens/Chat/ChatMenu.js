@@ -59,7 +59,7 @@
             },
             toolbar: {
                 backgroundColor: '#00bfff',
-                paddingTop: 40,
+                paddingTop: 30,
                 paddingBottom: 10,
                 flexDirection: 'row'    //Step 1
             },

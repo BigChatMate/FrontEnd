@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, ListView, StyleSheet,RefreshControl,TouchableOpacity, Text, Image, AsyncStorage } from 'react-native';
 import Row from './Row';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 // import chats from './data';
 
 
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
     },
     toolbar: {
         backgroundColor: '#00bfff',
-        paddingTop: 40,
+        paddingTop: 30,
         paddingBottom: 10,
         flexDirection: 'row'
     },
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
         width: 50,
         color: '#fff',
         textAlign: 'center',
-        fontSize: 15,
+        fontSize: 17,
     },
     toolbarTitle: {
         color: '#fff',
@@ -158,9 +160,9 @@ class ChatList extends React.Component {
         if(this.state.isFetching === true){
         return(<View style={{ flex: 1 }} >
             <View style={styles.toolbar}>
-                <Text style={styles.toolbarButton} onPress = {()=>this.props.navigation.navigate("AddFriends",{})}>Add</Text>
+                <Ionicons style={{color:'#fff',marginLeft:10,width:50}} name='md-add' size={28} onPress = {()=>this.gotoAdd(navigate)}/>                
                 <Text style={styles.toolbarTitle}>All Chats</Text>
-                <Text style={styles.toolbarButton}>Like</Text>
+                <Text style={styles.toolbarButton}></Text>
             </View>             
         </View>);}
         else{
@@ -170,11 +172,12 @@ class ChatList extends React.Component {
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
-                    <Text style={styles.toolbarButton} onPress = {()=>this.gotoAdd(navigate)}>Add</Text>
+                    <Ionicons style={{color:'#fff',marginLeft:10,width:50}} name='md-add' size={28} onPress = {()=>this.gotoAdd(navigate)}/>
                     <Text style={styles.toolbarTitle}>All Chats</Text>
-                    <Text style={styles.toolbarButton}>Like</Text>
+                    <Text style={styles.toolbarButton}></Text>
                 </View>
                 <ListView
+                enableEmptySections={true}
                    dataSource={this.state.dataSource}
                   refreshControl={
                     <RefreshControl
@@ -203,9 +206,9 @@ class ChatList extends React.Component {
             console.log(userData);
             console.log(userData.email);
             // return this._retrieveChatList(userData);
-
+            userData.token = "Token1"; //CHANGE THIS
             try
-            {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
+            {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token="+userData.token, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',

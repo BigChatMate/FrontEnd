@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     },
     toolbar:{
         backgroundColor:'#00bfff',
-        paddingTop:40,
+        paddingTop:30,
         paddingBottom:10,
         flexDirection:'row'    //Step 1
     },
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         width: 50,            //Step 2
         color:'#fff',
         textAlign:'center',
-        fontSize: 16,
+        fontSize: 17,
     },
 });
 

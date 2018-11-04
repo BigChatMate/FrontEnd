@@ -4,17 +4,19 @@ import Row from './Row';
 import SectionHeader from './SectionHeader';
 import data from './data';
 import Header from './Header'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 
 const styles = StyleSheet.create({
   separator: {
     flex: 1,
     height: StyleSheet.hairlineWidth,
-    backgroundColor: '#8E8E8E',
+    backgroundColor: '#a9a9a9',
   },
   toolbar:{
     backgroundColor:'#00bfff',
-    paddingTop:40,
+    paddingTop:30,
     paddingBottom:10,
     flexDirection:'row'    //Step 1
 },
@@ -22,7 +24,7 @@ const styles = StyleSheet.create({
       width: 50,            //Step 2
       color:'#fff',
       textAlign:'center',
-      fontSize: 16,
+      fontSize: 17,
   },
   toolbarTitle:{
       color:'#fff',
@@ -106,9 +108,9 @@ export default class Contact extends React.Component {
         return (
           <View style = {{flex: 1}} >
           <View style={styles.toolbar}>
-                    <Text style={styles.toolbarButton}>Add</Text>
+                <Ionicons style={{color:'#fff',marginLeft:10,width:50}} name='md-add' size={28} />                
                     <Text style={styles.toolbarTitle}>Contact</Text>
-                    <Text style={styles.toolbarButton}>Like</Text>
+                    <Text style={styles.toolbarButton}></Text>
                 </View>
             <ListView
             dataSource = {this.state.dataSource}

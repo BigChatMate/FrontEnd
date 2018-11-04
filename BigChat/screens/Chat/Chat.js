@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 import{
     View,
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
       },
       toolbar:{
         backgroundColor:'#00bfff',
-        paddingTop:40,
+        paddingTop:30,
         paddingBottom:10,
         flexDirection:'row'    //Step 1
     },
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
       width: 50,            //Step 2
       color:'#fff',
       textAlign:'center',
-      fontSize: 16,
+      fontSize: 17,
   },
   toolbarTitle:{
       color:'#fff',
@@ -54,9 +56,7 @@ export default class Chat extends Component{
         super(props);
         this._isMounted = false;
     }
-    componentWillMount() {
-        
-    }
+ 
     backAndRefresh(){
         this.props.navigation.state.params.onGoBack();
         this.props.navigation.goBack();
@@ -69,6 +69,11 @@ export default class Chat extends Component{
         if(this.state.isFetching){
             return(<View style = {{flex: 1}} >
                 <View style={styles.toolbar}>
+                <Ionicons
+                    name='ios-arrow-back'
+                    size={25}
+                    style={{color:'#fff', marginLeft:5}}/>
+
                     <Text onPress = {
                         ()=>goBack()
                     }
@@ -87,6 +92,10 @@ export default class Chat extends Component{
         return(
             <View style = {{flex: 1}} >
                 <View style={styles.toolbar}>
+                <Ionicons
+                    name='ios-arrow-back'
+                    size={25}
+                    style={{color:'#fff', marginLeft:5}}/>
                     <Text onPress = {
                        ()=> this.backAndRefresh()
                     }
@@ -114,6 +123,7 @@ export default class Chat extends Component{
     
 
     returnData = async (imageURI)=> {
+        if(this._isMounted)
         try{
             this.setState({imageSource:imageURI})
             // alert(this.state.imageSource);
@@ -126,7 +136,8 @@ export default class Chat extends Component{
 
 
     _retrieveData = async (key) => {
-        try {
+        if(this._isMounted)
+        {try {
             const value = await AsyncStorage.getItem(key);
             if (value !== null) {
                 // We have data!!
@@ -137,59 +148,62 @@ export default class Chat extends Component{
         } catch (error) {
             alert(error);
             return null;
-        }
+        }}
     }
 
     _retrieveMessages = () => {
-        this._retrieveData("userData").then((userData) => {
-            userData = JSON.parse(userData);
-            var chatId = this.props.navigation.state.params.chatId;
-            try {
-            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId , {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                },
-            }).then((response) => {
+        if(this._isMounted)
+    {this._retrieveData("userData").then((userData) => {
+        userData = JSON.parse(userData);
+        userData.token = "Token1"; //CHANGE THIS
+        var chatId = this.props.navigation.state.params.chatId;
+        try {
+        let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId , {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+        }).then((response) => {
 
-                messages = response._bodyText;
-                messages = JSON.parse(messages);
-                var check = 1;
-                for(i = 0; i<messages.messages.length;i++){
-                    messages.messages[i].user._id = messages.messages[i].user.user_email;
-                    if(messages.messages[i].type === 1)
-                        messages.messages[i].text = messages.messages[i].message;
-                    else if (messages.messages[i].type === 3){
-                        messages.messages[i].image = 'data:image/jpeg;base64,'+messages.messages[i].media;
-                    }
-                    messages.messages[i].createdAt = new Date(messages.messages[i].time);
-            }
-                newMessageArray=this.state.messages;
-                for(i = this.state.messageLength;i<messages.messages.length;i++){
-                    newMessageArray = GiftedChat.append(newMessageArray,messages.messages[i])
+            messages = response._bodyText;
+            messages = JSON.parse(messages);
+            var check = 1;
+            for(i = 0; i<messages.messages.length;i++){
+                messages.messages[i].user._id = messages.messages[i].user.user_email;
+                if(messages.messages[i].type === 1)
+                    messages.messages[i].text = messages.messages[i].message;
+                else if (messages.messages[i].type === 3){
+                    messages.messages[i].image = 'data:image/jpeg;base64,'+messages.messages[i].media;
                 }
-                this.setState(
-                    {
-                        user_name: userData.email,
-                        isFetching: false,
-                        messages:messages.messages,
-                        messageLength:messages.messages.length,
-                    });
-                // alert(this.state.messages[0].image);
-                this._isMounted=true;
-                
-            });
-
-        } catch (exp) {
-            alert("nonononoo");
+                messages.messages[i].createdAt = new Date(messages.messages[i].time);
+        }
+            newMessageArray=this.state.messages;
+            for(i = this.state.messageLength;i<messages.messages.length;i++){
+                newMessageArray = GiftedChat.append(newMessageArray,messages.messages[i])
+            }
+            if(this._isMounted)
             this.setState(
                 {
+                    user_name: userData.email,
                     isFetching: false,
-                    messages: []
+                    messages:messages.messages,
+                    messageLength:messages.messages.length,
                 });
-        }
-
+            // alert(this.state.messages[0].image);
+            // this._isMounted=true;
+            
         });
+
+    } catch (exp) {
+        alert("nonononoo");
+        this.setState(
+            {
+                isFetching: false,
+                messages: []
+            });
+    }
+
+    });}
     }
 
     _sendMessage = async(message,messageType) => {
@@ -216,11 +230,12 @@ export default class Chat extends Component{
             userData = JSON.parse(userData);
             // alert(message);
             // alert(userData.email);
+            userData.token = "Token1"; //CHANGE THIS
 
             var chatId = this.props.navigation.state.params.chatId;
             
             try {
-            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media, {
+            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -254,6 +269,7 @@ export default class Chat extends Component{
       }
 
     componentWillUnmount() {
+        this._isMounted = false;
         clearInterval(this._interval);
     }
 }
