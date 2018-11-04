@@ -73,6 +73,9 @@
         });
 
         export default class ChatMenu extends React.Component {
+            static navigationOptions  = {
+                header : null
+             };
             constructor(props) {
                 super(props);
                 this.state = {
@@ -112,7 +115,7 @@
                         <Button
                             style={styles.buttonStyle5} textStyle={styles.textStyle}
                             onPress={() => {
-                            console.log('world!') }}>
+                            this.props.navigation.navigate("VoiceRecord",{})}}>
                             Audio Recording 
                         </Button>
                         <Button
@@ -125,6 +128,13 @@
                             console.log('world!')
                             }}>
                             SnapChat
+                        </Button>
+                        <Button
+                            style={styles.buttonStyle7} textStyle={styles.textStyle6}
+                            onPress={() => {
+                            this.props.navigation.goBack();
+                            }}>
+                            Cancel
                         </Button>
                     </View>
                 </View>
@@ -177,6 +187,10 @@
                             avatarSource: source,
                             imgBase64: response.data,
                         });  
+                        // alert(typeof(response.data));
+                        
+                        this.props.navigation.state.params.returnData(response.data);
+                        this.props.navigation.goBack();
                     }
                 });
             }
@@ -212,4 +226,4 @@
                 });
             }
 
-        }
+        }4

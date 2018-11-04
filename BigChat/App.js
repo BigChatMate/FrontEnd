@@ -14,10 +14,11 @@ import Contact from './screens/Contact/Contact.js';
 import Chat from './screens/Chat/Chat';
 import Profile from './screens/Profile/Profile';
 import MyProfile from './screens/Profile/MyProfile';
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
-
-
+import ChatMenu from './screens/Chat/ChatMenu'
+import VoiceRecord from './screens/Chat/VoiceRecord'
+import AddFriends from './screens/AddFriends/AddFriends'
 // export default class DemoLogin extends Component {
 //   render() {
 //     return (
@@ -45,8 +46,11 @@ export default class App extends React.Component {
 
  const ChatNav = createStackNavigator({
   ChatList:ChatList,
+  AddFriends:AddFriends,
   Chat:{screen:Chat},
-  Profile:Profile
+  ChatMenu:ChatMenu,
+  Profile:Profile,
+  VoiceRecord:VoiceRecord,
 });
 
 ChatNav.navigationOptions=({navigation})=>{
@@ -72,7 +76,7 @@ const BottomNavBar = createBottomTabNavigator({
         tabBarOptions:{
         tabBarLabel: 'Chats',
         tabBarIcon:()=> (
-          <Icon name = 'ios-chatbubbles' size={24}/>
+          <Icon type='ionicons' name='ios-chatbubbles' size={24}/>
         )
       }
     },

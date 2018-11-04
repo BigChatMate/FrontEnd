@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import {GiftedChat} from 'react-native-gifted-chat';
-import Backend from './backend';
-//import ChatList from '../ChatList'
-// const util = require ('util');
-import UUIDGenerator from 'react-native-uuid-generator';
 
 import{
     View,
@@ -38,7 +34,7 @@ const styles = StyleSheet.create({
       fontWeight:'bold',
       fontSize: 25,
       flex:1                //Step 3
-  }
+  },
   });
 
 
@@ -47,6 +43,7 @@ export default class Chat extends Component{
        header : null
     };
     state = {
+        imageSource:"",
         user_name:"",
         messages: [],
         uuid:[], 
@@ -65,6 +62,8 @@ export default class Chat extends Component{
         this.props.navigation.goBack();
     }
     render(){
+        var imageURI = "";
+        // var base64Icon = 'data:image/png;base64,' + base64Data;
         var {navigate} = this.props.navigation;
         var {goBack} = this.props.navigation;
         if(this.state.isFetching){
@@ -78,11 +77,10 @@ export default class Chat extends Component{
                     <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}</Text>
 
                     <Text onPress = {
-                         ()=>navigate("Profile",{})
+                         ()=>navigate("ChatMenu",{})
                     }
-                    style={styles.toolbarButton} >Profile</Text>
+                    style={styles.toolbarButton} >More</Text>
                 </View>
-                   
             </View>);
         }
         else
@@ -97,20 +95,34 @@ export default class Chat extends Component{
                     <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}</Text>
 
                     <Text onPress = {
-                         ()=>navigate("Profile",{})
+                         ()=>navigate("ChatMenu",{returnData: this.returnData.bind(this)})
                     }
-                    style={styles.toolbarButton} >Profile</Text>
+                    style={styles.toolbarButton} >More</Text>
                 </View>
                 <GiftedChat
-                
                 messages = {this.state.messages}
                 onSend = {(text)=>{
-                    this._sendMessage(text);
+                    this._sendMessage(text,"text");
+                    // this.imageMessageTest();
                 }}
+                alwaysShowSend = {true}
                 user = {{name: this.state.user_name, _id: this.state.user_name}}/>
             </View>
             );
     }
+
+    
+
+    returnData = async (imageURI)=> {
+        try{
+            this.setState({imageSource:imageURI})
+            // alert(this.state.imageSource);
+            await this._sendMessage(imageURI,"image");
+        }catch (error) {
+            alert(error);
+            return null;
+        }
+      }
 
 
     _retrieveData = async (key) => {
@@ -142,10 +154,14 @@ export default class Chat extends Component{
 
                 messages = response._bodyText;
                 messages = JSON.parse(messages);
-                
+                var check = 1;
                 for(i = 0; i<messages.messages.length;i++){
                     messages.messages[i].user._id = messages.messages[i].user.user_email;
-                    messages.messages[i].text = messages.messages[i].message;
+                    if(messages.messages[i].type === 1)
+                        messages.messages[i].text = messages.messages[i].message;
+                    else if (messages.messages[i].type === 3){
+                        messages.messages[i].image = 'data:image/jpeg;base64,'+messages.messages[i].media;
+                    }
                     messages.messages[i].createdAt = new Date(messages.messages[i].time);
             }
                 newMessageArray=this.state.messages;
@@ -159,11 +175,9 @@ export default class Chat extends Component{
                         messages:messages.messages,
                         messageLength:messages.messages.length,
                     });
-                    
-                // this._setUUID().then();
-                // alert(JSON.stringify(this.state.messages))
+                // alert(this.state.messages[0].image);
                 this._isMounted=true;
-                // this.render();
+                
             });
 
         } catch (exp) {
@@ -178,12 +192,25 @@ export default class Chat extends Component{
         });
     }
 
-    _sendMessage = async(message) => {
-
-        var new_message = message[0];
+    _sendMessage = async(message,messageType) => {
+        // alert(messageType);
+        const user = {name: this.state.user_name, _id: this.state.user_name};
+        var new_message = {};var type = 1;
+        var media = "no media";
+       if(messageType === "text") 
+       { new_message = message[0];
         message = message[0].text;
         if(message === "" || message === null)
-            return;
+            return;}
+        else if(messageType === "image"){
+            // alert("image");
+            type = 3;
+            message = "[image]";
+            media = encodeURIComponent(this.state.imageSource);
+            new_message.image='data:image/jpeg;base64,'+this.state.imageSource;
+            // alert(this.state.imageSource);
+        }
+        new_message.user = user;
         // alert(message);
         this._retrieveData("userData").then((userData) => {
             userData = JSON.parse(userData);
@@ -191,43 +218,14 @@ export default class Chat extends Component{
             // alert(userData.email);
 
             var chatId = this.props.navigation.state.params.chatId;
+            
             try {
-            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId + "&message=" + message + "&type=1&email=" + userData.email, {
+            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                 },
-            }).then((response) => {
-                try {
-                let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=" + chatId , {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                    },
-                }).then((response) => {
-                    console.log("Inside fetching chatlist....");
-                    messages = response._bodyText;
-                    messages = JSON.parse(messages);
-                    this.setState(
-                        {
-                            isFetching: false,
-                            // messages: messages,
-                            messageLength: this.state.messageLength+1,
-                            messages: GiftedChat.append(this.state.messages,new_message),
-
-                        });   
-    
-                });
-                // this.render();
-            } catch (exception) {
-            this.setState(
-                {
-                    isFetching: false,
-                    messages: []
-                });
-            // this.render();
-            }
-            });
+            })
         } catch (exp) {
             this.setState(
                 {
@@ -252,7 +250,7 @@ export default class Chat extends Component{
 
             // alert("time out");
         }
-          }, 2000);
+          }, 1000);
       }
 
     componentWillUnmount() {

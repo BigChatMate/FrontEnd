@@ -6,6 +6,9 @@ import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
 
 export default class VoiceRecord extends Component {
+  static navigationOptions  = {
+    header : null
+ };
   sound = null;
   state = {
     audioFile: '',
@@ -104,10 +107,14 @@ export default class VoiceRecord extends Component {
   };
 
   render() {
+
     const { recording, paused, audioFile } = this.state;
     return (
       <View style={styles.container}>
       <View style={styles.toolbar}>
+                <Text onPress = {
+                       ()=> this.props.navigation.goBack()}
+                    style={styles.toolbarButton} >Cancel</Text>
                   <Text style={styles.toolbarTitle}>Audio Record</Text>
           </View>
         <View style={styles.row}>
@@ -135,6 +142,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
+  toolbarButton:{
+    width: 50,            //Step 2
+    color:'#fff',
+    textAlign:'center',
+    fontSize: 16,
+},
   toolbar: {
     backgroundColor: '#00bfff',
     paddingTop: 40,

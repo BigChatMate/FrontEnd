@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ListView, StyleSheet,TouchableOpacity, Text, Image, AsyncStorage } from 'react-native';
+import { View, ListView, StyleSheet,RefreshControl,TouchableOpacity, Text, Image, AsyncStorage } from 'react-native';
 import Row from './Row';
 // import chats from './data';
 
@@ -54,69 +54,77 @@ class ChatList extends React.Component {
 
         this.state = {
          chats:[],
-         isFetching : true,
+         isFetching : false,
          dataSource: ds,
      };  
     }
 
     componentDidMount() {
-        this._retrieveData("userData").then((userData) => {
-
-            console.log("In ChatList");
-            console.log("userData: " + userData);
-            userData = JSON.parse(userData);
-            console.log(userData);
-            console.log(userData.email);
-            // return this._retrieveChatList(userData);
-
-
-            try {
-
-            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token2", {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                },
-            }).then((response) => {
-
-                console.log("Inside fetching chatlist....");
-                chatlist = response._bodyText;
-                chatlist = JSON.parse(chatlist);
-
-                this.setState(
-                    {
-                        isFetching: false,
-                        chats: chatlist.chats
-                    });
-                console.log(this.state);
-                console.log("thestate...");
-
-
-                // alert(this.isFetching);
-                // alert("isFetching");
+        this.refresh();
+        this._interval = setInterval(() => {
                 
-            });
-        } catch (exp) {
+                    this.refresh();
+                    // this._isMounted = false;
+        
+                    // alert("time out");
+                }, 1000);
+        // this._retrieveData("userData").then((userData) => {
 
-            this.setState(
-                {
-                    isFetching: false,
-                    chats: null
-                });
+        //     console.log("In ChatList");
+        //     console.log("userData: " + userData);
+        //     userData = JSON.parse(userData);
+        //     console.log(userData);
+        //     console.log(userData.email);
+        //     // return this._retrieveChatList(userData);
 
-            this.render();
 
-        }
+        //     try {
 
-        }).then(()=>{
-            this._interval = setInterval(() => {
+        //     let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token2", {
+        //         method: 'GET',
+        //         headers: {
+        //             Accept: 'application/json',
+        //         },
+        //     }).then((response) => {
+
+        //         console.log("Inside fetching chatlist....");
+        //         chatlist = response._bodyText;
+        //         chatlist = JSON.parse(chatlist);
+
+        //         this.setState(
+        //             {
+        //                 isFetching: false,
+        //                 chats: chatlist.chats
+        //             });
+        //         console.log(this.state);
+        //         console.log("thestate...");
+
+
+        //         // alert(this.isFetching);
+        //         // alert("isFetching");
                 
-                this.refresh();
-                // this._isMounted = false;
+        //     });
+        // } catch (exp) {
+
+        //     this.setState(
+        //         {
+        //             isFetching: false,
+        //             chats: null
+        //         });
+
+        //     this.render();
+
+        // }
+
+        // }).then(()=>{
+        //     this._interval = setInterval(() => {
+                
+        //         this.refresh();
+        //         // this._isMounted = false;
     
-                // alert("time out");
-            }, 1000);
-        });
+        //         // alert("time out");
+        //     }, 1000);
+        // });
 
 
     }
@@ -150,7 +158,7 @@ class ChatList extends React.Component {
         if(this.state.isFetching === true){
         return(<View style={{ flex: 1 }} >
             <View style={styles.toolbar}>
-                <Text style={styles.toolbarButton}>Add</Text>
+                <Text style={styles.toolbarButton} onPress = {()=>this.props.navigation.navigate("AddFriends",{})}>Add</Text>
                 <Text style={styles.toolbarTitle}>All Chats</Text>
                 <Text style={styles.toolbarButton}>Like</Text>
             </View>             
@@ -162,12 +170,18 @@ class ChatList extends React.Component {
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
-                    <Text style={styles.toolbarButton}>Add</Text>
+                    <Text style={styles.toolbarButton} onPress = {()=>this.gotoAdd(navigate)}>Add</Text>
                     <Text style={styles.toolbarTitle}>All Chats</Text>
                     <Text style={styles.toolbarButton}>Like</Text>
                 </View>
                 <ListView
-                  //  dataSource={this.state.dataSource}
+                   dataSource={this.state.dataSource}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.isFetching}
+                      onRefresh={this.refresh}
+                    />
+                  }
                   data = {this.state.chats}
                   dataSource = {this.state.dataSource.cloneWithRows(this.state.chats)}
                   renderRow={(data)=> this._renderRow(data,navigate)}
@@ -177,25 +191,27 @@ class ChatList extends React.Component {
             </View>
         );}
     }
-    refresh(){
+    refresh=()=>{
         this.setState({
             isFetching:false,
         })
         this._retrieveData("userData").then((userData) => {
             console.log("In ChatList");
-            console.log("userData: " + userData);
+            // alert(userData);
             userData = JSON.parse(userData);
+            // alert(userData.token);
             console.log(userData);
             console.log(userData.email);
             // return this._retrieveChatList(userData);
 
-
-            let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
+            try
+            {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token1", {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 },
             }).then((response) => {
+                // alert(response)
                 chatlist = response._bodyText;
                 chatlist = JSON.parse(chatlist);
                 // alert(JSON.stringify(chatlist));
@@ -207,7 +223,18 @@ class ChatList extends React.Component {
                         //dataSource : ds.cloneWithRows(chats),
                     });
             });
+                }catch (exp) {
 
+                        this.setState(
+                            {
+                                isFetching: false,
+                                chats: null
+                            });
+                        alert(exp);
+
+                        this.render();
+
+                    }
         });
 
     }
@@ -222,7 +249,7 @@ class ChatList extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this._interval);
+        // clearInterval(this._interval);
     }
 
     _renderRow(chats,navigate) {
@@ -235,6 +262,11 @@ class ChatList extends React.Component {
             <Text >{chats.message}</Text> */}
           </TouchableOpacity>
         );
+      }
+
+      gotoAdd(navigate){
+        navigate("AddFriends",{onGoBack: ()=>this.comeBack()});
+        clearInterval(this._interval);
       }
 
       gotochat(chats,navigate){
