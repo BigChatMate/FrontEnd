@@ -54,26 +54,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 100,
     },
-<<<<<<< HEAD
-    row: {
-        flex: 1,
-        padding: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 15,
-    },
-    toolbar:{
-        backgroundColor:'#00bfff',
-        paddingTop:30,
-        paddingBottom:10,
-        flexDirection:'row'    //Step 1
-=======
     toolbar: {
         backgroundColor: '#00bfff',
-        paddingTop: 40,
+        paddingTop: 30,
         paddingBottom: 10,
-        flexDirection: 'row'    //Step 1
->>>>>>> 354da2666ae1fcc9f84afe1ac7391ca213500e85
+        flexDirection: 'row'
     },
     toolbarTitle: {
         color: '#fff',
@@ -81,16 +66,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 25,
         flex: 1
-    },
-<<<<<<< HEAD
-    toolbarButton:{
-        width: 50,            //Step 2
-        color:'#fff',
-        textAlign:'center',
-        fontSize: 17,
-    },
-=======
->>>>>>> 354da2666ae1fcc9f84afe1ac7391ca213500e85
+    }
 });
 
 const Udata = {
