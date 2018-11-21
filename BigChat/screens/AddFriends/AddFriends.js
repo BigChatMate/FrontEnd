@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, ListView, StyleSheet, Text,Image, TextInput, Button, FlatList, TouchableOpacity, SectionList } from 'react-native';
+import { View, AsyncStorage, ListView, StyleSheet, Text,Image, TextInput, Button, FlatList, TouchableOpacity, SectionList } from 'react-native';
 
 class AddFriends extends React.Component {
 
@@ -15,8 +15,11 @@ class AddFriends extends React.Component {
     _addEmail = async(email) => {
         // TODO: Implement this...
 
+        console.log("adding..." + email);
+
         this._retrieveData("userData").then((userData) => {
 
+            console.log("data recieved: " + userData);
             userData = JSON.parse(userData);
 
             if (email === userData.email) {
@@ -55,6 +58,8 @@ class AddFriends extends React.Component {
             const value = await AsyncStorage.getItem(key);
             if (value !== null) {
                 // We have data!!
+                console.log("Data for:" + key);
+                console.log(value);
                 return value;
             }
         } catch (error) {
@@ -75,8 +80,9 @@ class AddFriends extends React.Component {
         console.log("Retrieving data...");
         this._retrieveData("userData").then((userData) => {
 
+            console.log("data recieved " + userData);
             userData = JSON.parse(userData);
-
+            console.log(userData.token);
             try {
 
             // let req = fetch("http://40.118.225.183:8000/addFriends/FriendRequests/?token=Token2", {
@@ -107,7 +113,7 @@ class AddFriends extends React.Component {
             });
 
         } catch (exp) {
-
+            console.log(exp);
             this.setState(
                 {
                     isFetching: false,
@@ -159,6 +165,9 @@ class AddFriends extends React.Component {
     }
 
     _decline = async(email) => {
+
+        console.log("Declining..." + email);
+
         this._retrieveData("userData").then((userData) => {
 
             userData = JSON.parse(userData);
