@@ -62,72 +62,17 @@ class ChatList extends React.Component {
     }
 
     componentDidMount() {
+        this._retrieveData("userData").then((userData) => {
+            userData = JSON.parse(userData);
+            this.setState({
+            userData:userData,
+        })
         this.refresh();
         this._interval = setInterval(() => {
                 
                     this.refresh();
-                    // this._isMounted = false;
-        
-                    // alert("time out");
                 }, 1000);
-        // this._retrieveData("userData").then((userData) => {
-
-        //     console.log("In ChatList");
-        //     console.log("userData: " + userData);
-        //     userData = JSON.parse(userData);
-        //     console.log(userData);
-        //     console.log(userData.email);
-        //     // return this._retrieveChatList(userData);
-
-
-        //     try {
-
-        //     let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token=Token2", {
-        //         method: 'GET',
-        //         headers: {
-        //             Accept: 'application/json',
-        //         },
-        //     }).then((response) => {
-
-        //         console.log("Inside fetching chatlist....");
-        //         chatlist = response._bodyText;
-        //         chatlist = JSON.parse(chatlist);
-
-        //         this.setState(
-        //             {
-        //                 isFetching: false,
-        //                 chats: chatlist.chats
-        //             });
-        //         console.log(this.state);
-        //         console.log("thestate...");
-
-
-        //         // alert(this.isFetching);
-        //         // alert("isFetching");
-                
-        //     });
-        // } catch (exp) {
-
-        //     this.setState(
-        //         {
-        //             isFetching: false,
-        //             chats: null
-        //         });
-
-        //     this.render();
-
-        // }
-
-        // }).then(()=>{
-        //     this._interval = setInterval(() => {
-                
-        //         this.refresh();
-        //         // this._isMounted = false;
-    
-        //         // alert("time out");
-        //     }, 1000);
-        // });
-
+    });
 
     }
 
@@ -138,20 +83,14 @@ class ChatList extends React.Component {
             const value = await AsyncStorage.getItem(key);
             if (value !== null) {
                 // We have data!!
-                console.log("Retrieving data...");
-                console.log(data);
+                // alert("Retrieving data...");
+                // alert(value);
                 return value;
             }
         } catch (error) {
             console.log(error);
         }
     }
-
-    // _goToChat = (chatId) => {
-
-    //     ;
-
-    // }
     
     
 
@@ -198,23 +137,20 @@ class ChatList extends React.Component {
         this.setState({
             isFetching:false,
         })
-        this._retrieveData("userData").then((userData) => {
-            console.log("In ChatList");
+
+        
             // alert(userData);
-            userData = JSON.parse(userData);
-            // alert(userData.token);
-            console.log(userData);
-            console.log(userData.email);
-            // return this._retrieveChatList(userData);
-            userData.token = "Token1"; //CHANGE THIS
+            
+            // alert(userData);
+            this.state.userData.token = "Token1"; //CHANGE THIS
             try
-            {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token="+userData.token, {
+            {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token="+this.state.userData.token, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 },
             }).then((response) => {
-                // alert(response)
+                // alert(response);
                 chatlist = response._bodyText;
                 chatlist = JSON.parse(chatlist);
                 // alert(JSON.stringify(chatlist));
@@ -238,21 +174,24 @@ class ChatList extends React.Component {
                         this.render();
 
                     }
-        });
 
     }
     comeBack(){
+        this._retrieveData("userData").then((userData) => {
+            userData = JSON.parse(userData);
+            this.setState({
+            userData:userData,
+        })
+        this.refresh();
         this._interval = setInterval(() => {
                 
-            this.refresh();
-            // this._isMounted = false;
-
-            // alert("time out");
-        }, 1000);
+                    this.refresh();
+                }, 1000);
+    });
     }
 
     componentWillUnmount() {
-        // clearInterval(this._interval);
+        clearInterval(this._interval);
     }
 
     _renderRow(chats,navigate) {
