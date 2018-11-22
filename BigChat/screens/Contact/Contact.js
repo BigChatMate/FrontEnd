@@ -1,140 +1,196 @@
-import React, {Component} from 'react';
-import { View, TouchableOpacity, ListView, StyleSheet, Text,Image } from 'react-native';
+import React from 'react';
+import { View, ListView, StyleSheet,RefreshControl,TouchableOpacity, Text, Image, AsyncStorage } from 'react-native';
 import Row from './Row';
-import SectionHeader from './SectionHeader';
-import data from './data';
-import Header from './Header'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 
 const styles = StyleSheet.create({
-  separator: {
-    flex: 1,
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#a9a9a9',
-  },
-  toolbar:{
-    backgroundColor:'#00bfff',
-    paddingTop:30,
-    paddingBottom:10,
-    flexDirection:'row'    //Step 1
-},
-  toolbarButton:{
-      width: 50,            //Step 2
-      color:'#fff',
-      textAlign:'center',
-      fontSize: 17,
-  },
-  toolbarTitle:{
-      color:'#fff',
-      textAlign:'center',
-      fontWeight:'bold',
-      fontSize: 25,
-      flex:1                //Step 3
-  }
-  });
+    message: {
+        color: 'blue',
+        alignItems: 'center',
+    },
+    name: {
+        fontFamily: 'Verdana',
+        fontSize: 18,
+        alignItems: 'center',
+    },
+    separator: {
+        flex: 1,
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: '#8E8E8E',
+    },
+    toolbar: {
+        backgroundColor: '#00bfff',
+        paddingTop: 30,
+        paddingBottom: 10,
+        flexDirection: 'row'
+    },
+    toolbarButton: {
+        width: 50,
+        color: '#fff',
+        textAlign: 'center',
+        fontSize: 17,
+    },
+    toolbarTitle: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
+        flex: 1
+    }
+});
 
+class Contact extends React.Component {
+    static navigationOptions  = {
+       header : null
+    };
 
-export default class Contact extends React.Component {
-  static navigationOptions ={
-    header: null,
-};
     constructor(props) {
+
         super(props);
-        const getSectionData = (dataBlob, sectionId) => dataBlob[sectionId];
-        const getRowData = (dataBlob, sectionId, rowId) => dataBlob[`${rowId}`];
-        const ds = new ListView.DataSource({
-          rowHasChanged: (r1, r2) => r1 !== r2,
-          sectionHeaderHasChanged : (s1, s2) => s1 !== s2,
-          getSectionData,
-          getRowData,
-        });
-        const { dataBlob, sectionIds, rowIds } = this.formatData(data);   
+        this._retrieveData = this._retrieveData.bind(this);
+        var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
         this.state = {
-            dataSource: ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds),
-        };
+         contacts:[],
+         isFetching : false,
+         dataSource: ds,
+     };  
     }
-    formatData(data) {
-      // We're sorting by alphabetically so we need the alphabet
-      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  
-      // Need somewhere to store our data
-      const dataBlob = {};
-      const sectionIds = [];
-      const rowIds = [];
-  
-      // Each section is going to represent a letter in the alphabet so we loop over the alphabet
-      for (let sectionId = 0; sectionId < alphabet.length; sectionId++) {
-        // Get the character we're currently looking for
-        const currentChar = alphabet[sectionId];
-  
-        // Get users whose first name starts with the current letter
-        const users = data.filter((user) => user.name.first.toUpperCase().indexOf(currentChar) === 0);
-  
-        // If there are any users who have a first name starting with the current letter then we'll
-        // add a new section otherwise we just skip over it
-        if (users.length > 0) {
-          // Add a section id to our array so the listview knows that we've got a new section
-          sectionIds.push(sectionId);
-  
-          // Store any data we would want to display in the section header. In our case we want to show
-          // the current character
-          dataBlob[sectionId] = { character: currentChar };
-  
-          // Setup a new array that we can store the row ids for this section
-          rowIds.push([]);
-  
-          // Loop over the valid users for this section
-          for (let i = 0; i < users.length; i++) {
-            // Create a unique row id for the data blob that the listview can use for reference
-            const rowId = `${sectionId}:${i}`;
-  
-            // Push the row id to the row ids array. This is what listview will reference to pull
-            // data from our data blob
-            rowIds[rowIds.length - 1].push(rowId);
-  
-            // Store the data we care about for this row
-            dataBlob[rowId] = users[i];
-          }
+
+    componentDidMount() {
+        this.refresh();
+    }
+    
+    _retrieveData = async (key) => {
+        try {
+            const value = await AsyncStorage.getItem(key);
+            if (value !== null) {
+                // We have data!!
+                console.log("Retrieving data...");
+                console.log(data);
+                return value;
+            }
+        } catch (error) {
+            console.log(error);
         }
-      }
-  
-      return { dataBlob, sectionIds, rowIds };
     }
+    
+
     render() {
-      var {navigate} = this.props.navigation;
+        var {navigate} = this.props.navigation;
+        if(this.state.isFetching === true){
+        return(<View style={{ flex: 1 }} >
+            <View style={styles.toolbar}>
+                <Ionicons style={{color:'#fff',marginLeft:10,width:50}} name='md-add' size={28} onPress = {()=>this.gotoAdd(navigate)}/>                
+                <Text style={styles.toolbarTitle}>Contacts</Text>
+                <Text style={styles.toolbarButton}></Text>
+            </View>             
+        </View>);}
+        else{
+
+        console.log("rendering...");
 
         return (
-          <View style = {{flex: 1}} >
-          <View style={styles.toolbar}>
-                <Ionicons style={{color:'#fff',marginLeft:10,width:50}} name='md-add' size={28} />                
-                    <Text style={styles.toolbarTitle}>Contact</Text>
+            <View style={{ flex: 1 }} >
+                <View style={styles.toolbar}>
+                    <Ionicons style={{color:'#fff',marginLeft:10,width:50}} name='md-add' size={28} onPress = {()=>this.gotoAdd(navigate)}/>
+                    <Text style={styles.toolbarTitle}>Contacts</Text>
                     <Text style={styles.toolbarButton}></Text>
                 </View>
-            <ListView
-            dataSource = {this.state.dataSource}
-            renderRow={ (data)=> this._renderRow(data,navigate)}
-            renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-            renderHeader={() => <Header />}
-            renderSectionHeader={(sectionData) => <SectionHeader {...sectionData} />}
-            />
-          </View>
-        );
+                <ListView
+                enableEmptySections={true}
+                   dataSource={this.state.dataSource}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.isFetching}
+                      onRefresh={this.refresh}
+                    />
+                  }
+                  data = {this.state.contacts}
+                  dataSource = {this.state.dataSource.cloneWithRows(this.state.chats)}
+                  renderRow={(data)=> this._renderRow(data,navigate)}
+                    //renderRow={(data) => <Row {...data} />}
+                 renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+                />
+            </View>
+        );}
+    }
+    refresh=()=>{
+        this.setState({
+            isFetching:false,
+        })
+        this._retrieveData("userData").then((userData) => {
+            userData = JSON.parse(userData);
+            userData.token = "Token1"; //CHANGE THIS
+            try
+            {let req = fetch("http://40.118.225.183:8000/Contact/Contacts/?token="+userData.token, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                },
+            }).then((response) => {
+                contacts = response._bodyText;
+                contacts = JSON.parse(chatlist);
+                this.setState(
+                    {
+                        isFetching: false,
+                        contacts: contacts,
+                    });
+            });
+                }catch (exp) {
+
+                        this.setState(
+                            {
+                                isFetching: false,
+                                contacts: null
+                            });
+                        alert(exp);
+
+                        this.render();
+
+                    }
+        });
 
     }
-    _renderRow(data,navigate) {
-      return (
-        <TouchableOpacity onPress = {
-          ()=>navigate("Profile",{})
-     }>
-          <Row {...data} />
-        </TouchableOpacity>
-      );
+    // comeBack(){
+    //     // this._interval = setInterval(() => {
+                
+    //     //     this.refresh();
+    //     //     // this._isMounted = false;
+
+    //     //     // alert("time out");
+    //     // }, 1000);
+    // }
+
+    componentWillUnmount() {
+        // clearInterval(this._interval);
     }
+
+    _renderRow(chats,navigate) {
+        return (
+          <TouchableOpacity onPress = {
+            ()=>this.gotochat(chats,navigate)
+          }>
+            <Row {...chats}/>
+            {/* <Text >{chats.name}</Text>
+            <Text >{chats.message}</Text> */}
+          </TouchableOpacity>
+        );
+      }
+
+      gotoAdd(navigate){
+        navigate("AddFriends",{onGoBack: ()=>this.comeBack()});
+        clearInterval(this._interval);
+      }
+
+      gotochat(chats,navigate){
+        navigate("Chat",{chatId:chats.chatId,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
+        clearInterval(this._interval);
+      }
 }
 
 
 
-
-//export default Contact;
+export default Contact;

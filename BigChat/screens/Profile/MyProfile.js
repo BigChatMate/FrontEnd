@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, ListView, StyleSheet, Text, Image,TouchableOpacity} from 'react-native';
+import { View, ListView,AsyncStorage, StyleSheet, Text, Image,TouchableOpacity} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-import Video from 'react-native-video';
-import RNFetchBlob from 'rn-fetch-blob';
 import Footer from './Footer';
 import Button from 'apsl-react-native-button';
 var FileUpload = require('NativeModules').FileUpload;
@@ -81,32 +79,35 @@ export default class Profile extends React.Component {
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
+            isFetching:true,
             avatarSource: null,
             videoSource: null,
-            userData: Udata,
+            userData: null,
             imgBase64: '',
         };
     }
+    componentDidMount() {
 
+        this._retrieveAvatar();
+
+      }
     render() {
-        if(this.state.imgBase64 == ''){
+        if(this.state.isFetching){
             return (
                     <View style={{ flex: 1 }}>
                         <View style={styles.toolbar}>
                             <Text style={styles.toolbarTitle}>Profile</Text>
                         </View>
                         <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                            {this.state.avatarSource == null ?
-                                <Image source={{ uri: this.state.userData.picture }} style={styles.profilephoto} resizeMode="stretch" />
-                                : <Image source={this.state.avatarSource} style={styles.profilephoto} resizeMode="stretch" />}
                         </TouchableOpacity>
-                        <Text style={styles.username}> {this.state.userData.name} </Text>
+                        <Text style={styles.username}>  </Text>
                         <View style={styles.container}>
                             <Button style={styles.buttonStyle1} textStyle={styles.textStyle}
                                 onPress={this.selectPhotoTapped.bind(this)}>
                                 Select new Profile Image
                             </Button>
-                            <Button  style={styles.buttonStyle2} textStyle={styles.textStyle} >
+                            <Button  style={styles.buttonStyle2} textStyle={styles.textStyle} 
+                                onPress ={this._sendAvattar}>
                                 Upload new Profile Image 
                             </Button>
                         </View>
@@ -114,16 +115,16 @@ export default class Profile extends React.Component {
                     </View>
             );
         }
-
-        return (
+        else 
+        {return (
             <View style={{ flex: 1 }}>
                 <View style={styles.toolbar}>
                     <Text style={styles.toolbarTitle}>Profile</Text>
                 </View>
                 <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                    {this.state.avatarSource == null ?
-                        <Image source={{ uri: this.state.userData.picture }} style={styles.profilephoto} resizeMode="stretch" />
-                        : <Image source={this.state.avatarSource} style={styles.profilephoto} resizeMode="stretch" />}
+                    {this.state.imgBase64 == '' ?
+                        <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.userData.picture }} style={styles.profilephoto} resizeMode="stretch" />
+                        : <Image source={{uri:'data:image/jpeg;base64,'+this.state.imgBase64}} style={styles.profilephoto} resizeMode="stretch" />}
                 </TouchableOpacity>
                 <Text style={styles.username}> {this.state.userData.name} </Text>
                 <View style={styles.container}>
@@ -131,14 +132,15 @@ export default class Profile extends React.Component {
                         onPress={this.selectPhotoTapped.bind(this)}>
                         Select new Profile Image
                         </Button>
-                     <Button  style={styles.buttonStyle4} textStyle={styles.textStyle} >
+                     <Button  style={styles.buttonStyle4} textStyle={styles.textStyle}
+                        onPress ={this._sendAvattar}>
                         Upload new Profile Image 
                     </Button>
                 </View>
                 <Footer />
             </View>
 
-        );
+        );}
     }
 
     //Choose picture 
@@ -190,68 +192,68 @@ export default class Profile extends React.Component {
         });
     }
 
-    upload(){
-        if(this.state.imgBase64 == '')
-            alert("failed to find upload images, please select new profile image first");
-        else{
-        console.log("click");
-        var obj = {
-            uploadUrl: "http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=chat_table_1&email=aaa&type=3",
-            method: 'POST', // default 'POST',support 'POST' and 'PUT'
-            headers: {
-              'Accept': 'application/json',
-            },
-            fields: {
-              'img': this.state.imgBase64,
-            },
-            files: [
-                
-            ],
-        };
-        FileUpload.upload(obj, function(err, result) {
-          console.log('upload:', err, result);
-          if (err == null){
-            Alert.alert(
-              'Thong Bao',
-              'Upload thanh cong',
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ]
-            )
-          } else{
-            Alert.alert(
-              'Thong Bao',
-              err,
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ]
-            )
-          }
-    
-        })
-        }   
-      };
+    _retrieveData = async (key) => {
+        try {
+            const value = await AsyncStorage.getItem(key);
+            if (value !== null) {
+                return value;
+            }
+        } catch (error) {
+            alert(error);
+            return null;
+        }}
 
-    fileUpload(){
-        try{
-        RNFetchBlob.fetch('POST', "http://40.118.225.183:8000/chat/MessageHistory/?token=Token1&chatId=chat_table_1&email=aaa&type=3", {
-            Authorization: "Bearer access-token",
-            type: '3',
-            'Content-Type': 'multipart/form-data',
-        }, [
-                // custom content type
-            { name: 'avatar-png', filename: 'avatar-png.png', type: 'image/png', data: this.state.imgBase64},
-            ]).then((resp) => {
-                // ...
-            }).catch((err) => {
-                // ...
-            })
-        }
-        catch(exception){
-           alert("failed to upload");
-           console.log("error");
-        }
-    };
+    _retrieveAvatar = () => {
+        this._retrieveData("userData").then((userData) => {
+        userData = JSON.parse(userData);
+        //userData.token = "Token1"; //CHANGE THIS
+        try {
+        let req = fetch("http://40.118.225.183:8000/Contact/Profile/?email="+userData.email , {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+        }).then((response) => {
+
+            let avatar = response._bodyText;
+            avatar = JSON.parse(avatar);
+            userData.picture = avatar.image;
+            //userData.name = userData.email;
+            this.setState(
+                {
+                    userData:userData,
+                    user_name: userData.name,
+                    isFetching:false,
+                });
+
+        });
+
+    } catch (exp) {
+        alert("nonononoo");
+    }
+
+    });
+    }
+
+    _sendAvattar = async() => {
+        if(this.state.imgBase64!='')
+                {let picture = encodeURIComponent(this.state.imgBase64);
+                    //alert("sending")
+                try {
+                let req = fetch("http://40.118.225.183:8000/Contact/Profile/?token="+this.state.userData.token+"&email=" + this.state.userData.email + "&image=" + picture + "&name="+this.state.user_name, {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                    },
+                })
+            } catch (exp) {
+                this.setState(
+                    {
+                        isFetching: false,
+                    });
+            }}
+        else alert("Profile image is not selected!");
+     }
 
     //Choose video 
     selectVideoTapped() {

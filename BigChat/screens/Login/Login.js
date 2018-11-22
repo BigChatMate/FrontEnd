@@ -109,7 +109,7 @@ class Login extends Component {
   
       try {
       let req = await fetch('http://40.118.225.183:8000/auth/authenticate/?email=' + data.email + '&token=' + data.token + '&authType=' + data.authType, {
-        method: 'POST',
+        method: 'GET',
         headers: {
           Accept: 'application/json',
         },
