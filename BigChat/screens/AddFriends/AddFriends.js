@@ -21,7 +21,8 @@ class AddFriends extends React.Component {
         this._retrieveData("userData").then((userData) => {
 
             userData = JSON.parse(userData);
-
+            // userData.token = "Token1";
+            // userData.email="harminder@hotmail.ca"
             if (email === userData.email) {
                 alert("You can't add yourself...");
                 return;
@@ -83,7 +84,7 @@ class AddFriends extends React.Component {
         this._retrieveData("userData").then((userData) => {
 
             userData = JSON.parse(userData);
-
+            // userData.token = "Token1";
             try {
 
             let req = fetch("http://40.118.225.183:8000/addFriends/FriendRequests/?token=" + userData.token, {
@@ -128,6 +129,8 @@ class AddFriends extends React.Component {
         this._retrieveData("userData").then((userData) => {
 
             userData = JSON.parse(userData);
+            // userData.token = "Token1";
+            // userData.email="harminder@hotmail.ca"
 
             if (email === userData.email) {
                 alert("You can't add yourself...");
@@ -162,7 +165,8 @@ class AddFriends extends React.Component {
         this._retrieveData("userData").then((userData) => {
 
             userData = JSON.parse(userData);
-
+            // userData.token = "Token1";
+            // userData.email="harminder@hotmail.ca"
             try {
             let req = fetch("http://40.118.225.183:8000/addFriends/FriendRequests/?token="+ userData.token+ "&email=" + userData.email +"&friendEmail=" + email, {
                 method: 'DELETE',

@@ -3,6 +3,7 @@ import { View, ListView, StyleSheet,RefreshControl,TouchableOpacity, Text, Image
 import Row from './Row';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+// import chats from './data';
 
 
 const styles = StyleSheet.create({
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
 
 class Contact extends React.Component {
     static navigationOptions  = {
+        //tabBarVisible = false,
        header : null
     };
 
@@ -53,29 +55,43 @@ class Contact extends React.Component {
         var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
         this.state = {
-         contacts:[],
+         chats:[],
          isFetching : false,
          dataSource: ds,
      };  
     }
 
     componentDidMount() {
+        this._retrieveData("userData").then((userData) => {
+            userData = JSON.parse(userData);
+            this.setState({
+            userData:userData,
+        })
         this.refresh();
+    //     this._interval = setInterval(() => {
+                
+    //                 this.refresh();
+    //             }, 1000);
+    });
+
     }
-    
+
+
+
     _retrieveData = async (key) => {
         try {
             const value = await AsyncStorage.getItem(key);
             if (value !== null) {
                 // We have data!!
-                console.log("Retrieving data...");
-                console.log(data);
+                // alert("Retrieving data...");
+                // alert(value);
                 return value;
             }
         } catch (error) {
             console.log(error);
         }
     }
+    
     
 
     render() {
@@ -108,7 +124,7 @@ class Contact extends React.Component {
                       onRefresh={this.refresh}
                     />
                   }
-                  data = {this.state.contacts}
+                  data = {this.state.chats}
                   dataSource = {this.state.dataSource.cloneWithRows(this.state.chats)}
                   renderRow={(data)=> this._renderRow(data,navigate)}
                     //renderRow={(data) => <Row {...data} />}
@@ -121,22 +137,25 @@ class Contact extends React.Component {
         this.setState({
             isFetching:false,
         })
-        this._retrieveData("userData").then((userData) => {
-            userData = JSON.parse(userData);
-            userData.token = "Token1"; //CHANGE THIS
+            // this.state.userData.token = "Token1"; //CHANGE THIS
             try
-            {let req = fetch("http://40.118.225.183:8000/Contact/Contacts/?token="+userData.token, {
+            {let req = fetch("http://40.118.225.183:8000/Contact/Contacts/?token="+this.state.userData.token, {
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 },
             }).then((response) => {
-                contacts = response._bodyText;
-                contacts = JSON.parse(chatlist);
+                // alert(response);
+                chatlist = response._bodyText;
+                alert(chatlist)
+                chatlist = JSON.parse(chatlist);
+                // alert(JSON.stringify(chatlist));
+
                 this.setState(
                     {
                         isFetching: false,
-                        contacts: contacts,
+                        chats: chatlist.contact,
+                        //dataSource : ds.cloneWithRows(chats),
                     });
             });
                 }catch (exp) {
@@ -144,28 +163,31 @@ class Contact extends React.Component {
                         this.setState(
                             {
                                 isFetching: false,
-                                contacts: null
+                                chats: null
                             });
                         alert(exp);
 
                         this.render();
 
                     }
-        });
 
     }
-    // comeBack(){
-    //     // this._interval = setInterval(() => {
+    comeBack(){
+        this._retrieveData("userData").then((userData) => {
+            userData = JSON.parse(userData);
+            this.setState({
+            userData:userData,
+        })
+        this.refresh();
+        // this._interval = setInterval(() => {
                 
-    //     //     this.refresh();
-    //     //     // this._isMounted = false;
-
-    //     //     // alert("time out");
-    //     // }, 1000);
-    // }
+        //             this.refresh();
+        //         }, 1000);
+    });
+    }
 
     componentWillUnmount() {
-        // clearInterval(this._interval);
+        clearInterval(this._interval);
     }
 
     _renderRow(chats,navigate) {

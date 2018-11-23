@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 class Row extends React.Component {
   render() {
 
-      const unread = <Text style={styles.textRead}>                                                       unread</Text>;
+      const unread = <Text style={styles.textRead}>                                                unread</Text>;
 
       let message;
       if (this.props.flag) {
@@ -41,7 +41,7 @@ class Row extends React.Component {
 
       return (
       <View style={styles.container}>
-        {/* <Image source={{ uri: props.picture.large}} style={styles.photo} /> */}   
+        <Image source={{ uri: 'data:image/jpeg;base64,'+this.props.image}} style={styles.photo} /> 
         <Text style={styles.text}>
           {`${this.props.name}`}
           {"\n"}

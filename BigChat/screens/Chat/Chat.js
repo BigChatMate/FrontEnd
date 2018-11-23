@@ -9,7 +9,7 @@ import { Buffer } from 'buffer';
 import Permissions from 'react-native-permissions';
 import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
-import{View,Text,StyleSheet,Image,Button,AsyncStorage,}from 'react-native';
+import{View,Text,Keyboard,StyleSheet,Image,Button,AsyncStorage,}from 'react-native';
 
 const styles = StyleSheet.create({
     separator: {
@@ -47,7 +47,7 @@ export default class Chat extends Component{
         imageSource:"",
         user_name:"",
         messages: [],
-        uuid:[], 
+        userData:[],
         isFetching: true,
         messageLength: 0,
         opened: false,
@@ -73,6 +73,7 @@ export default class Chat extends Component{
         this.setState({ opened: false });
       }
       onTriggerPress() {
+        Keyboard.dismiss;
         this.setState({ opened: true });
       }
 
@@ -101,8 +102,8 @@ export default class Chat extends Component{
                     <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}</Text>
                     <Menu opened={this.state.opened} renderer={renderers.SlideInMenu} style = {{marginBottom: 10}}>
                             <MenuTrigger onPress={() => this.onTriggerPress()}>
-                                {/* <Text style={styles.toolbarButton}>More</Text> */}
-                                <Ionicons name='ios-more' size={30} style={styles.toolbarButton}/>
+                                <Text style={styles.toolbarButton}>More</Text>
+                                {/* <Ionicons name='md-more' size={30} style={styles.toolbarButton}/> */}
                             </MenuTrigger>
                             <MenuOptions>
                                 <View style = {{flexDirection:'row', justifyContent: 'space-evenly'}}>
@@ -209,8 +210,10 @@ export default class Chat extends Component{
     _retrieveMessages = () => {
         if(this._isMounted)
     {this._retrieveData("userData").then((userData) => {
+        // alert(userData);
+
         userData = JSON.parse(userData);
-        userData.token = "Token1"; //CHANGE THIS
+        // userData.token = "Token1"; //CHANGE THIS
         var chatId = this.props.navigation.state.params.chatId;
         try {
         let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId , {
@@ -221,16 +224,21 @@ export default class Chat extends Component{
         }).then((response) => {
 
             messages = response._bodyText;
+            // alert(messages);
             messages = JSON.parse(messages);
             var check = 1;
+            
             for(i = 0; i<messages.messages.length;i++){
                 messages.messages[i].user._id = messages.messages[i].user.user_email;
+                messages.messages[i].user.name = messages.messages[i].user.user_email;
+                messages.messages[i].user.avatar = 'data:image/jpeg;base64,'+messages.userData.image;
                 if(messages.messages[i].type === 1)
                     messages.messages[i].text = messages.messages[i].message;
                 else if (messages.messages[i].type === 3){
                     messages.messages[i].image = 'data:image/jpeg;base64,'+messages.messages[i].media;
                 }
                 messages.messages[i].createdAt = new Date(messages.messages[i].time);
+                // messages.messages[i].user.name = userData.name;
         }
             newMessageArray=this.state.messages;
             for(i = this.state.messageLength;i<messages.messages.length;i++){
@@ -244,7 +252,8 @@ export default class Chat extends Component{
                     messages:messages.messages,
                     messageLength:messages.messages.length,
                 });
-            // alert(this.state.messages[0].image);
+            // alert(JSON.stringify(this.state.messages[0]));
+            // alert(this.state.user_name)
             // this._isMounted=true;
             
         });
@@ -263,7 +272,8 @@ export default class Chat extends Component{
 
     _sendMessage = async(message,messageType) => {
         // alert(messageType);
-        const user = {name: this.state.user_name, _id: this.state.user_name};
+        const user = {name: this.state.user_name, _id: this.state.user_email};
+        // const user = {name: "harmin@hotmail.ca", _id: "harmin@hotmail.ca"};
         var new_message = {};var type = 1;
         var media = "no media";
        if(messageType === "text") 
@@ -285,7 +295,7 @@ export default class Chat extends Component{
             userData = JSON.parse(userData);
             // alert(message);
             // alert(userData.email);
-            userData.token = "Token1"; //CHANGE THIS
+            // userData.token = "Token1"; //CHANGE THIS
 
             var chatId = this.props.navigation.state.params.chatId;
             
@@ -496,6 +506,3 @@ export default class Chat extends Component{
         });
     }
 }
-
-  
-

@@ -137,12 +137,7 @@ class ChatList extends React.Component {
         this.setState({
             isFetching:false,
         })
-
-        
-            // alert(userData);
-            
-            // alert(userData);
-            this.state.userData.token = "Token1"; //CHANGE THIS
+            // this.state.userData.token = "Token1"; //CHANGE THIS
             try
             {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token="+this.state.userData.token, {
                 method: 'GET',
@@ -152,6 +147,7 @@ class ChatList extends React.Component {
             }).then((response) => {
                 // alert(response);
                 chatlist = response._bodyText;
+                // alert(chatlist)
                 chatlist = JSON.parse(chatlist);
                 // alert(JSON.stringify(chatlist));
 
