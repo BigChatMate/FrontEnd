@@ -3,18 +3,24 @@ import { AppRegistry, StyleSheet, Text, View, Image, AsyncStorage, Button } from
 import ImagePicker from 'react-native-image-picker';
 import Video from 'react-native-video';
 
+
+// Later on in your styles..
+var styles = StyleSheet.create({
+    backgroundVideo: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    },
+  });
+
+
 // More info on all the options is below in the API Reference... just some common use cases shown here
 const options = {
-    title: 'Select Avatar',
-    // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-    storageOptions: {
-        skipBackup: true,
-        path: 'images',
-    },
-    mediaType: 'image',
+    title: 'Select Image',
+    mediaType: 'video',
 };
-
-var file = require('./BigChatLogo.png');
 
 class mediaTest extends Component {
     state = {
@@ -42,12 +48,13 @@ class mediaTest extends Component {
             } else {
                 const source = { uri: response.uri };
 
+                // const source = response.path;
                 // You can also display the image using data:
                 // const source = { uri: 'data:image/png;base64,' + response.uri };
 
                 console.log("Here");
                 console.log(response);
-                console.log(response.data);
+
 
                 this.setState({
                     avatarSource: source,
@@ -56,33 +63,32 @@ class mediaTest extends Component {
                 });
 
                 
-            try {
+            // try {
 
-                var formdata = new FormData();
-                formdata.append("user_id", 77);
-                formdata.append("media", {
-                    uri: this.state.avatarSource,
-                    name: 'testPhotoName'
-                });
-                console.log("added to form...");
+            //     var formdata = new FormData();
+            //     formdata.append("user_id", 77);
+            //     formdata.append("media", {
+            //         uri: this.state.avatarSource,
+            //         name: 'testPhotoName'
+            //     });
+            //     console.log("added to form...");
 
-                formdata.append
-                var req = fetch("http://40.118.225.183:8000/media/mediaMessage/", {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                    body: formdata
-                }).then((response) => {
+            //     var req = fetch("http://40.118.225.183:8000/media/mediaMessage/", {
+            //         method: 'post',
+            //         headers: {
+            //             'Content-Type': 'multipart/form-data',
+            //         },
+            //         body: formdata
+            //     }).then((response) => {
 
-                    alert(response._bodyText);
+            //         alert(response._bodyText);
 
-                });
+            //     });
 
-            } catch (error) {
-                console.log(error);
-                alert("Send image error")
-            }
+            // } catch (error) {
+            //     console.log(error);
+            //     alert("Send image error")
+            // }
 
             }
         });
@@ -130,8 +136,10 @@ class mediaTest extends Component {
             return (
                 <View>
                     <Button title="Send" onPress={this._sendImage}/>
-                    <Image style={{width: 66, height: 58}} source={this.state.image}></Image>
-                    {/* <Video style={{width: 66, height: 58}} source={this.state.image}></Video> */}
+                    {/* <Image style={{width: 66, height: 58}} source={this.state.image}></Image> */}
+                    {/* <Video style={{width: 66, height: 58}} source={this.state.image}/>*/}
+                    <Video source={this.state.image}  // Can be a URL or a local file.
+                        style={styles.backgroundVideo} />
                 </View>
             )
         }
