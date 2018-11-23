@@ -88,7 +88,7 @@ export default class Chat extends Component{
                 <View style={styles.toolbar}>
                 <Ionicons name='ios-arrow-back' size={25} style={{color:'#fff', marginLeft:5}}/>
                     <Text onPress = {()=>goBack()} style={styles.toolbarButton} >Back</Text>
-                    <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}</Text>
+                    <Text style={styles.toolbarTitle}>{`${this.props.navigation.state.params.name}`}   </Text>
                     <Text onPress = {()=>navigate("ChatMenu",{})} style={styles.toolbarButton} >More</Text>
                 </View>
             </View>);

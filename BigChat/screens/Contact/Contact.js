@@ -68,10 +68,6 @@ class Contact extends React.Component {
             userData:userData,
         })
         this.refresh();
-    //     this._interval = setInterval(() => {
-                
-    //                 this.refresh();
-    //             }, 1000);
     });
 
     }
@@ -147,7 +143,7 @@ class Contact extends React.Component {
             }).then((response) => {
                 // alert(response);
                 chatlist = response._bodyText;
-                alert(chatlist)
+                alert(chatlist);
                 chatlist = JSON.parse(chatlist);
                 // alert(JSON.stringify(chatlist));
 
@@ -186,14 +182,14 @@ class Contact extends React.Component {
     });
     }
 
-    componentWillUnmount() {
-        clearInterval(this._interval);
-    }
+    // componentWillUnmount() {
+    //     clearInterval(this._interval);
+    // }
 
     _renderRow(chats,navigate) {
         return (
           <TouchableOpacity onPress = {
-            ()=>this.gotochat(chats,navigate)
+            ()=>this.gotoProfile(chats,navigate)
           }>
             <Row {...chats}/>
             {/* <Text >{chats.name}</Text>
@@ -204,12 +200,12 @@ class Contact extends React.Component {
 
       gotoAdd(navigate){
         navigate("AddFriends",{onGoBack: ()=>this.comeBack()});
-        clearInterval(this._interval);
+        // clearInterval(this._interval);
       }
 
-      gotochat(chats,navigate){
-        navigate("Chat",{chatId:chats.chatId,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
-        clearInterval(this._interval);
+      gotoProfile(chats,navigate){
+        navigate("Profile",{email:chats.email,name: chats.name,});
+        // clearInterval(this._interval);
       }
 }
 
