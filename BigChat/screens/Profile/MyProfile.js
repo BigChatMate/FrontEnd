@@ -345,7 +345,7 @@ export default class MyProfile extends React.Component {
         //   alert(authType);
         // // authType = JSON.parse(authType);
         // // authType = authType.authType;
-        alert(authType);
+        // alert(authType);
         
       
       

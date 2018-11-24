@@ -9,6 +9,7 @@ import { Buffer } from 'buffer';
 import Permissions from 'react-native-permissions';
 import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
+import dismissKeyboard from 'dismissKeyboard';
 import{View,Text,Keyboard,StyleSheet,Image,Button,AsyncStorage,}from 'react-native';
 
 const styles = StyleSheet.create({
@@ -73,7 +74,8 @@ export default class Chat extends Component{
         this.setState({ opened: false });
       }
       onTriggerPress() {
-        Keyboard.dismiss;
+        // GiftedChat.onKeyboardWillHide();
+        dismissKeyboard();
         this.setState({ opened: true });
       }
 
@@ -165,6 +167,7 @@ export default class Chat extends Component{
                     </Menu>
                 </View>
                 <GiftedChat
+                keyboardShouldPersistTaps={'handled'}
                 messages = {this.state.messages}
                 onSend = {(text)=>{
                     this._sendMessage(text,"text");
