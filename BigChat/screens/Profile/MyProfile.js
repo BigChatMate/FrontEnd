@@ -3,24 +3,23 @@ import { View, ListView,AsyncStorage, StyleSheet, Text, Image,TouchableOpacity} 
 import ImagePicker from 'react-native-image-picker';
 import Footer from './Footer';
 import Button from 'apsl-react-native-button';
-var FileUpload = require('NativeModules').FileUpload;
 
 const styles = StyleSheet.create({
     buttonStyle1: {
         borderColor: '#d35400',
-        backgroundColor: '#e98b39'
+        backgroundColor: '#e98b39',
       },
       buttonStyle2: {
         borderColor: '#c0392b',
-        backgroundColor: '#e74c3c'
+        backgroundColor: '#e74c3c',
       },
     buttonStyle3: {
         borderColor: '#16a085',
-        backgroundColor: '#1abc9c'
+        backgroundColor: '#1abc9c',
     },
     buttonStyle4: {
         borderColor: '#27ae60',
-        backgroundColor: '#2ecc71'
+        backgroundColor: '#2ecc71',
     },
     container: {
         flex: 1,
@@ -34,10 +33,10 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     username: {
-        marginTop: 15,
+        marginTop: 40,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 30,
         flex: 1,
     },
     text: {
@@ -47,6 +46,7 @@ const styles = StyleSheet.create({
     },
     profilephoto: {
         alignSelf: 'center',
+        marginTop: 20,
         height: 200,
         width: 200,
         borderWidth: 1,
@@ -74,7 +74,7 @@ const Udata = {
     UserId: "123456",
 };
 
-export default class Profile extends React.Component {
+export default class MyProfile extends React.Component {
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -84,6 +84,7 @@ export default class Profile extends React.Component {
             videoSource: null,
             userData: null,
             imgBase64: '',
+            finish: false,
         };
     }
     componentDidMount() {
@@ -93,21 +94,33 @@ export default class Profile extends React.Component {
       }
     render() {
         if(this.state.isFetching){
+            return(
+                <View style={{ flex: 1 }}>
+                <View style={styles.toolbar}>
+                    <Text style={styles.toolbarTitle}>Profile</Text>
+                </View>
+                </View>
+            );
+        }
+        else if(this.state.imgBase64 == ''){
             return (
                     <View style={{ flex: 1 }}>
                         <View style={styles.toolbar}>
                             <Text style={styles.toolbarTitle}>Profile</Text>
                         </View>
-                        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-                        </TouchableOpacity>
-                        <Text style={styles.username}>  </Text>
+                        {/* <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}> */}
+                        {this.state.imgBase64 == '' ?
+                        <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.userData.picture }} style={styles.profilephoto} />
+                        : <Image source={{uri:'data:image/jpeg;base64,'+this.state.imgBase64}} style={styles.profilephoto}  />}
+                        {/* </TouchableOpacity> */}
+                        <Text style={styles.username}> {this.state.userData.name} </Text>
                         <View style={styles.container}>
                             <Button style={styles.buttonStyle1} textStyle={styles.textStyle}
                                 onPress={this.selectPhotoTapped.bind(this)}>
                                 Select new Profile Image
                             </Button>
                             <Button  style={styles.buttonStyle2} textStyle={styles.textStyle} 
-                                onPress ={this._sendAvattar}>
+                                onPress ={()=>this._sendAvattar()}>
                                 Upload new Profile Image 
                             </Button>
                         </View>
@@ -121,21 +134,21 @@ export default class Profile extends React.Component {
                 <View style={styles.toolbar}>
                     <Text style={styles.toolbarTitle}>Profile</Text>
                 </View>
-                <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+                {/* <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}> */}
                     {this.state.imgBase64 == '' ?
-                        <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.userData.picture }} style={styles.profilephoto} resizeMode="stretch" />
-                        : <Image source={{uri:'data:image/jpeg;base64,'+this.state.imgBase64}} style={styles.profilephoto} resizeMode="stretch" />}
-                </TouchableOpacity>
+                        <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.userData.picture }} style={styles.profilephoto}  />
+                        : <Image source={{uri:'data:image/jpeg;base64,'+this.state.imgBase64}} style={styles.profilephoto}  />}
+                {/* </TouchableOpacity> */}
                 <Text style={styles.username}> {this.state.userData.name} </Text>
                 <View style={styles.container}>
                     <Button style={styles.buttonStyle3} textStyle={styles.textStyle}
                         onPress={this.selectPhotoTapped.bind(this)}>
                         Select new Profile Image
                         </Button>
-                     <Button  style={styles.buttonStyle4} textStyle={styles.textStyle}
-                        onPress ={this._sendAvattar}>
+                        <Button  style={styles.buttonStyle4} textStyle={styles.textStyle}
+                        onPress ={()=>this._sendAvattar()}>
                         Upload new Profile Image 
-                    </Button>
+                        </Button>
                 </View>
                 <Footer />
             </View>
@@ -251,7 +264,8 @@ export default class Profile extends React.Component {
                     {
                         isFetching: false,
                     });
-            }}
+            }
+        }
         else alert("Profile image is not selected!");
      }
 

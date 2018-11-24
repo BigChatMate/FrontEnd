@@ -54,6 +54,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 100,
     },
+    toolbarButton:{
+        width: 50,            //Step 2
+        color:'#fff',
+        textAlign:'center',
+        fontSize: 17,
+    },
     toolbar: {
         backgroundColor: '#00bfff',
         paddingTop: 30,
@@ -78,9 +84,8 @@ const Udata = {
 
 export default class Profile extends React.Component {
     static navigationOptions  = {
-        //tabBarVisible = false,
-       header : null
-    };
+        header : null
+     };
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -103,17 +108,18 @@ export default class Profile extends React.Component {
             return (
                     <View style={{ flex: 1 }}>
                         <View style={styles.toolbar}>
-                            <Ionicons name='ios-arrow-back' size={25} style={{color:'#fff', marginLeft:5}}/>
+                            <Text onPress = {()=>this.props.navigation.goBack()}  style={styles.toolbarButton} >Back</Text>
                             <Text style={styles.toolbarTitle}>Profile</Text>
                         </View>
                         <TouchableOpacity>
-                            <Ionicons name='ios-arrow-back' size={25} style={{color:'#fff', marginLeft:5}}/>
-                            <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.picture }} style={styles.profilephoto} resizeMode="stretch" />
+                            <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.picture }} style={styles.profilephoto} />
                         </TouchableOpacity>
-                        <Text style={styles.username}> {this.props.name} </Text>
+                        <Text style={styles.username}> {this.props.navigation.state.params.name} </Text>
+                        <Text style={styles.username}> {this.props.navigation.state.params.email} </Text>
+
                         <View style={styles.container}>
                         </View>
-                        <Footer />
+
                     </View>
             );
         }
@@ -121,15 +127,17 @@ export default class Profile extends React.Component {
         {return (
             <View style={{ flex: 1 }}>
                 <View style={styles.toolbar}>
+                    <Text onPress = {()=>this.props.navigation.goBack()} style={styles.toolbarButton} >Back</Text>
                     <Text style={styles.toolbarTitle}>Profile</Text>
                 </View>
                 <TouchableOpacity>
-                        <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.picture }} style={styles.profilephoto} resizeMode="stretch" />
+                        <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.picture }} style={styles.profilephoto}/>
                 </TouchableOpacity>
-                <Text style={styles.username}> {this.props.name} </Text>
+                <Text style={styles.username}> {this.props.navigation.state.params.name} </Text>
+                <Text style={styles.username}> {this.props.navigation.state.params.email} </Text>
                 <View style={styles.container}>
                 </View>
-                <Footer />
+
             </View>
 
         );}
@@ -148,13 +156,11 @@ export default class Profile extends React.Component {
         }}
 
     _retrieveAvatar = () => {
-        alert(this.props.email);
-        alert(this.props.name);
         this._retrieveData("userData").then((userData) => {
         userData = JSON.parse(userData);
         //userData.token = "Token1"; //CHANGE THIS
         try {
-        let req = fetch("http://40.118.225.183:8000/Contact/Profile/?email="+this.props.email , {
+        let req = fetch("http://40.118.225.183:8000/Contact/Profile/?email="+this.props.navigation.state.params.email , {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -167,7 +173,7 @@ export default class Profile extends React.Component {
             //userData.name = userData.email;
             this.setState(
                 {
-                    picture:avatar,
+                    picture:avatar.image,
                     user_name: userData.name,
                     isFetching:false,
                 });

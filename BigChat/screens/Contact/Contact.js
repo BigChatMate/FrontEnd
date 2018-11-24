@@ -143,7 +143,7 @@ class Contact extends React.Component {
             }).then((response) => {
                 // alert(response);
                 chatlist = response._bodyText;
-                alert(chatlist);
+                // alert(chatlist);
                 chatlist = JSON.parse(chatlist);
                 // alert(JSON.stringify(chatlist));
 

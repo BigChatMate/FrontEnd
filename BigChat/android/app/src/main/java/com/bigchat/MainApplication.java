@@ -3,6 +3,18 @@ package com.bigchat;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.brentvatne.react.ReactVideoPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import cl.json.RNSharePackage;
+import com.imagepicker.ImagePickerPackage;
+import com.yoloci.fileupload.FileUploadPackage;
+import org.reactnative.camera.RNCameraPackage;
+import com.goodatlas.audiorecord.RNAudioRecordPackage;
+import com.rnim.rn.audio.ReactNativeAudioPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -37,6 +49,18 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new MapsPackage(),
+            new RNFetchBlobPackage(),
+            new ReactVideoPackage(),
+            new VectorIconsPackage(),
+            new RNUUIDGeneratorPackage(),
+            new RNSoundPackage(),
+            new RNSharePackage(),
+            new ImagePickerPackage(),
+            new FileUploadPackage(),
+            new RNCameraPackage(),
+            new RNAudioRecordPackage(),
+            new ReactNativeAudioPackage(),
               new RNGoogleSigninPackage(),
               new FBSDKPackage(mCallbackManager)
       );

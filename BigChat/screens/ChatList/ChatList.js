@@ -106,8 +106,6 @@ class ChatList extends React.Component {
         </View>);}
         else{
 
-        console.log("rendering...");
-
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>

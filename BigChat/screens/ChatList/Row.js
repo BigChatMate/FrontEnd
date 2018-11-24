@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     },
     textRead: {
       textAlign: 'right',
+      marginRight:10,
+      marginLeft:200,
       fontWeight: 'bold',
       fontSize: 16,
       justifyContent: 'flex-end',
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
 class Row extends React.Component {
   render() {
 
-      const unread = <Text style={styles.textRead}>                                                unread</Text>;
+      const unread = <Text style={styles.textRead}>unread</Text>;
 
       let message;
       if (this.props.flag) {

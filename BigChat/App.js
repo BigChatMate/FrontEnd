@@ -12,6 +12,7 @@ import Login from './screens/Login/Login.js';
 import ChatList from './screens/ChatList/ChatList.js';
 import Contact from './screens/Contact/Contact.js';
 import Chat from './screens/Chat/Chat';
+import Location from './screens/Chat/Location';
 import Profile from './screens/Profile/Profile';
 import MyProfile from './screens/Profile/MyProfile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,7 +31,8 @@ import AddFriends from './screens/AddFriends/AddFriends'
 
 export default class App extends React.Component {
   render() {
-    return <AuthStack />;
+   return <AuthStack />;
+  //  return <Location/>;
   }
 }
 // const AppStack = createStackNavigator(
@@ -70,6 +72,17 @@ const ContactNav = createStackNavigator({
   Profile:Profile,
   Chat:Chat,
 });
+
+ContactNav.navigationOptions=({navigation})=>{
+  if(navigation.state.index !== 0){
+    return{
+      tabBarVisible : false,
+    };
+  }
+  return{
+    tabBarVisible : true,
+  };
+}
 
 const BottomNavBar = createBottomTabNavigator(
   {
