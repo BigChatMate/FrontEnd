@@ -231,23 +231,19 @@ export default class Chat extends Component{
         }
         navigator.geolocation.getCurrentPosition(
             (position) => {
-            //    alert(position.coords.latitude);
-              this.setState({
+             this.setState({
                   opened: false,
                   latitude: position.coords.latitude,
                   longitude: position.coords.longitude,
               });
+            this._sendMessage("location","location");
+              
             },
             (error) => alert(error.message),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-          );
-            try{
-            // alert(this.state.imageSource);
-             await this._sendMessage("emmm","location");
-            }catch (error) {
-                alert(error);
-                return null;
-            }
+          )
+              
+            //   this._sendMessage("hi","location");
     
     }
 
@@ -340,9 +336,7 @@ export default class Chat extends Component{
             new_message.location= {
                 latitude: this.state.latitude,
                 longitude: this.state.longitude,
-              }
-            alert(this.state.latitude);
-            alert(this.state.longitude);
+            }
         }
         else if(messageType === "image"){
             // alert("image");
