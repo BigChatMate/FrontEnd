@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     textRead: {
       textAlign: 'right',
       marginRight:10,
-      marginLeft:200,
+      marginLeft: 150,
       fontWeight: 'bold',
       fontSize: 16,
       justifyContent: 'flex-end',

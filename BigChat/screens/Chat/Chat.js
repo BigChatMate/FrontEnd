@@ -210,7 +210,7 @@ export default class Chat extends Component{
     _retrieveMessages = () => {
         if(this._isMounted)
     {this._retrieveData("userData").then((userData) => {
-        alert(userData);
+        // alert(typeof(userData));
 
         userData = JSON.parse(userData);
         // userData.token = "Token1"; //CHANGE THIS

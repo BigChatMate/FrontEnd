@@ -2,6 +2,8 @@ import React from 'react';
 import { View, ListView,AsyncStorage, StyleSheet, Text, Image,TouchableOpacity} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Footer from './Footer';
+import {GoogleSignin} from 'react-native-google-signin';
+import {LoginManager} from 'react-native-fbsdk';
 import Button from 'apsl-react-native-button';
 
 const styles = StyleSheet.create({
@@ -21,6 +23,11 @@ const styles = StyleSheet.create({
         borderColor: '#27ae60',
         backgroundColor: '#2ecc71',
     },
+    buttonStyle5: {
+        borderColor: '#27ae60',
+        backgroundColor: '#2ecc71',
+        marginTop:20,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -33,10 +40,16 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     username: {
-        marginTop: 40,
+        marginTop: 15,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 30,
+        flex: 1,
+    },
+    email: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
         flex: 1,
     },
     text: {
@@ -108,23 +121,27 @@ export default class MyProfile extends React.Component {
                         <View style={styles.toolbar}>
                             <Text style={styles.toolbarTitle}>Profile</Text>
                         </View>
-                        {/* <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}> */}
+                        <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                         {this.state.imgBase64 == '' ?
                         <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.userData.picture }} style={styles.profilephoto} />
                         : <Image source={{uri:'data:image/jpeg;base64,'+this.state.imgBase64}} style={styles.profilephoto}  />}
-                        {/* </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <Text style={styles.username}> {this.state.userData.name} </Text>
+                        <Text style={styles.email}> {this.state.userData.email} </Text>
                         <View style={styles.container}>
-                            <Button style={styles.buttonStyle1} textStyle={styles.textStyle}
+                            {/* <Button style={styles.buttonStyle1} textStyle={styles.textStyle}
                                 onPress={this.selectPhotoTapped.bind(this)}>
                                 Select new Profile Image
                             </Button>
                             <Button  style={styles.buttonStyle2} textStyle={styles.textStyle} 
                                 onPress ={()=>this._sendAvattar()}>
                                 Upload new Profile Image 
+                            </Button> */}
+                            <Button  style={styles.buttonStyle2} textStyle={styles.textStyle} 
+                                onPress ={()=>this._logOut()}>
+                                LogOut
                             </Button>
                         </View>
-                        <Footer />
                     </View>
             );
         }
@@ -134,23 +151,28 @@ export default class MyProfile extends React.Component {
                 <View style={styles.toolbar}>
                     <Text style={styles.toolbarTitle}>Profile</Text>
                 </View>
-                {/* <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}> */}
+                <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
                     {this.state.imgBase64 == '' ?
                         <Image source={{ uri: 'data:image/jpeg;base64,'+this.state.userData.picture }} style={styles.profilephoto}  />
                         : <Image source={{uri:'data:image/jpeg;base64,'+this.state.imgBase64}} style={styles.profilephoto}  />}
-                {/* </TouchableOpacity> */}
+                </TouchableOpacity>
                 <Text style={styles.username}> {this.state.userData.name} </Text>
+                <Text style={styles.email}> {this.state.userData.email} </Text>
                 <View style={styles.container}>
-                    <Button style={styles.buttonStyle3} textStyle={styles.textStyle}
+                    {/* <Button style={styles.buttonStyle3} textStyle={styles.textStyle}
                         onPress={this.selectPhotoTapped.bind(this)}>
                         Select new Profile Image
                         </Button>
                         <Button  style={styles.buttonStyle4} textStyle={styles.textStyle}
                         onPress ={()=>this._sendAvattar()}>
                         Upload new Profile Image 
+                        </Button> */}
+                        <Button  style={styles.buttonStyle2} textStyle={styles.textStyle} 
+                                onPress ={()=>this._logOut()}>
+                                LogOut
                         </Button>
                 </View>
-                <Footer />
+              
             </View>
 
         );}
@@ -201,8 +223,12 @@ export default class MyProfile extends React.Component {
                     avatarSource: source,
                     imgBase64: response.data,
                 });  
+               
             }
+        this._sendAvattar();
+
         });
+
     }
 
     _retrieveData = async (key) => {
@@ -300,5 +326,78 @@ export default class MyProfile extends React.Component {
             }
         });
     }
+
+    _storeData = async (key, value) => {
+        try {
+          console.log("Storing data...");
+          console.log(value);
+          await AsyncStorage.setItem(key, value);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      
+      _logOut = async () => {
+        var userData = await this._retrieveData("userData");
+        //   alert(userData)
+          userData = JSON.parse(userData);
+          var authType = userData.authType;
+        //   alert(authType);
+        // // authType = JSON.parse(authType);
+        // // authType = authType.authType;
+        alert(authType);
+        
+      
+      
+          if (authType === "facebook") {
+      
+        // Facebook logout
+        // alert("facebook logging out");
+    
+        LoginManager.logOut();
+        
+        var data = {
+            name: "", // Name
+            email: "", // Email Address
+            user_id: "",   // User's Name
+            app_id: "", // app_id (FB or Google)
+            token: "", // Authentication Token
+            authType: "",   // Token issuer (FB or Google)
+          }
+          // Clearing AsyncStorage
+          this._storeData("userData", JSON.stringify(data));
+          this._storeData("logInStatus", "false");
+    
+        this.props.navigation.navigate("Login");
+    
+    
+      } else if (authType === "google") {
+        try {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          var data = {
+            name: "", // Name
+            email: "", // Email Address
+            user_id: "",   // User's Name
+            app_id: "", // app_id (FB or Google)
+            token: "", // Authentication Token
+            authType: "",   // Token issuer (FB or Google)
+          }
+          // Clearing AsyncStorage
+          this._storeData("userData", JSON.stringify(data));
+          this._storeData("logInStatus", "false");
+          this.props.navigation.navigate("Login");
+    
+        } catch (error) {
+          console.error(error);
+        }
+    
+      } else {
+    
+        alert("Not logged into either facebook or google...");
+    
+      }
+      
+      };
 
 }

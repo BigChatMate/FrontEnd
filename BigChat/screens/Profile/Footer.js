@@ -25,16 +25,49 @@ const styles = StyleSheet.create({
   },
 });
 
-const Footer = (props) => (
-  <View style={styles.container}>
-    <TouchableOpacity style={styles.button} onPress={this._logOut}>
-      <Text style={styles.text}>LogOut</Text>
-    </TouchableOpacity>
-  </View>
-);
 
+export default class Contact extends React.Component {
+  render(){
+    return (<View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={this._logOut}>
+        <Text style={styles.text}>LogOut</Text>
+      </TouchableOpacity>
+    </View>);
+  }
+
+ 
+
+_storeData = async (key, value) => {
+  try {
+    console.log("Storing data...");
+    console.log(value);
+    await AsyncStorage.setItem(key, value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+_retrieveData = async (key) => {
+  if(this._isMounted)
+  {try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+          // We have data!!
+          // console.log("Retrieving data...");
+          // console.log(data);
+          return value;
+      }
+  } catch (error) {
+      alert(error);
+      return null;
+  }}
+}
 _logOut = async () => {
-  // var authType = this._retrieveData("userData").authType;
+   this._retrieveData("userData").then((userData) => {
+    alert(userData)
+    userData = JSON.parse(userData);
+    alert(userData)
+    // var authType = this._retrieveData("userData").authType;
   // var userData = await this._retrieveData("userData");
   // //   userData = JSON.parse(userData);
   //   alert(userData)
@@ -79,61 +112,12 @@ _logOut = async () => {
   //   console.log("Not logged into either facebook or google...");
 
   // }
-  this._retrieveData("userData").then((userData) => {
-    alert(userData)
-    userData = JSON.parse(userData);
-    alert(userData)
 
-    // alert(message);
-    // alert(userData.email);
-    // userData.token = "Token1"; //CHANGE THIS
-
-//     var chatId = this.props.navigation.state.params.chatId;
-    
-//     try {
-//     let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media, {
-//         method: 'POST',
-//         headers: {
-//             Accept: 'application/json',
-//         },
-//     })
-// } catch (exp) {
-//     this.setState(
-//         {
-//             isFetching: false,
-//             messages: []
-//         });
-//     // this.render();
-// }
-// });
 });
 
 };
-
-_storeData = async (key, value) => {
-  try {
-    console.log("Storing data...");
-    console.log(value);
-    await AsyncStorage.setItem(key, value);
-  } catch (error) {
-    console.log(error);
-  }
+  
 }
 
-_retrieveData = async (key) => {
-  if(this._isMounted)
-  {try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-          // We have data!!
-          // console.log("Retrieving data...");
-          // console.log(data);
-          return value;
-      }
-  } catch (error) {
-      alert(error);
-      return null;
-  }}
-}
 
-export default Footer;
+ 
