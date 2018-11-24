@@ -172,8 +172,8 @@ class mediaTest extends Component {
             return (
                 <View style={styles.container}>
                     <Video 
-                    // source={video}
-                    source={{uri: "https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1455/8/207277102/706899303.mp4?token=1543114406-0xc3ec7557131180d473c1560bff5f37fb97dfb78f"}}
+                    source={video}
+                    // source={{uri: "https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1455/8/207277102/706899303.mp4?token=1543114406-0xc3ec7557131180d473c1560bff5f37fb97dfb78f"}}
                     resizeMode="cover"
                     style={StyleSheet.absoluteFill}
                     />
