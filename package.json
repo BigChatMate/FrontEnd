@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "babel-preset-react-native": "^4.0.1",
-    "jest": "^23.6.0"
-  }
-}
