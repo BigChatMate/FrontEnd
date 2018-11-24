@@ -9,8 +9,10 @@ import { Buffer } from 'buffer';
 import Permissions from 'react-native-permissions';
 import Sound from 'react-native-sound';
 import AudioRecord from 'react-native-audio-record';
+import{View,Text,StyleSheet,Image,Button,AsyncStorage,}from 'react-native';
+// import MapView from 'react-native-maps';
+import CustomView from './CustomView'
 import dismissKeyboard from 'dismissKeyboard';
-import{View,Text,Keyboard,StyleSheet,Image,Button,AsyncStorage,}from 'react-native';
 
 const styles = StyleSheet.create({
     separator: {
@@ -51,6 +53,8 @@ export default class Chat extends Component{
         userData:[],
         isFetching: true,
         messageLength: 0,
+        latitude: 0,
+        longitude: 0,
         opened: false,
         visible: false,
         videoSource: null,
@@ -77,6 +81,14 @@ export default class Chat extends Component{
         // GiftedChat.onKeyboardWillHide();
         dismissKeyboard();
         this.setState({ opened: true });
+      }
+
+      renderCustomView(props) {
+        return (
+          <CustomView
+            {...props}
+          />
+        );
       }
 
     render(){
@@ -123,7 +135,7 @@ export default class Chat extends Component{
                                     </MenuOption>
                                </View>
                                <View style = {{flexDirection:'row',justifyContent: 'space-evenly',marginBottom: 20}}>
-                                    <MenuOption> 
+                                    <MenuOption onSelect = {()=>this.viewLocation()}> 
                                         <Icon name='location' size={25} style={{color:'grey',marginLeft:15}}/> 
                                         <Text style = {{textAlign: 'center',fontSize: 17,}}>Location</Text>
                                     </MenuOption>
@@ -174,7 +186,9 @@ export default class Chat extends Component{
                     // this.imageMessageTest();
                 }}
                 alwaysShowSend = {true}
-                user = {{name: this.state.user_name, _id: this.state.user_name}}/>
+                user = {{name: this.state.user_name, _id: this.state.user_name}}
+                renderCustomView={this.renderCustomView}/>
+
             </MenuProvider>
         );
     }
@@ -210,6 +224,33 @@ export default class Chat extends Component{
         }}
     }
 
+    viewLocation = async()=>{
+        const p = await Permissions.check('location');
+        if (p === 'authorized') {
+            const pi = await Permissions.request('location');
+        }
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+            //    alert(position.coords.latitude);
+              this.setState({
+                  opened: false,
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude,
+              });
+            },
+            (error) => alert(error.message),
+            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+          );
+            try{
+            // alert(this.state.imageSource);
+             await this._sendMessage("emmm","location");
+            }catch (error) {
+                alert(error);
+                return null;
+            }
+    
+    }
+
     _retrieveMessages = () => {
         if(this._isMounted)
     {this._retrieveData("userData").then((userData) => {
@@ -239,6 +280,14 @@ export default class Chat extends Component{
                     messages.messages[i].text = messages.messages[i].message;
                 else if (messages.messages[i].type === 3){
                     messages.messages[i].image = 'data:image/jpeg;base64,'+messages.messages[i].media;
+                }
+                else if (messages.messages[i].type ===5){
+                    // alert(messages.messages[i].latitude);
+                    // alert(messages.messages[i].longitude);                    
+                    messages.messages[i].location = {
+                        latitude:messages.messages[i].latitude,
+                        longitude:messages.messages[i].longitude,
+                    }
                 }
                 messages.messages[i].createdAt = new Date(messages.messages[i].time);
                 // messages.messages[i].user.name = userData.name;
@@ -284,6 +333,17 @@ export default class Chat extends Component{
         message = message[0].text;
         if(message === "" || message === null)
             return;}
+        else if(messageType === "location"){
+            type = 5;
+            media = "no media";
+            message = "[location]";
+            new_message.location= {
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+              }
+            alert(this.state.latitude);
+            alert(this.state.longitude);
+        }
         else if(messageType === "image"){
             // alert("image");
             type = 3;
@@ -304,7 +364,7 @@ export default class Chat extends Component{
             var chatId = this.props.navigation.state.params.chatId;
             
             try {
-            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media, {
+            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media+"&latitude="+this.state.latitude+"&longitude="+this.state.longitude, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
