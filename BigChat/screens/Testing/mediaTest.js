@@ -3,22 +3,12 @@ import { AppRegistry, StyleSheet, Text, View, Image, AsyncStorage, Button } from
 import ImagePicker from 'react-native-image-picker';
 import Video from 'react-native-video';
 var RNFS = require('react-native-fs');
-
-// Later on in your styles..
-var styles = StyleSheet.create({
-    backgroundVideo: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-    },
-});
+import video from './Test.mp4';
 
 
 // More info on all the options is below in the API Reference... just some common use cases shown here
 const options = {
-    title: 'Select Image',
+    title: 'Select Video',
     mediaType: 'video',
 };
 
@@ -61,11 +51,12 @@ class mediaTest extends Component {
                     console.log(content);
                     console.log(content.length);
 
-                    const path = 'file://' + RNFS.DocumentDirectoryPath + '/Test.mp4';
+                    // const path = 'file:///storage/emulated/0/Android/data/com.bigchat/files/Test.mp4';
+                    const path = 'file://' + RNFS.ExternalDirectoryPath + '/test.mp4';
                     console.log(path);
                     RNFS.writeFile(path, content, 'base64')
                     .then(success => {
-                        console.log('FILE WRITTEN: ', "Test");
+                        console.log('FILE WRITTEN: ', "test");
                         this.setState({
                             avatarSource: source,
                             image: source,
@@ -150,34 +141,60 @@ class mediaTest extends Component {
         }
     }
 
-    handleError= (meta) => {
+    onBuffer= () => {
+        console.log("Buffering...");
+    }
+
+    videoError= (meta) => {
         console.log("Something went wrong...");
         console.log(meta);
+    }
+
+    renderVideo = () => {
+
+        this.setState({
+            gotImage: true
+        });
+        console.log("Changin....");
+        this.render();
+
     }
 
     render() {
         if (!this.state.gotImage) {
             return (
                 <View>
-                    <Button title="Send" onPress={this._sendImage} />
-                    <Button title="Get" onPress={this._getImage} />
+                    {/* <Button title="Send" onPress={this._sendImage} /> */}
+                    <Button title="Get" onPress={this.renderVideo} />
                 </View>
             )
         } else {
             return (
-                <View>
-                    <Button title="Send" onPress={this._sendImage} />
-                    <Image style={{width: 66, height: 58}} source={{ uri: 'file://' + RNFS.DocumentDirectoryPath + '/Test.mp4'}}></Image>
-                    <Video style={{width: "100%", height: 100 }}
-                      source={{ uri: 'file://' + RNFS.DocumentDirectoryPath + '/Test.mp4'}} 
-                      onBuffer={this.handleError}
-                      onError={this.handleError}
-                      resizeMode="contain"
-                     />
+                <View style={styles.container}>
+                    <Video 
+                    // source={video}
+                    source={{uri: "https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/1455/8/207277102/706899303.mp4?token=1543114406-0xc3ec7557131180d473c1560bff5f37fb97dfb78f"}}
+                    resizeMode="cover"
+                    style={StyleSheet.absoluteFill}
+                    />
                 </View>
             )
         }
     }
 }
+
+// Later on in your styles..
+var styles = StyleSheet.create({
+    container: {
+        flex: 1,
+      },
+    backgroundVideo: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    },
+});
 
 export default mediaTest;
