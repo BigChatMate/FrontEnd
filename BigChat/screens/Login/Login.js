@@ -100,10 +100,9 @@ class Login extends Component {
       console.log("Inside _loginSuccess");
       console.log(data);
   
-      this._storeData("userData", JSON.stringify(data));
-      this._storeData("logInStatus", "true");
+      await this._storeData("userData", JSON.stringify(data));
+      await this._storeData("logInStatus", "true");
   
-      this.props.navigation.navigate("App");
       
       console.log("Navigating to App...");
   
@@ -114,6 +113,8 @@ class Login extends Component {
           Accept: 'application/json',
         },
       });
+      this.props.navigation.navigate("App");
+
   
     } catch (exception) {
       alert("Unable to log into BigChat." + exception)

@@ -16,7 +16,7 @@ export default class CustomView extends React.Component {
         <TouchableOpacity style={[styles.container, this.props.containerStyle]} onPress={() => {
           const url = Platform.select({
             ios: `http://maps.apple.com/?ll=${this.props.currentMessage.location.latitude},${this.props.currentMessage.location.longitude}`,
-            android: `http://maps.google.com/?q=${this.props.currentMessage.location.latitude},${this.props.currentMessage.location.longitude}`
+            ios: `http://maps.google.com/?q=${this.props.currentMessage.location.latitude},${this.props.currentMessage.location.longitude}`
           });
           Linking.canOpenURL(url).then(supported => {
             if (supported) {
@@ -34,8 +34,8 @@ export default class CustomView extends React.Component {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-            scrollEnabled={false}
-            zoomEnabled={false}
+            scrollEnabled={true}
+            zoomEnabled={true}
           />
         </TouchableOpacity>
       );

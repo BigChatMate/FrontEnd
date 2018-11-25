@@ -377,8 +377,7 @@ export default class Chat extends Component{
     }
 
     componentDidMount() {
-        // this._retrieveMessages();
-        this._isMounted = true;
+       try {this._isMounted = true;
         this._retrieveMessages();
 
         this._interval = setInterval(() => {
@@ -388,7 +387,9 @@ export default class Chat extends Component{
 
             // alert("time out");
         }
-          }, 1000);
+          }, 1000);} catch (error) {
+            alert(error);
+          }
       }
 
     componentWillUnmount() {

@@ -292,7 +292,7 @@ export default class MyProfile extends React.Component {
                     });
             }
         }
-        else alert("Profile image is not selected!");
+        // else alert("Profile image is not selected!");
      }
 
     //Choose video 

@@ -65,7 +65,8 @@ state = {
                     color="#4267B2"
                 /> */}
 
-                <LoginButton
+                <LoginButton 
+                style = {{width:220,height:40}}
                     readPermissions={["email"]}
                     onLoginFinished={
                         (error, result) => {

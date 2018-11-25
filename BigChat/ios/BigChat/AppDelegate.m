@@ -6,7 +6,8 @@
  */
 
 #import "AppDelegate.h"
-
+//@import GoogleMaps;
+#import <GoogleMaps/GoogleMaps.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
