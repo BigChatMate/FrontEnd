@@ -7,10 +7,18 @@ import {
   TouchableOpacity,
   ViewPropTypes,
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView,{PROVIDER_GOOGLE}from 'react-native-maps';
+import Marker from 'react-native-maps';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import Video from 'react-native-video';
+
 
 export default class CustomView extends React.Component {
+  constructor(props) {
+    super(props);
+}
   render() {
+    // const { navigate } = this.props.navigation;
     if (this.props.currentMessage.location) {
       return (
         <TouchableOpacity style={[styles.container, this.props.containerStyle]} onPress={() => {
@@ -27,6 +35,7 @@ export default class CustomView extends React.Component {
           });
         }}>
           <MapView
+          provider = {PROVIDER_GOOGLE}
             style={[styles.mapView, this.props.mapViewStyle]}
             region={{
               latitude: this.props.currentMessage.location.latitude,
@@ -34,9 +43,38 @@ export default class CustomView extends React.Component {
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
-            scrollEnabled={true}
-            zoomEnabled={true}
-          />
+            scrollEnabled={false}
+            zoomEnabled={false}
+          >
+          <MapView.Marker 
+            coordinate = {{latitude: this.props.currentMessage.location.latitude,
+              longitude: this.props.currentMessage.location.longitude}}/>
+          </MapView>
+
+
+        </TouchableOpacity>
+      );
+    }
+
+    else if(this.props.currentMessage.video){
+      return(
+        <TouchableOpacity style={[styles.container, this.props.containerStyle]} >
+            {/* <Ionicons name='ios-play' size={25} style={{color:'#fff', marginLeft:5}}/> */}
+            <Video source = {{uri: this.props.currentMessage.video.path}}
+             ref={(ref) => {
+              this.player = ref
+            }} //// Store reference
+              onEnd = {()=>this.player.seek(0)}            
+            onBuffer={this.onBuffer}                // Callback when remote video is buffering
+            onError={this.videoError}               // Callback when video cannot be loaded
+            style={styles.videoView}  />
+        </TouchableOpacity>
+      );
+    }
+    else if(this.props.currentMessage.audio){
+      return(
+        <TouchableOpacity>
+
         </TouchableOpacity>
       );
     }
@@ -53,6 +91,12 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     margin: 3,
   },
+  videoView:{
+    width: 150,
+    height:250,
+    borderRadius: 13,
+    margin: 3,
+  }
 });
 
 CustomView.defaultProps = {

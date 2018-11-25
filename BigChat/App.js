@@ -20,7 +20,8 @@ import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator }
 import ChatMenu from './screens/Chat/ChatMenu'
 import VoiceRecord from './screens/Chat/VoiceRecord'
 import AddFriends from './screens/AddFriends/AddFriends'
-
+import VideoPlayScreen from './screens/Chat/VideoPlayScreen'
+import CustomView from './screens/Chat/CustomView'
 // export default class DemoLogin extends Component {
 //   render() {
 //     return (
@@ -54,7 +55,14 @@ export default class App extends React.Component {
   ChatMenu:ChatMenu,
   Profile:Profile,
   VoiceRecord:VoiceRecord,
+  CustomView:CustomView,
+  VideoPlayScreen: VideoPlayScreen,
 });
+
+// const VideoNav = createStackNavigator({
+//   CustomView:CustomView,
+//   VideoPlayScreen:VideoPlayScreen
+// });
 
 ChatNav.navigationOptions=({navigation})=>{
   if(navigation.state.index !== 0){

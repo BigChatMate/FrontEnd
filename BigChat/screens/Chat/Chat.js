@@ -13,6 +13,7 @@ import{View,Text,StyleSheet,Image,Button,AsyncStorage,}from 'react-native';
 // import MapView from 'react-native-maps';
 import CustomView from './CustomView'
 import dismissKeyboard from 'dismissKeyboard';
+var RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({
     separator: {
@@ -125,7 +126,7 @@ export default class Chat extends Component{
                                         <Ionicons name='ios-image' size={25} style={{color:'grey',marginLeft:10}}/> 
                                         <Text style = {{textAlign: 'center',fontSize: 17}}>Image</Text>
                                     </MenuOption>
-                                    <MenuOption onSelect={this.selectVideoTapped.bind(this)}>
+                                    <MenuOption onSelect={()=>this.selectVideo()}>
                                         <Ionicons name='md-videocam' size={25} style={{color:'grey',marginLeft:10}}/> 
                                         <Text style = {{textAlign: 'center',fontSize: 17,}}>Video</Text>
                                     </MenuOption>
@@ -247,6 +248,72 @@ export default class Chat extends Component{
     
     }
 
+    selectVideo = async () => {
+
+        const options = {
+            title: 'Select Video',
+            mediaType: 'video',
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
+            
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                RNFS.readFile( response.uri, 'base64').then((content) => {
+            //    alert(content);
+                    this._sendMessage(content,"video");
+                });
+            //    var video = this._convertPathToBase64(response.uri);
+
+                // return response.uri;
+            }
+
+            // return null;
+        });
+    }
+
+
+    _convertPathToBase64 = (path) => {
+        RNFS.readFile( path, 'base64').then((content) => {
+            return content;
+        });
+    }
+
+    _convertBase64ToMOV = (data) => {
+
+            const path = RNFS.DocumentDirectoryPath + "/video.MOV";
+            console.log(path);
+            RNFS.writeFile(path, data, 'base64')
+            .then(success => {
+                // alert('FILE WRITTEN: ', "video");
+                return path;
+            })
+            .catch(err => {
+                alert('File Write Error: ', err.message);
+                return null;
+            });
+    }
+
+    _convertBase64ToWAV = (data) => {
+
+        const path = RNFS.DocumentDirectoryPath + "/audio.WAV";
+        console.log(path);
+        RNFS.writeFile(path, data, 'base64')
+        .then(success => {
+            alert('FILE WRITTEN: ', "audio");
+            return path;
+        })
+        .catch(err => {
+            alert('File Write Error: ', err.message);
+            return null;
+        });
+    }
+
     _retrieveMessages = () => {
         if(this._isMounted)
     {this._retrieveData("userData").then((userData) => {
@@ -279,11 +346,44 @@ export default class Chat extends Component{
                 }
                 else if (messages.messages[i].type ===5){
                     // alert(messages.messages[i].latitude);
-                    // alert(messages.messages[i].longitude);                    
-                    messages.messages[i].location = {
-                        latitude:messages.messages[i].latitude,
-                        longitude:messages.messages[i].longitude,
+                    // alert(messages.messages[i].longitude);
+                    
+                    if(messages.messages[i].latitude == null || messages.messages[i].longitude== null)
+                    {messages.messages[i].type =1;  
+                        messages.messages[i].text = messages.messages[i].message
+                        ;}
+                    
+                    else
+                        {messages.messages[i].location = {
+                            latitude:messages.messages[i].latitude,
+                            longitude:messages.messages[i].longitude,
+                        }}
+                    
+                }
+                else if(messages.messages[i].type === 4){
+                    // alert(messages.messages[i].media);
+                    const path = RNFS.DocumentDirectoryPath + "/"+messages.messages[i]._id+".MOV";
+                    // console.log(path);
+                    RNFS.writeFile(path, messages.messages[i].media, 'base64')
+                    .then(success => {
+                        // alert('FILE WRITTEN: '+ path);
+                        // alert(path);
+                        // alert
+                        
+                    })
+                    .catch(err => {
+                        alert('File Write Error: '+ err.message);
+                    });
+                    // alert(typeof(path));
+                    messages.messages[i].video = {
+                        path : path,
                     }
+                //    var videoPath = this._convertBase64ToMOV(messages.messages[i].media);
+                //    alert(videoPath);
+                //     messages.messages[i].video = {
+                //         uri : videoPath,
+                //     }
+                    // alert(videoPath)
                 }
                 messages.messages[i].createdAt = new Date(messages.messages[i].time);
                 // messages.messages[i].user.name = userData.name;
@@ -320,6 +420,7 @@ export default class Chat extends Component{
 
     _sendMessage = async(message,messageType) => {
         // alert(messageType);
+        //type: 1 for text, 2 for audio? 3 for image, 4 for video, 5 for location, 6 for snaps
         const user = {name: this.state.user_name, _id: this.state.user_email};
         // const user = {name: "harmin@hotmail.ca", _id: "harmin@hotmail.ca"};
         var new_message = {};var type = 1;
@@ -329,6 +430,12 @@ export default class Chat extends Component{
         message = message[0].text;
         if(message === "" || message === null)
             return;}
+        else if(messageType === "video"){
+            type = 4;
+            media = message;
+            message = "[video]";
+            
+        }
         else if(messageType === "location"){
             type = 5;
             media = "no media";
@@ -336,7 +443,13 @@ export default class Chat extends Component{
             new_message.location= {
                 latitude: this.state.latitude,
                 longitude: this.state.longitude,
-            }
+            };
+        }
+        else if(messageType === "audio"){
+            type = 2;
+            message = "[audio]";
+            // new_message.audi
+            media = message;
         }
         else if(messageType === "image"){
             // alert("image");
@@ -356,15 +469,28 @@ export default class Chat extends Component{
             // userData.token = "Token1"; //CHANGE THIS
 
             var chatId = this.props.navigation.state.params.chatId;
-            
+            var somethingRandom = JSON.stringify({
+                token: userData.token,
+                chatId : chatId,
+                message : message, 
+                type: type,
+                email:  userData.email,
+                media:media,
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+            })
             try {
-            let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media+"&latitude="+this.state.latitude+"&longitude="+this.state.longitude, {
+                let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/", {
+            // let req = fetch("http://40.118.225.183:8000/chat/MessageHistory/?token="+userData.token+"&chatId=" + chatId + "&message=" + message + "&type="+type+"&email=" + userData.email+"&media="+media+"&latitude="+this.state.latitude+"&longitude="+this.state.longitude, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
+                    'Content-Type':'application/json',
                 },
+                body: somethingRandom,
             })
         } catch (exp) {
+            alert(exp);
             this.setState(
                 {
                     isFetching: false,

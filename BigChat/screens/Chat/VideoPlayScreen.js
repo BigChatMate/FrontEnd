@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import { View, ListView, StyleSheet, Text, Image,TouchableOpacity, Slider, TouchableWithoutFeedback,Dimensions,} from 'react-native';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation';
@@ -84,7 +84,7 @@ export default class VideoPlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          videoSource: null,
+          videoSource: this.props.navigate.params.video,
           videoWidth: screenWidth,
           videoHeight: screenWidth * 9/16, // 默认16：9的宽高比
           showVideoCover: true,    // 是否显示视频封面
@@ -150,10 +150,9 @@ export default class VideoPlayScreen extends Component {
                         {
                             this.state.isPlaying ? null :
                             <TouchableWithoutFeedback onPress={() => { this.onPressPlayButton() }}>
-                                <Image
-                                style={styles.playButton}
-                                source={require('../../assets/image/icon_video_play.png')}
-                                />
+                                
+                                <Ionicons name='ios-play' size={25} style={styles.playButton}/>
+
                             </TouchableWithoutFeedback>
                         }
                         </View>
@@ -162,17 +161,15 @@ export default class VideoPlayScreen extends Component {
                         this.state.showVideoControl ?
                         <View style={[styles.control, {width: this.state.videoWidth}]}>
                             <TouchableOpacity activeOpacity={0.3} onPress={() => { this.onControlPlayPress() }}>
-                            <Image
-                                style={styles.playControl}
-                                source={this.state.isPlaying ? require('../../assets/image/icon_control_pause.png') : require('../../assets/image/icon_control_play.png')}
-                            />
+                                <Ionicons name='ios-pause' size={25} style={styles.playButton}/>
+                            
                             </TouchableOpacity>
                             <Text style={styles.time}>{formatTime(this.state.currentTime)}</Text>
                             <Slider
                             style={{flex: 1}}
                             maximumTrackTintColor={'#999999'}
                             minimumTrackTintColor={'#00c06d'}
-                            thumbImage={require('../../assets/image/icon_control_slider.png')}
+                            // thumbImage={require('../../assets/image/icon_control_slider.png')}
                             value={this.state.currentTime}
                             minimumValue={0}
                             maximumValue={this.state.duration}
@@ -180,10 +177,10 @@ export default class VideoPlayScreen extends Component {
                             />
                             <Text style={styles.time}>{formatTime(this.state.duration)}</Text>
                             <TouchableOpacity activeOpacity={0.3} onPress={() => { this.onControlShrinkPress() }}>
-                            <Image
+                            {/* <Image
                                 style={styles.shrinkControl}
                                 source={this.state.isFullScreen ? require('../../assets/image/icon_control_shrink_screen.png') : require('../../assets/image/icon_control_full_screen.png')}
-                            />
+                            /> */}
                             </TouchableOpacity>
                         </View> : null
                     }

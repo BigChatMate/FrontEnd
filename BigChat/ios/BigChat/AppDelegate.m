@@ -12,12 +12,16 @@
 #import <React/RCTRootView.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "RNGoogleSignin.h"
+#import "../../node_modules/react-native-orientation/iOS/RCTOrientation/Orientation.h"
+
+@import GoogleMaps;
 //#import <RNGoogleSignin/RNGoogleSignin.h>
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyBM2y8itrR4OtrozKY3t9SadZ6iQBYWEr0"];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
   
@@ -62,6 +66,13 @@
 }
 */
 
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  while ([[UIDevice currentDevice] isGeneratingDeviceOrientationNotifications]) {
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+  }
+  
+  return [Orientation getOrientation];
+}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {

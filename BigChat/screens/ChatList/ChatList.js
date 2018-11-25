@@ -135,6 +135,7 @@ class ChatList extends React.Component {
                 },
             }).then((response) => {
                 chatlist = response._bodyText;
+                // alert(chatlist);
                 chatlist = JSON.parse(chatlist);
 
                 this.setState(

@@ -56,6 +56,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		85E7F34ECB6746E6AFF04C52 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5CA6DA13F974B10AE300154 /* Zocial.ttf */; };
 		8616FC323BDE47A182A121F1 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4439C2451E8F4B1E9DF839ED /* AntDesign.ttf */; };
+		952BCBDC2B761A4E63D5DC81 /* libPods-BigChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A54D1330756487D8C067530 /* libPods-BigChat.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		CA5B56D7D7934EFF88205536 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB9C273201AF4504BB0F803E /* Feather.ttf */; };
 		D648A302B79A4BAB82DD8DDE /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CBEF29E4AE4468ABEB2B6E8 /* SimpleLineIcons.ttf */; };
@@ -63,8 +64,6 @@
 		D73B7B585A73429AA175DC93 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B9CEA991E74761ABB3AB92 /* SystemConfiguration.framework */; };
 		D917D519218A734900B0942D /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D4FE218A727E00B0942D /* libRCTVideo.a */; };
 		D917D51A218A734900B0942D /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D50C218A72AD00B0942D /* libReactNativePermissions.a */; };
-		D917D51B218A734900B0942D /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D506218A729A00B0942D /* libRNCamera.a */; };
-		D917D51C218A734900B0942D /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D4F7218A725D00B0942D /* libRNFetchBlob.a */; };
 		D917D51D218A734900B0942D /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D518218A72F600B0942D /* libRNImagePicker.a */; };
 		D917D51E218A734900B0942D /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D512218A72C400B0942D /* libRNSound.a */; };
 		D917D528218A750E00B0942D /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D525218A74F700B0942D /* libRNVectorIcons.a */; };
@@ -77,8 +76,9 @@
 		D9329A0221A6407D0055BE49 /* RNGSPromiseWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D93299FA21A6407D0055BE49 /* RNGSPromiseWrapper.m */; };
 		D9329A5B21A6626B0055BE49 /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D4EC218A721100B0942D /* libRNAudio.a */; };
 		D9329A5C21A6626B0055BE49 /* libRNAudioRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D4F1218A721100B0942D /* libRNAudioRecord.a */; };
-		D9329A6321A667290055BE49 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9329A6221A666F90055BE49 /* libAirMaps.a */; };
 		D962E37F21A8BB8700EC0D71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D962E37E21A8BB8700EC0D71 /* GoogleService-Info.plist */; };
+		D9729A6021AA7C5F00BD2D6A /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9729A5F21AA7C4F00BD2D6A /* libRCTOrientation.a */; };
+		D9DFBAF021AA5356001EE601 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9DFBAED21AA5337001EE601 /* libRNFS.a */; };
 		F2117BC474864173B9CAAEB0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8984580A233E45DF87CBC658 /* FBSDKShareKit.framework */; };
 		F39DCBFB771F49C18C1EC683 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2F0961EDC964683AA716F8B /* AddressBook.framework */; };
 		F47871DE6A0B4F63A6C8046A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72BE968CD87D4770BCA9C956 /* MaterialCommunityIcons.ttf */; };
@@ -386,13 +386,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNAudioRecord;
 		};
-		D917D4F6218A725D00B0942D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D917D4F2218A725D00B0942D /* RNFetchBlob.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A15C300E1CD25C330074CB35;
-			remoteInfo = RNFetchBlob;
-		};
 		D917D4FD218A727E00B0942D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D917D4F8218A727E00B0942D /* RCTVideo.xcodeproj */;
@@ -406,13 +399,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 641E28441F0EEC8500443AF6;
 			remoteInfo = "RCTVideo-tvOS";
-		};
-		D917D505218A729A00B0942D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D917D501218A729A00B0942D /* RNCamera.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
-			remoteInfo = RNCamera;
 		};
 		D917D50B218A72AD00B0942D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -463,6 +449,41 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
+		D9729A5621AA7C4300BD2D6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTVideo;
+		};
+		D9729A5821AA7C4300BD2D6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 641E28441F0EEC8500443AF6;
+			remoteInfo = "RCTVideo-tvOS";
+		};
+		D9729A5E21AA7C4F00BD2D6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTOrientation;
+		};
+		D9DFBAEC21AA5337001EE601 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
+		D9DFBAEE21AA5337001EE601 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6456441F1EB8DA9100672408;
+			remoteInfo = "RNFS-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -505,10 +526,12 @@
 		6A45D0F4217C0F7600681118 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../FacebookSDKs-iOS-4/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		6A45D0F5217C0F7600681118 /* FBSDKPlacesKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKPlacesKit.framework; path = "../../FacebookSDKs-iOS-4/FBSDKPlacesKit.framework"; sourceTree = "<group>"; };
 		6A45D0F6217C0F7700681118 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../FacebookSDKs-iOS-4/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		6A54D1330756487D8C067530 /* libPods-BigChat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BigChat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A582A71217C50710037D6E7 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		72BE968CD87D4770BCA9C956 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8475F70E41DFE2784EEB7B12 /* Pods-BigChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BigChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BigChat/Pods-BigChat.debug.xcconfig"; sourceTree = "<group>"; };
 		8984580A233E45DF87CBC658 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../FacebookSDKs-iOS-4/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		8EC76291202946EC8701EA47 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		9C5B519DA4CC48149C91CE28 /* RNAudioRecord.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAudioRecord.xcodeproj; path = "../node_modules/react-native-audio-record/ios/RNAudioRecord.xcodeproj"; sourceTree = "<group>"; };
@@ -522,9 +545,7 @@
 		D68237CDC0A8433BA1335F6B /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		D72791C62891412C82B7F16F /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		D8584DB728CF4CC487A45741 /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = "<group>"; };
-		D917D4F2218A725D00B0942D /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		D917D4F8218A727E00B0942D /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
-		D917D501218A729A00B0942D /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		D917D507218A72AD00B0942D /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		D917D50D218A72C400B0942D /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		D917D513218A72ED00B0942D /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
@@ -542,8 +563,12 @@
 		D9329A0921A641F40055BE49 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		D9329A5D21A6667F0055BE49 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		D962E37E21A8BB8700EC0D71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
+		D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
+		D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		DB4227C0025E4C009A6552CA /* libRNUUIDGenerator.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNUUIDGenerator.a; sourceTree = "<group>"; };
 		E8B9CEA991E74761ABB3AB92 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ED9E2BC8017210BB2EF56E25 /* Pods-BigChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BigChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-BigChat/Pods-BigChat.release.xcconfig"; sourceTree = "<group>"; };
 		F30F86A37DA14CD38E9C3CAF /* RNUUIDGenerator.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNUUIDGenerator.xcodeproj; path = "../node_modules/react-native-uuid-generator/ios/RNUUIDGenerator.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -560,14 +585,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9329A6321A667290055BE49 /* libAirMaps.a in Frameworks */,
+				D9729A6021AA7C5F00BD2D6A /* libRCTOrientation.a in Frameworks */,
+				D9DFBAF021AA5356001EE601 /* libRNFS.a in Frameworks */,
 				D9329A5B21A6626B0055BE49 /* libRNAudio.a in Frameworks */,
 				D9329A5C21A6626B0055BE49 /* libRNAudioRecord.a in Frameworks */,
 				D917D528218A750E00B0942D /* libRNVectorIcons.a in Frameworks */,
 				D917D519218A734900B0942D /* libRCTVideo.a in Frameworks */,
 				D917D51A218A734900B0942D /* libReactNativePermissions.a in Frameworks */,
-				D917D51B218A734900B0942D /* libRNCamera.a in Frameworks */,
-				D917D51C218A734900B0942D /* libRNFetchBlob.a in Frameworks */,
 				D917D51D218A734900B0942D /* libRNImagePicker.a in Frameworks */,
 				D917D51E218A734900B0942D /* libRNSound.a in Frameworks */,
 				6A582A77217C50A80037D6E7 /* libRCTFBSDK.a in Frameworks */,
@@ -596,6 +620,7 @@
 				5163DF293CDA4BDDA632E108 /* FBSDKCoreKit.framework in Frameworks */,
 				F2117BC474864173B9CAAEB0 /* FBSDKShareKit.framework in Frameworks */,
 				5A65F45E16144BAE950BAAFB /* FBSDKLoginKit.framework in Frameworks */,
+				952BCBDC2B761A4E63D5DC81 /* libPods-BigChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,6 +783,7 @@
 				C17CA85DE26D4049A7C25B05 /* FBSDKCoreKit.framework */,
 				8984580A233E45DF87CBC658 /* FBSDKShareKit.framework */,
 				CCEBAE1CECA948B6B4451D33 /* FBSDKLoginKit.framework */,
+				6A54D1330756487D8C067530 /* libPods-BigChat.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -802,6 +828,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */,
+				D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */,
+				D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */,
 				D9329A5D21A6667F0055BE49 /* AirMaps.xcodeproj */,
 				D9329A0921A641F40055BE49 /* RNGoogleSignin.xcodeproj */,
 				D93299EE21A6407D0055BE49 /* RNGoogleSignin */,
@@ -809,9 +838,7 @@
 				D917D513218A72ED00B0942D /* RNImagePicker.xcodeproj */,
 				D917D50D218A72C400B0942D /* RNSound.xcodeproj */,
 				D917D507218A72AD00B0942D /* ReactNativePermissions.xcodeproj */,
-				D917D501218A729A00B0942D /* RNCamera.xcodeproj */,
 				D917D4F8218A727E00B0942D /* RCTVideo.xcodeproj */,
-				D917D4F2218A725D00B0942D /* RNFetchBlob.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -851,6 +878,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				6A45D0AD217BECA200681118 /* Recovered References */,
 				B8F033791A9549FAA6454C98 /* Resources */,
+				F1F58A68801B720890B366E5 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -923,27 +951,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D917D4F3218A725D00B0942D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D917D4F7218A725D00B0942D /* libRNFetchBlob.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D917D4F9218A727E00B0942D /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				D917D4FE218A727E00B0942D /* libRCTVideo.a */,
 				D917D500218A727E00B0942D /* libRCTVideo.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		D917D502218A729A00B0942D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D917D506218A729A00B0942D /* libRNCamera.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1012,6 +1024,41 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D9729A5221AA7C4300BD2D6A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9729A5721AA7C4300BD2D6A /* libRCTVideo.a */,
+				D9729A5921AA7C4300BD2D6A /* libRCTVideo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9729A5B21AA7C4E00BD2D6A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9729A5F21AA7C4F00BD2D6A /* libRCTOrientation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9DFBAE821AA5327001EE601 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9DFBAED21AA5337001EE601 /* libRNFS.a */,
+				D9DFBAEF21AA5337001EE601 /* libRNFS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1F58A68801B720890B366E5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8475F70E41DFE2784EEB7B12 /* Pods-BigChat.debug.xcconfig */,
+				ED9E2BC8017210BB2EF56E25 /* Pods-BigChat.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1037,10 +1084,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "BigChat" */;
 			buildPhases = (
+				787DBDE607774528AE278E8A /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				706A142F02A50D32B098CC59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1166,6 +1215,10 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
+					ProductGroup = D9729A5B21AA7C4E00BD2D6A /* Products */;
+					ProjectRef = D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */;
+				},
+				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
 					ProjectRef = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
 				},
@@ -1176,6 +1229,10 @@
 				{
 					ProductGroup = 00C302E01ABCB9EE00DB3ED1 /* Products */;
 					ProjectRef = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
+				},
+				{
+					ProductGroup = D9729A5221AA7C4300BD2D6A /* Products */;
+					ProjectRef = D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */;
 				},
 				{
 					ProductGroup = D917D4F9218A727E00B0942D /* Products */;
@@ -1202,12 +1259,8 @@
 					ProjectRef = 9C5B519DA4CC48149C91CE28 /* RNAudioRecord.xcodeproj */;
 				},
 				{
-					ProductGroup = D917D502218A729A00B0942D /* Products */;
-					ProjectRef = D917D501218A729A00B0942D /* RNCamera.xcodeproj */;
-				},
-				{
-					ProductGroup = D917D4F3218A725D00B0942D /* Products */;
-					ProjectRef = D917D4F2218A725D00B0942D /* RNFetchBlob.xcodeproj */;
+					ProductGroup = D9DFBAE821AA5327001EE601 /* Products */;
+					ProjectRef = D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */;
 				},
 				{
 					ProductGroup = D9329A0A21A641F40055BE49 /* Products */;
@@ -1528,13 +1581,6 @@
 			remoteRef = D917D4F0218A721100B0942D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D917D4F7218A725D00B0942D /* libRNFetchBlob.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFetchBlob.a;
-			remoteRef = D917D4F6218A725D00B0942D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		D917D4FE218A727E00B0942D /* libRCTVideo.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1547,13 +1593,6 @@
 			fileType = archive.ar;
 			path = libRCTVideo.a;
 			remoteRef = D917D4FF218A727E00B0942D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D917D506218A729A00B0942D /* libRNCamera.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNCamera.a;
-			remoteRef = D917D505218A729A00B0942D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D917D50C218A72AD00B0942D /* libReactNativePermissions.a */ = {
@@ -1603,6 +1642,41 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = D9329A6121A666F90055BE49 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9729A5721AA7C4300BD2D6A /* libRCTVideo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTVideo.a;
+			remoteRef = D9729A5621AA7C4300BD2D6A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9729A5921AA7C4300BD2D6A /* libRCTVideo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTVideo.a;
+			remoteRef = D9729A5821AA7C4300BD2D6A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9729A5F21AA7C4F00BD2D6A /* libRCTOrientation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTOrientation.a;
+			remoteRef = D9729A5E21AA7C4F00BD2D6A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9DFBAED21AA5337001EE601 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = D9DFBAEC21AA5337001EE601 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D9DFBAEF21AA5337001EE601 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = D9DFBAEE21AA5337001EE601 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1686,6 +1760,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		706A142F02A50D32B098CC59 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BigChat/Pods-BigChat-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BigChat/Pods-BigChat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		787DBDE607774528AE278E8A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BigChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1829,6 +1947,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8475F70E41DFE2784EEB7B12 /* Pods-BigChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1838,20 +1957,40 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = HQMRHNH6WJ;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
-				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Pods/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
+					"$(PROJECT_DIR)/Frameworks/",
 					"/Users/Austin/Desktop/CPEN321/oldFrontEnd/FacebookSDKs-iOS-4",
+					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
+				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(SRCROOT)/Pods/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
+					"$(PROJECT_DIR)/Frameworks/",
+					"/Users/Austin/Desktop/CPEN321/oldFrontEnd/FacebookSDKs-iOS-4",
+					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/node_modules/react-native-orientation/iOS/RCTOrientation/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-audio-player-recorder/ios",
 					"$(SRCROOT)/../node_modules/react-native-audio-record/ios",
 					"$(SRCROOT)/../node_modules/react-native-uuid-generator/ios",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios",
 					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
+					"/Users/Austin/Desktop/CPEN321/oldFrontEnd/FacebookSDKs-iOS-4",
 				);
-				"HEADER_SEARCH_PATHS[arch=*]" = "/Users/Austin/Desktop/CPEN321/oldFrontEnd/FacebookSDKs-iOS-4";
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-audio-player-recorder/ios",
+					"$(SRCROOT)/../node_modules/react-native-audio-record/ios",
+					"$(SRCROOT)/../node_modules/react-native-uuid-generator/ios",
+					"$(SRCROOT)/../node_modules/react-native-google-signin/ios",
+					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
+					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
+				);
 				INFOPLIST_FILE = BigChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -1868,6 +2007,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED9E2BC8017210BB2EF56E25 /* Pods-BigChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1878,8 +2018,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
-					/Users/Austin/Desktop/CPEN,
-					"321/oldFrontEnd/FacebookSDKs-iOS-4",
+					"/Users/Austin/Desktop/CPEN321/oldFrontEnd/FacebookSDKs-iOS-4",
 					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
 				);
 				HEADER_SEARCH_PATHS = (
