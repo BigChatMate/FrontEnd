@@ -72,7 +72,7 @@ export default class CustomView extends React.Component {
     else if(this.props.props.currentMessage.video){
       return(
 <View style={styles.container} >
-<View style={styles.videoView}>
+<View style={{width:this.state.videoWidth,height:this.state.videoHeight}}>
   <Video
     ref={(ref) => this.videoPlayer = ref}
     source={{uri: this.props.props.currentMessage.video.path}}
@@ -91,7 +91,7 @@ export default class CustomView extends React.Component {
     onEnd={this._onPlayEnd}
     onError={this._onPlayError}
     onBuffer={this._onBuffering}
-    style={styles.videoView}
+    style={{width:this.state.videoWidth,height:this.state.videoHeight}}
   />
   <TouchableWithoutFeedback onPress={() => { this.hideControl() }}>
     <View
@@ -332,8 +332,6 @@ export default class CustomView extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#f0f0f0'
   },
   audio: {
     flex: 1,
