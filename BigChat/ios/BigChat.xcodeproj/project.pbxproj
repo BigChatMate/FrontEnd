@@ -77,7 +77,6 @@
 		D9329A5B21A6626B0055BE49 /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D4EC218A721100B0942D /* libRNAudio.a */; };
 		D9329A5C21A6626B0055BE49 /* libRNAudioRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D917D4F1218A721100B0942D /* libRNAudioRecord.a */; };
 		D962E37F21A8BB8700EC0D71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D962E37E21A8BB8700EC0D71 /* GoogleService-Info.plist */; };
-		D9729A6021AA7C5F00BD2D6A /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9729A5F21AA7C4F00BD2D6A /* libRCTOrientation.a */; };
 		D9DFBAF021AA5356001EE601 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9DFBAED21AA5337001EE601 /* libRNFS.a */; };
 		F2117BC474864173B9CAAEB0 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8984580A233E45DF87CBC658 /* FBSDKShareKit.framework */; };
 		F39DCBFB771F49C18C1EC683 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2F0961EDC964683AA716F8B /* AddressBook.framework */; };
@@ -463,13 +462,6 @@
 			remoteGlobalIDString = 641E28441F0EEC8500443AF6;
 			remoteInfo = "RCTVideo-tvOS";
 		};
-		D9729A5E21AA7C4F00BD2D6A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTOrientation;
-		};
 		D9DFBAEC21AA5337001EE601 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */;
@@ -564,7 +556,6 @@
 		D9329A5D21A6667F0055BE49 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		D962E37E21A8BB8700EC0D71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
-		D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
 		D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		DB4227C0025E4C009A6552CA /* libRNUUIDGenerator.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNUUIDGenerator.a; sourceTree = "<group>"; };
 		E8B9CEA991E74761ABB3AB92 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -585,7 +576,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9729A6021AA7C5F00BD2D6A /* libRCTOrientation.a in Frameworks */,
 				D9DFBAF021AA5356001EE601 /* libRNFS.a in Frameworks */,
 				D9329A5B21A6626B0055BE49 /* libRNAudio.a in Frameworks */,
 				D9329A5C21A6626B0055BE49 /* libRNAudioRecord.a in Frameworks */,
@@ -828,7 +818,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */,
 				D9729A5121AA7C4300BD2D6A /* RCTVideo.xcodeproj */,
 				D9DFBAE721AA5327001EE601 /* RNFS.xcodeproj */,
 				D9329A5D21A6667F0055BE49 /* AirMaps.xcodeproj */,
@@ -1033,14 +1022,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D9729A5B21AA7C4E00BD2D6A /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D9729A5F21AA7C4F00BD2D6A /* libRCTOrientation.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D9DFBAE821AA5327001EE601 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1213,10 +1194,6 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
-				},
-				{
-					ProductGroup = D9729A5B21AA7C4E00BD2D6A /* Products */;
-					ProjectRef = D9729A5A21AA7C4E00BD2D6A /* RCTOrientation.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1658,13 +1635,6 @@
 			remoteRef = D9729A5821AA7C4300BD2D6A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D9729A5F21AA7C4F00BD2D6A /* libRCTOrientation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTOrientation.a;
-			remoteRef = D9729A5E21AA7C4F00BD2D6A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		D9DFBAED21AA5337001EE601 /* libRNFS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1972,6 +1942,7 @@
 					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Pods",
 					"$(SRCROOT)/node_modules/react-native-orientation/iOS/RCTOrientation/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/AirMaps/**",
 					"$(inherited)",
@@ -2016,12 +1987,17 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HQMRHNH6WJ;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Pods/**",
+					"$(PROJECT_DIR)/Frameworks/",
+				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(SRCROOT)/Pods/**",
 					"/Users/Austin/Desktop/CPEN321/oldFrontEnd/FacebookSDKs-iOS-4",
 					/Users/Austin/Desktop/CPEN321/oldFrontEnd/google_signin_sdk_4_3_0,
 				);
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Pods",
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-audio-player-recorder/ios",

@@ -10,19 +10,30 @@ import Button from 'apsl-react-native-button';
 const styles = StyleSheet.create({
     buttonStyle1: {
         borderColor: '#d35400',
-        backgroundColor: '#e98b39'
+        backgroundColor: '#e98b39',
       },
       buttonStyle2: {
         borderColor: '#c0392b',
-        backgroundColor: '#e74c3c'
+        backgroundColor: '#e74c3c',
       },
     buttonStyle3: {
         borderColor: '#16a085',
-        backgroundColor: '#1abc9c'
+        backgroundColor: '#1abc9c',
     },
     buttonStyle4: {
         borderColor: '#27ae60',
-        backgroundColor: '#2ecc71'
+        backgroundColor: '#2ecc71',
+    },
+    buttonStyle5: {
+        borderColor: '#27ae60',
+        backgroundColor: '#2ecc71',
+        marginTop:20,
+    },
+    toolbarButton:{
+        width: 50,            //Step 2
+        color:'#fff',
+        textAlign:'center',
+        fontSize: 17,
     },
     container: {
         flex: 1,
@@ -39,7 +50,13 @@ const styles = StyleSheet.create({
         marginTop: 15,
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 30,
+        flex: 1,
+    },
+    email: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
         flex: 1,
     },
     text: {
@@ -49,16 +66,12 @@ const styles = StyleSheet.create({
     },
     profilephoto: {
         alignSelf: 'center',
+        marginTop: 20,
         height: 200,
         width: 200,
         borderWidth: 1,
         borderRadius: 100,
-    },
-    toolbarButton:{
-        width: 50,            //Step 2
-        color:'#fff',
-        textAlign:'center',
-        fontSize: 17,
+        borderColor: '#fff'
     },
     toolbar: {
         backgroundColor: '#00bfff',
@@ -68,6 +81,7 @@ const styles = StyleSheet.create({
     },
     toolbarTitle: {
         color: '#fff',
+        marginRight:50,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 25,
@@ -189,4 +203,3 @@ export default class Profile extends React.Component {
 
 
 }
-

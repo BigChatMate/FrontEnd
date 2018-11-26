@@ -20,8 +20,9 @@ import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator }
 import ChatMenu from './screens/Chat/ChatMenu'
 import VoiceRecord from './screens/Chat/VoiceRecord'
 import AddFriends from './screens/AddFriends/AddFriends'
-import VideoPlayScreen from './screens/Chat/VideoPlayScreen'
-import CustomView from './screens/Chat/CustomView'
+import FirstTimeLogin from './screens/Login/FirstTimeLogin'
+// import
+// import Testing from './screens/Testing/mediaTest';
 // export default class DemoLogin extends Component {
 //   render() {
 //     return (
@@ -32,8 +33,10 @@ import CustomView from './screens/Chat/CustomView'
 
 export default class App extends React.Component {
   render() {
-   return <AuthStack />;
+    //return <ChatNav/>;
+    return <AuthStack />;
   //  return <Location/>;
+    // return <FirstTimeLogin/>;
   }
 }
 // const AppStack = createStackNavigator(
@@ -55,14 +58,7 @@ export default class App extends React.Component {
   ChatMenu:ChatMenu,
   Profile:Profile,
   VoiceRecord:VoiceRecord,
-  CustomView:CustomView,
-  VideoPlayScreen: VideoPlayScreen,
 });
-
-// const VideoNav = createStackNavigator({
-//   CustomView:CustomView,
-//   VideoPlayScreen:VideoPlayScreen
-// });
 
 ChatNav.navigationOptions=({navigation})=>{
   if(navigation.state.index !== 0){
@@ -80,17 +76,6 @@ const ContactNav = createStackNavigator({
   Profile:Profile,
   Chat:Chat,
 });
-
-ContactNav.navigationOptions=({navigation})=>{
-  if(navigation.state.index !== 0){
-    return{
-      tabBarVisible : false,
-    };
-  }
-  return{
-    tabBarVisible : true,
-  };
-}
 
 const BottomNavBar = createBottomTabNavigator(
   {
@@ -144,7 +129,8 @@ const BottomNavBar = createBottomTabNavigator(
 
 const AuthStack = createSwitchNavigator(
   {
-    Login: Login,
+    Login: Login, 
+    FirstTimeLogin: FirstTimeLogin,
     App: BottomNavBar,
     
   },

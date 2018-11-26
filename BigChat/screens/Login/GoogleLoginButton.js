@@ -78,7 +78,7 @@ state = {
           onPress={this.signIn}
           // disabled={this.state.isSigninInProgress} 
           />
-          
+ 
       </View>
     );
   }

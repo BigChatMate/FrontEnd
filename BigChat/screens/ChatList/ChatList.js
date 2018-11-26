@@ -3,6 +3,9 @@ import { View, ListView, StyleSheet,RefreshControl,TouchableOpacity, Text, Image
 import Row from './Row';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+// import chats from './data';
+
+
 const styles = StyleSheet.create({
     message: {
         color: 'blue',
@@ -41,22 +44,25 @@ const styles = StyleSheet.create({
 
 class ChatList extends React.Component {
     static navigationOptions  = {
+        //tabBarVisible = false,
        header : null
     };
 
     constructor(props) {
+
         super(props);
+        this._retrieveData = this._retrieveData.bind(this);
         var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
         this.state = {
          chats:[],
-         isFetching : true,
+         isFetching : false,
          dataSource: ds,
      };  
     }
 
     componentDidMount() {
-        
-        try {this._retrieveData("userData").then((userData) => {
+        this._retrieveData("userData").then((userData) => {
             userData = JSON.parse(userData);
             this.setState({
             userData:userData,
@@ -66,9 +72,7 @@ class ChatList extends React.Component {
                 
                     this.refresh();
                 }, 1000);
-    });} catch (error){
-        alert(error);
-    }
+    });
 
     }
 
@@ -78,6 +82,9 @@ class ChatList extends React.Component {
         try {
             const value = await AsyncStorage.getItem(key);
             if (value !== null) {
+                // We have data!!
+                // alert("Retrieving data...");
+                // alert(value);
                 return value;
             }
         } catch (error) {
@@ -99,6 +106,8 @@ class ChatList extends React.Component {
         </View>);}
         else{
 
+        console.log("rendering...");
+
         return (
             <View style={{ flex: 1 }} >
                 <View style={styles.toolbar}>
@@ -118,6 +127,7 @@ class ChatList extends React.Component {
                   data = {this.state.chats}
                   dataSource = {this.state.dataSource.cloneWithRows(this.state.chats)}
                   renderRow={(data)=> this._renderRow(data,navigate)}
+                    //renderRow={(data) => <Row {...data} />}
                  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
                 />
             </View>
@@ -127,6 +137,7 @@ class ChatList extends React.Component {
         this.setState({
             isFetching:false,
         })
+          //   this.state.userData.token = "Token1"; //CHANGE THIS
             try
             {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token="+this.state.userData.token, {
                 method: 'GET',
@@ -134,14 +145,17 @@ class ChatList extends React.Component {
                     Accept: 'application/json',
                 },
             }).then((response) => {
+                // alert(response);
                 chatlist = response._bodyText;
-                // alert(chatlist);
+                // alert(chatlist)
                 chatlist = JSON.parse(chatlist);
+                // alert(JSON.stringify(chatlist));
 
                 this.setState(
                     {
                         isFetching: false,
                         chats: chatlist.chats,
+                        //dataSource : ds.cloneWithRows(chats),
                     });
             });
                 }catch (exp) {
@@ -194,7 +208,7 @@ class ChatList extends React.Component {
       }
 
       gotochat(chats,navigate){
-        navigate("Chat",{chatId:chats.chatId,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
+        navigate("Chat",{chatId:chats.chatId,token:this.state.userData.token,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
         clearInterval(this._interval);
       }
 }

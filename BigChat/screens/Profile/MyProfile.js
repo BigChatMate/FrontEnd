@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
         width: 200,
         borderWidth: 1,
         borderRadius: 100,
+        borderColor: '#fff'
     },
     toolbar: {
         backgroundColor: '#00bfff',
@@ -258,6 +259,7 @@ export default class MyProfile extends React.Component {
             avatar = JSON.parse(avatar);
             userData.picture = avatar.image;
             //userData.name = userData.email;
+            userData.name = avatar.name;
             this.setState(
                 {
                     userData:userData,

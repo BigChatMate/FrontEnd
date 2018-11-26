@@ -112,8 +112,21 @@ class Login extends Component {
         headers: {
           Accept: 'application/json',
         },
+      }).then((response)=>{
+        messages = response._bodyText;
+        // alert(messages);
+        messages = JSON.parse(messages);
+        if(messages.newUser==1){
+          // alert("newUser");
+          this.props.navigation.navigate("FirstTimeLogin");
+        }
+        else {
+          this.props.navigation.navigate("App");
+        }
+        
       });
-      this.props.navigation.navigate("App");
+
+
 
   
     } catch (exception) {
