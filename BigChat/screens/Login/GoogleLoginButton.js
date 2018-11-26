@@ -71,13 +71,14 @@ state = {
       /> */}
 
         <GoogleSigninButton
-          style={{width: 195, height: 40 }}
-          size={GoogleSigninButton.Size.Icon}
-          color={GoogleSigninButton.Color.Dark}
+         // style={{width: 195, height: 40 }}
+         style={{width:230, height: 48 }}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Light}
           onPress={this.signIn}
           // disabled={this.state.isSigninInProgress} 
           />
-          
+ 
       </View>
     );
   }

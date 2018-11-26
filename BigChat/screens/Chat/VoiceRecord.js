@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Button,Text,Image} from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { Buffer } from 'buffer';
 import Permissions from 'react-native-permissions';
-import Sound from 'react-native-sound';
+import Video from 'react-native-video';
 import AudioRecord from 'react-native-audio-record';
 
-export default class VoiceRecord extends Component {
-  static navigationOptions  = {
-    header : null
- };
-  sound = null;
+export default class App extends Component {
   state = {
     audioFile: '',
     recording: false,
-    loaded: false,
-    paused: true
+    paused: true,
+    loaded: false
   };
 
   async componentDidMount() {
@@ -49,7 +45,7 @@ export default class VoiceRecord extends Component {
 
   start = () => {
     console.log('start record');
-    this.setState({ audioFile: '', recording: true, loaded: false });
+    this.setState({ audioFile: '', recording: true });
     AudioRecord.start();
   };
 
@@ -58,65 +54,43 @@ export default class VoiceRecord extends Component {
     console.log('stop record');
     let audioFile = await AudioRecord.stop();
     console.log('audioFile', audioFile);
-    this.setState({ audioFile, recording: false });
+    this.setState({ recording: false });
+    // wait till file is saved, else react-native-video will load incomplete file
+    setTimeout(() => {
+      this.setState({ audioFile });
+    }, 1000);
   };
 
-  load = () => {
-    return new Promise((resolve, reject) => {
-      if (!this.state.audioFile) {
-        return reject('file path is empty');
-      }
-
-      this.sound = new Sound(this.state.audioFile, '', error => {
-        if (error) {
-          console.log('failed to load the file', error);
-          return reject(error);
-        }
-        this.setState({ loaded: true });
-        return resolve();
-      });
-    });
-  };
-
-  play = async () => {
-    if (!this.state.loaded) {
-      try {
-        await this.load();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    this.setState({ paused: false });
-    Sound.setCategory('Playback');
-
-    this.sound.play(success => {
-      if (success) {
-        console.log('successfully finished playing');
-      } else {
-        console.log('playback failed due to audio decoding errors');
-      }
-      this.setState({ paused: true });
-      // this.sound.release();
-    });
+  play = () => {
+    if (!this.state.loaded) this.player.seek(0);
+    this.setState({ paused: false, loaded: true });
   };
 
   pause = () => {
-    this.sound.pause();
     this.setState({ paused: true });
   };
 
-  render() {
+  onLoad = data => {
+    console.log('onLoad', data);
+  };
 
-    const { recording, paused, audioFile } = this.state;
+  onProgress = data => {
+    console.log('progress', data);
+  };
+
+  onEnd = () => {
+    console.log('finished playback');
+    this.setState({ paused: true, loaded: false });
+  };
+
+  onError = error => {
+    console.log('error', error);
+  };
+
+  render() {
+    const { recording, audioFile, paused } = this.state;
     return (
       <View style={styles.container}>
-      <View style={styles.toolbar}>
-                <Text onPress = {
-                       ()=> this.props.navigation.goBack()}
-                    style={styles.toolbarButton} >Cancel</Text>
-                  <Text style={styles.toolbarTitle}>Audio Record</Text>
-          </View>
         <View style={styles.row}>
           <Button onPress={this.start} title="Record" disabled={recording} />
           <Button onPress={this.stop} title="Stop" disabled={!recording} />
@@ -126,8 +100,18 @@ export default class VoiceRecord extends Component {
             <Button onPress={this.pause} title="Pause" disabled={!audioFile} />
           )}
         </View>
-        <Image source={{ uri: "https://randomuser.me/api/portraits/men/4.jpg" }} style={styles.profilephoto}
-                    resizeMode="stretch" />
+        {!!audioFile && (
+          <Video
+            ref={ref => (this.player = ref)}
+            source={{ uri: audioFile }}
+            paused={paused}
+            ignoreSilentSwitch={'ignore'}
+            onLoad={this.onLoad}
+            onProgress={this.onProgress}
+            onEnd={this.onEnd}
+            onError={this.onError}
+          />
+        )}
       </View>
     );
   }
@@ -136,44 +120,10 @@ export default class VoiceRecord extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  //  justifyContent: 'center'
+    justifyContent: 'center'
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-evenly'
-  },
-  toolbarButton:{
-    width: 50,            //Step 2
-    color:'#fff',
-    textAlign:'center',
-    fontSize: 16,
-},
-  toolbar: {
-    backgroundColor: '#00bfff',
-    paddingTop: 40,
-    paddingBottom: 10,
-    flexDirection: 'row'    //Step 1
-},
-toolbarTitle: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 25,
-    flex: 1
-},
-profilephoto:{
-  alignSelf: 'center',
-  paddingTop: 50,
-  marginTop: 200,
-  height: 200,
-  width: 200,
-  borderWidth: 1,
-  borderRadius: 100,
-},
-text:{
-  width: 50,            //Step 2
- // color:'#fff',
-  textAlign:'center',
-  fontSize: 20,
-},
+  }
 });

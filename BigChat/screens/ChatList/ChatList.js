@@ -137,7 +137,7 @@ class ChatList extends React.Component {
         this.setState({
             isFetching:false,
         })
-            // this.state.userData.token = "Token1"; //CHANGE THIS
+          //   this.state.userData.token = "Token1"; //CHANGE THIS
             try
             {let req = fetch("http://40.118.225.183:8000/chat/chatlist/?token="+this.state.userData.token, {
                 method: 'GET',
@@ -208,7 +208,7 @@ class ChatList extends React.Component {
       }
 
       gotochat(chats,navigate){
-        navigate("Chat",{chatId:chats.chatId,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
+        navigate("Chat",{chatId:chats.chatId,token:this.state.userData.token,name: chats.name,chatList_interval:this._interval, onGoBack: ()=>this.comeBack()});
         clearInterval(this._interval);
       }
 }

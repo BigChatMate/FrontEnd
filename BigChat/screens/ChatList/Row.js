@@ -9,11 +9,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
+        width:'70%',
         marginLeft: 12,
         fontSize: 20,
     },
     textRead: {
+    // marginLeft:'80%',
+        // width:
       textAlign: 'right',
+      marginRight:10,
       fontWeight: 'bold',
       fontSize: 16,
       justifyContent: 'flex-end',
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
 class Row extends React.Component {
   render() {
 
-      const unread = <Text style={styles.textRead}>                                                unread</Text>;
+      const unread = <Text style={styles.textRead}>unread</Text>;
 
       let message;
       if (this.props.flag) {
@@ -41,14 +45,15 @@ class Row extends React.Component {
 
       return (
       <View style={styles.container}>
+        <View >{message}</View>
         <Image source={{ uri: 'data:image/jpeg;base64,'+this.props.image}} style={styles.photo} /> 
         <Text style={styles.text}>
+            {/* {message} */}
           {`${this.props.name}`}
           {"\n"}
           {`${this.props.message}`}
         </Text>
-        <View >{message}</View>
-      </View>);
+      </View> );
   }
 }
   // const Row = (props) => (
@@ -66,4 +71,3 @@ class Row extends React.Component {
   // );
 
 export default Row;
-

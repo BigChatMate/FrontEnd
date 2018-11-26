@@ -141,12 +141,14 @@ class Contact extends React.Component {
                     Accept: 'application/json',
                 },
             }).then((response) => {
-                // alert(response);
+               // alert(JSON.stringify(response));
                 chatlist = response._bodyText;
-                alert(chatlist);
+             //   alert(JSON.stringify(chatlist));
+                
                 chatlist = JSON.parse(chatlist);
-                // alert(JSON.stringify(chatlist));
-
+           //     alert(chatlist);
+                // alert(chatlist.contact);
+                //alert(JSON.stringify(chatlist, null, 4));
                 this.setState(
                     {
                         isFetching: false,
